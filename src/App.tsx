@@ -5,7 +5,6 @@ import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import HexagonBackground from './components/HexagonBackground';
-import ScrollParticles from './components/ScrollParticles';
 import ScrollCursorFollower from './components/ScrollCursorFollower';
 import { ScrollProvider, useScrollContext } from './hooks/ScrollProvider';
 import { ProjectProvider, useProjectContext } from './hooks/ProjectContext';
@@ -147,7 +146,6 @@ function AppContent() {
                 <div style={{ pointerEvents: 'auto' }}>
                   <Navbar activeSection={activeSection} />
                 </div>
-                <ScrollParticles />
                 <ScrollCursorFollower />
               </motion.div>
             )}
@@ -160,6 +158,9 @@ function AppContent() {
             className="relative z-10"
           >
             <Hero />
+            <Suspense fallback={<SectionFallback />}>
+              <Showreel />
+            </Suspense>
             <Suspense fallback={<SectionFallback />}>
               <Projects />
             </Suspense>
