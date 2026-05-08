@@ -1,268 +1,263 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
+import { useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Mail, Linkedin, Instagram, Video, Palette, ArrowUpRight } from 'lucide-react';
+import { Mail, Linkedin, Instagram, Video, ArrowUpRight, Send, Check } from 'lucide-react';
 
 const SOCIALS = [
   { name: 'LinkedIn', icon: <Linkedin size={16} />, url: 'https://linkedin.com', color: '#0A66C2' },
-  { name: 'ArtStation', icon: <Palette size={16} />, url: 'https://artstation.com', color: '#13AFF0' },
+  { name: 'ArtStation', icon: <Video size={16} />, url: 'https://artstation.com', color: '#13AFF0' },
   { name: 'Instagram', icon: <Instagram size={16} />, url: 'https://instagram.com', color: '#E4405F' },
   { name: 'Vimeo', icon: <Video size={16} />, url: 'https://vimeo.com', color: '#1AB7EA' },
 ];
 
-const MARQUEE_TEXT = 'AVAILABLE FOR FREELANCE ';
+// ─── CONTACT FORM ───────────────────────────────────────────────────────────
+function ContactForm() {
+  const [formState, setFormState] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
 
-export default function Contact() {
-  const marqueeRef = useRef<HTMLDivElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const validate = () => {
+    const newErrors: typeof errors = {};
+    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    if (!formData.email.trim()) newErrors.email = 'Email is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Invalid email format';
+    if (!formData.message.trim()) newErrors.message = 'Message is required';
+    else if (formData.message.trim().length < 10) newErrors.message = 'Message must be at least 10 characters';
+    return newErrors;
+  };
 
-  useEffect(() => {
-    if (!marqueeRef.current || shouldReduceMotion) return;
-    const tween = gsap.to(marqueeRef.current, { xPercent: -50, duration: 30, ease: 'none', repeat: -1 });
-    return () => tween.kill();
-  }, [shouldReduceMotion]);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newErrors = validate();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    setErrors({});
+    setFormState('sending');
+    // Open mailto as fallback
+    setTimeout(() => {
+      const subject = encodeURIComponent(`Portfolio Inquiry from ${formData.name}`);
+      const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`);
+      window.open(`mailto:hailuong.vfx@gmail.com?subject=${subject}&body=${body}`, '_blank');
+      setFormState('success');
+    }, 600);
+  };
+
+  if (formState === 'success') {
+    return (
+      <motion.div
+        className="text-center py-8"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.4 }}
+      >
+        <div className="w-14 h-14 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ background: 'rgba(52,211,153,0.12)', border: '1px solid rgba(52,211,153,0.25)' }}>
+          <Check size={24} className="text-emerald-400" />
+        </div>
+        <h3 className="text-lg font-semibold text-white mb-2">Message Sent</h3>
+        <p className="text-white/50 text-sm">Thanks for reaching out. I'll get back to you soon.</p>
+        <button
+          onClick={() => { setFormState('idle'); setFormData({ name: '', email: '', message: '' }); }}
+          className="mt-5 text-sm text-amber-400/70 hover:text-amber-400 transition-colors"
+        >
+          Send another message
+        </button>
+      </motion.div>
+    );
+  }
 
   return (
-    <footer id="contact" className="pt-20 md:pt-32 pb-8 overflow-hidden relative" aria-label="Contact section">
+    <motion.form
+      onSubmit={handleSubmit}
+      className="space-y-4 max-w-md mx-auto"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.2 }}
+    >
+      <div>
+        <input
+          type="text"
+          name="name"
+          placeholder="Your name"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          className="w-full px-4 py-3 sm:py-4 rounded-xl bg-white/[0.03] border text-white placeholder-white/25 focus:outline-none focus:border-amber-400/40 transition-colors"
+          style={{ borderColor: errors.name ? 'rgba(239,68,68,0.5)' : 'rgba(255,255,255,0.08)' }}
+          aria-label="Your name"
+          autoComplete="name"
+        />
+        {errors.name && <p className="text-red-400/80 text-xs mt-1">{errors.name}</p>}
+      </div>
+      <div>
+        <input
+          type="email"
+          name="email"
+          placeholder="your@email.com…"
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          className="w-full px-4 py-3 sm:py-4 rounded-xl bg-white/[0.03] border text-white placeholder-white/25 focus:outline-none focus:border-amber-400/40 transition-colors"
+          style={{ borderColor: errors.email ? 'rgba(239,68,68,0.5)' : 'rgba(255,255,255,0.08)' }}
+          aria-label="Your email"
+          autoComplete="email"
+          spellCheck={false}
+        />
+        {errors.email && <p className="text-red-400/80 text-xs mt-1">{errors.email}</p>}
+      </div>
+      <div>
+        <textarea
+          name="message"
+          placeholder="Tell me about your project…"
+          value={formData.message}
+          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+          rows={4}
+          className="w-full px-4 py-3 sm:py-4 rounded-xl bg-white/[0.03] border text-white placeholder-white/25 focus:outline-none focus:border-amber-400/40 transition-colors resize-none"
+          style={{ borderColor: errors.message ? 'rgba(239,68,68,0.5)' : 'rgba(255,255,255,0.08)' }}
+          aria-label="Your message"
+          spellCheck={false}
+        />
+        {errors.message && <p className="text-red-400/80 text-xs mt-1">{errors.message}</p>}
+      </div>
+      <button
+        type="submit"
+        disabled={formState === 'sending'}
+        className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-medium text-white transition-all disabled:opacity-60"
+        style={{ background: 'rgba(232,164,0,0.12)', border: '1px solid rgba(232,164,0,0.25)' }}
+      >
+        <Send size={15} />
+        <span>{formState === 'sending' ? 'Sending...' : 'Send Message'}</span>
+      </button>
+    </motion.form>
+  );
+}
+
+export default function Contact() {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <footer id="contact" className="pt-20 md:pt-28 pb-8 overflow-hidden relative" aria-label="Contact section">
       <h2 id="contact-heading" className="sr-only">Get in Touch</h2>
-      {/* Background radial gradient */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        animate={{
-          background: [
-            'radial-gradient(circle at 20% 50%, rgba(232,164,0,0.06) 0%, transparent 55%)',
-            'radial-gradient(circle at 80% 50%, rgba(232,164,0,0.06) 0%, transparent 55%)',
-            'radial-gradient(circle at 20% 50%, rgba(232,164,0,0.06) 0%, transparent 55%)',
-          ]
+
+      {/* Background gradient */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.03]"
+        style={{
+          background: 'radial-gradient(circle at 50% 30%, rgba(232,164,0,0.15) 0%, transparent 60%)',
         }}
-        transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
       />
 
-      {/* Subtle grid */}
-      <div className="absolute inset-0 opacity-[0.015] pointer-events-none" style={{
-        backgroundImage: 'linear-gradient(rgba(232,164,0,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(232,164,0,0.6) 1px, transparent 1px)',
-        backgroundSize: '60px 60px',
-      }} />
-
       <div className="relative z-10">
-        {/* Marquee */}
+        {/* CTA Section */}
         <motion.div
-          className="overflow-hidden mb-16 md:mb-24 py-4"
-          style={{
-            background: 'rgba(12, 12, 15, 0.5)',
-            borderTop: '1px solid rgba(255,255,255,0.06)',
-            borderBottom: '1px solid rgba(255,255,255,0.06)',
-            backdropFilter: 'blur(60px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(60px) saturate(180%)',
-          }}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-        >
-          <motion.div ref={marqueeRef} className="flex whitespace-nowrap" whileHover={{ animationPlayState: 'paused' }}>
-            {Array.from({ length: 20 }, (_, i) => (
-              <motion.span
-                key={i}
-                className="text-4xl md:text-6xl lg:text-7xl font-bold px-4 text-amber-400/[0.08]"
-                whileHover={{
-                  color: 'rgba(232,164,0,0.45)',
-                  transition: { duration: 0.2 },
-                }}
-              >
-                {MARQUEE_TEXT}
-              </motion.span>
-            ))}
-          </motion.div>
-        </motion.div>
-
-        {/* CTA */}
-        <motion.div
-          className="text-center px-6 mb-16 md:mb-24"
-          initial={{ opacity: 0, y: 60 }}
+          className="text-center px-6 mb-16 md:mb-20"
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
+          transition={{ duration: 0.7 }}
         >
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <motion.div
-              className="w-12 h-px"
+          {/* Label */}
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <div
+              className="w-10 h-px"
               style={{ background: 'linear-gradient(90deg, transparent, hsl(43 100% 46%))' }}
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3, duration: 0.6 }}
             />
-            <span className="text-[11px] uppercase tracking-[0.4em] font-semibold text-amber-400/80">
+            <span className="text-[10px] uppercase tracking-[0.35em] font-medium text-amber-400/70">
               Get in Touch
             </span>
-            <motion.div
-              className="w-12 h-px"
+            <div
+              className="w-10 h-px"
               style={{ background: 'linear-gradient(90deg, hsl(43 100% 46%), transparent)' }}
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3, duration: 0.6 }}
             />
           </div>
 
-          <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6">
-            Let&apos;s Create
+          {/* Headline */}
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4">
+            Let's Work Together
           </h2>
 
-          <h3 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-10">
-            <span className="bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent">
-              Something Epic
-            </span>
-          </h3>
-
-          <motion.p
-            className="max-w-md mx-auto mb-10 text-white/35"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-          >
+          <p className="max-w-md mx-auto mb-8 text-white/40 text-sm">
             Have a project in mind? Looking for a VFX artist to bring your vision to life?
-          </motion.p>
+          </p>
 
-          {/* CTA Button */}
+          {/* Primary CTA */}
           <motion.a
             href="mailto:hailuong.vfx@gmail.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative inline-flex items-center gap-3 text-base rounded-full px-10 py-4 overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            className="group inline-flex items-center gap-3 text-base rounded-full px-8 py-3.5 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            style={{
+              background: 'linear-gradient(135deg, hsl(43 100% 46%), hsl(35 100% 50%))',
+              color: 'hsl(0 0% 5%)',
+            }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
-            <div
-              className="absolute inset-0 rounded-full"
-              style={{
-                background: 'rgba(14, 14, 18, 0.75)',
-                border: '1px solid rgba(232,164,0,0.2)',
-                backdropFilter: 'blur(60px) saturate(180%)',
-                WebkitBackdropFilter: 'blur(60px) saturate(180%)',
-              }}
-            />
-
-            <motion.div
-              className="absolute inset-0 rounded-full"
-              style={{
-                background: 'linear-gradient(135deg, hsl(43 100% 46%), hsl(35 100% 50%))',
-              }}
-              initial={{ x: '-100%' }}
-              whileHover={{ x: 0 }}
-              transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-            />
-
-            <Mail
-              size={18}
-              className="relative z-10 text-amber-400 transition-colors"
-            />
-            <span className="relative z-10 text-white/80 transition-colors">hailuong.vfx@gmail.com</span>
-            <ArrowUpRight
-              size={14}
-              className="relative z-10 opacity-0 group-hover:opacity-100 transition-all -ml-3 group-hover:ml-0 text-black"
-            />
+            <Mail size={17} />
+            <span className="font-semibold">hailuong.vfx@gmail.com</span>
+            <ArrowUpRight size={15} className="opacity-70" />
           </motion.a>
+        </motion.div>
+
+        {/* Contact Form */}
+        <motion.div
+          className="px-6 mb-16 md:mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <ContactForm />
         </motion.div>
 
         {/* Footer */}
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
-          <motion.div
-            className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-6"
-            style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+          <div
+            className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-5"
+            style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
           >
             {/* Social icons */}
             <div className="flex items-center gap-2">
-              {SOCIALS.map((social, i) => (
-                <motion.a
+              {SOCIALS.map((social) => (
+                <a
                   key={social.name}
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.name}
-                  className="relative p-3 rounded-xl overflow-hidden"
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.1 * i, type: 'spring', stiffness: 280, damping: 22 }}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
+                  className="p-2.5 rounded-lg transition-all hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
                   style={{
                     background: 'rgba(12, 12, 15, 0.5)',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    backdropFilter: 'blur(40px)',
-                    WebkitBackdropFilter: 'blur(40px)',
-                    transition: 'all 0.5s cubic-bezier(0.25,0.1,0.25,1)',
+                    border: '1px solid rgba(255,255,255,0.06)',
                   }}
                 >
-                  <span className="relative z-10 text-white/35" style={{ color: 'inherit' }}>
+                  <span className="text-white/30 hover:text-white/60 transition-colors">
                     {social.icon}
                   </span>
-                </motion.a>
+                </a>
               ))}
             </div>
 
             {/* Copyright */}
-            <motion.div
-              className="flex items-center gap-3 text-xs text-white/20"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-            >
+            <div className="flex items-center gap-2 text-xs text-white/20">
               <span>&copy; 2026 Hai Luong</span>
-              <motion.span
-                className="w-1 h-1 rounded-full bg-amber-400/50"
-                animate={{ scale: [1, 1.5, 1] }}
-                transition={{ duration: 2.5, repeat: Infinity }}
-              />
+              <span className="text-white/10">·</span>
               <span>VFX Compositor</span>
-            </motion.div>
+            </div>
 
             {/* Available status */}
-            <motion.div
-              className="flex items-center gap-2 px-4 py-2 rounded-full"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
+            <div
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full text-[10px]"
               style={{
                 background: 'rgba(12, 12, 15, 0.5)',
-                border: '1px solid rgba(255,255,255,0.07)',
-                backdropFilter: 'blur(40px)',
-                WebkitBackdropFilter: 'blur(40px)',
+                border: '1px solid rgba(255,255,255,0.06)',
               }}
             >
-              <span className="relative flex h-2 w-2">
-                <motion.span
-                  className="absolute inline-flex h-full w-full rounded-full bg-emerald-400/60"
-                  animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
-                  transition={{ duration: 1.8, repeat: Infinity }}
-                />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" style={{ boxShadow: '0 0 6px rgba(52,211,153,0.4)' }} />
-              </span>
-              <span className="text-[11px] text-white/30">Available for projects</span>
-            </motion.div>
-          </motion.div>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" style={{ boxShadow: '0 0 6px rgba(52,211,153,0.4)' }} />
+              <span className="text-white/30">Available for projects</span>
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Corner decorations */}
-      {[
-        'bottom-8 left-8 border-l border-b',
-        'bottom-8 right-8 border-r border-b',
-      ].map((pos, i) => (
-        <motion.div
-          key={i}
-          className={`absolute ${pos} w-14 h-14 border-white/10`}
-          initial={{ opacity: 0, scale: 0 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 + i * 0.1, type: 'spring' }}
-        />
-      ))}
     </footer>
   );
 }

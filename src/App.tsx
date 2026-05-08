@@ -3,9 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import HexagonBackground from './components/HexagonBackground';
-import ScrollCursorFollower from './components/ScrollCursorFollower';
+import Hero from './components/Hero_Pipeline';
 import { ScrollProvider, useScrollContext } from './hooks/ScrollProvider';
 import { ProjectProvider, useProjectContext } from './hooks/ProjectContext';
 import ProjectDetail from './pages/ProjectDetail';
@@ -19,7 +17,25 @@ const Clients = lazy(() => import('./components/Clients'));
 const About = lazy(() => import('./components/About'));
 const Contact = lazy(() => import('./components/Contact'));
 
-const VIDEO_URL = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260324_024928_1efd0b0d-6c02-45a8-8847-1030900c4f63.mp4';
+const VIDEO_URL = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260307_083826_e938b29f-a43a-41ec-a153-3d4730578ab8.mp4';
+
+// Initialize UnicornStudio
+function useUnicornStudio() {
+  useEffect(() => {
+    if (!window.UnicornStudio) {
+      window.UnicornStudio = { isInitialized: false };
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js';
+      script.onload = () => {
+        if (!window.UnicornStudio?.isInitialized) {
+          window.UnicornStudio && window.UnicornStudio.init();
+          window.UnicornStudio && (window.UnicornStudio.isInitialized = true);
+        }
+      };
+      document.head.appendChild(script);
+    }
+  }, []);
+}
 
 // Fallback component for lazy loaded sections
 function SectionFallback() {
@@ -38,6 +54,9 @@ function AppContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [isProjectClosing, setIsProjectClosing] = useState(false);
   const [isProjectsModalOpen, setIsProjectsModalOpen] = useState(false);
+  const [showBackgroundVideo] = useState(true);
+
+  // Video background is always shown (controlled by showBackgroundVideo state)
 
   const isProjectDetail = location.pathname.startsWith('/project/');
   const shouldHideNavbar = selectedProject || isProjectDetail || isProjectsModalOpen;
@@ -73,7 +92,7 @@ function AppContent() {
 
   return (
     <>
-      {/* Layer 1: Deep background (video + gradient) - hidden when project open */}
+      {/* Layer 1: Video background */}
       <AnimatePresence>
         {!selectedProject && (
           <motion.div
@@ -82,29 +101,11 @@ function AppContent() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <video
-              src={VIDEO_URL}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              className="w-full min-h-screen object-cover"
+            <div
+              className="absolute top-0 left-0 -z-10 w-full h-full"
+              data-us-project="cqcLtDwfoHqqRPttBbQE"
             />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.6) 100%)' }} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {!selectedProject && (
-          <motion.div
-            className="fixed inset-0 z-[-15]"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <HexagonBackground />
           </motion.div>
         )}
       </AnimatePresence>
@@ -146,11 +147,16 @@ function AppContent() {
                 <div style={{ pointerEvents: 'auto' }}>
                   <Navbar activeSection={activeSection} />
                 </div>
-                <ScrollCursorFollower />
               </motion.div>
             )}
           </AnimatePresence>
-          
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-amber-400 focus:text-black focus:rounded-lg focus:font-medium"
+          >
+            Skip to main content
+          </a>
+
           {/* Main content - always shown */}
           <motion.main
             key="main-content"
@@ -221,6 +227,7 @@ function AppContent() {
 }
 
 function App() {
+  useUnicornStudio();
   return (
     <ScrollProvider>
       <ProjectProvider>

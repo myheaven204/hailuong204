@@ -1,20 +1,25 @@
 import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
-const VIDEO_URL = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260324_024928_1efd0b0d-6c02-45a8-8847-1030900c4f63.mp4';
-
 interface LoadingScreenProps {
   onComplete: () => void;
 }
 
-const WORDS = ['Create', 'Simulate', 'Composite', 'Render'];
-const DURATION = 2700;
+const STAGES = [
+  { label: 'CREATE', color: '#e8a400' },
+  { label: 'SIMULATE', color: '#e8a400' },
+  { label: 'COMPOSITE', color: '#e8a400' },
+  { label: 'RENDER', color: '#e8a400' },
+];
+
+const DURATION = 3000;
 
 export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
-  const [count, setCount] = useState(0);
-  const [wordIndex, setWordIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [activeKeyframes, setActiveKeyframes] = useState(0);
+  const [displayProgress, setDisplayProgress] = useState(0);
   const shouldReduceMotion = useReducedMotion();
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const startTime = useRef<number | null>(null);
   const rafRef = useRef<number>(0);
 
@@ -22,15 +27,19 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     const animate = (timestamp: number) => {
       if (!startTime.current) startTime.current = timestamp;
       const elapsed = timestamp - startTime.current;
-      const progress = Math.min(elapsed / DURATION, 1);
-      const currentCount = Math.floor(progress * 100);
-      setCount(currentCount);
+      const currentProgress = Math.min((elapsed / DURATION) * 100, 100);
 
-      if (progress < 1) {
+      setProgress(currentProgress);
+      setDisplayProgress(currentProgress);
+      setActiveKeyframes(Math.floor((currentProgress / 100) * 8));
+
+      if (currentProgress < 100) {
         rafRef.current = requestAnimationFrame(animate);
       } else {
-        setCount(100);
-        setTimeout(() => onComplete(), 400);
+        setProgress(100);
+        setDisplayProgress(100);
+        setActiveKeyframes(8);
+        setTimeout(() => onComplete(), 500);
       }
     };
 
@@ -38,221 +47,270 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     return () => cancelAnimationFrame(rafRef.current);
   }, [onComplete]);
 
-  useEffect(() => {
-    if (shouldReduceMotion) {
-      setCount(100);
-      return;
-    }
-    const interval = setInterval(() => {
-      setWordIndex(i => (i + 1) % WORDS.length);
-    }, 700);
-    return () => clearInterval(interval);
-  }, [shouldReduceMotion]);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const playVideo = async () => {
-      try {
-        await video.play();
-      } catch (err) {
-        console.log('Autoplay blocked, waiting for user interaction');
-      }
-    };
-
-    playVideo();
-
-    const handleInteraction = () => {
-      playVideo();
-      document.removeEventListener('click', handleInteraction);
-      document.removeEventListener('touchstart', handleInteraction);
-    };
-
-    document.addEventListener('click', handleInteraction);
-    document.addEventListener('touchstart', handleInteraction);
-
-    return () => {
-      document.removeEventListener('click', handleInteraction);
-      document.removeEventListener('touchstart', handleInteraction);
-    };
-  }, []);
+  const keyframePositions = [5, 15, 28, 42, 55, 68, 82, 95];
+  const timelineHeight = 120;
 
   return (
     <motion.div
-      className="fixed inset-0 z-[9999] flex flex-col"
+      ref={containerRef}
+      className="fixed inset-0 z-[9999] flex flex-col bg-[#0a0a0a]"
+      role="status"
+      aria-live="polite"
+      aria-label="Loading portfolio"
       exit={{
-        clipPath: 'circle(0% at 50% 50%)',
-        transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] }
+        opacity: 0,
+        transition: { duration: 0.6, ease: 'easeOut' }
       }}
     >
-      {/* Video Background */}
-      <video
-        ref={videoRef}
-        src={VIDEO_URL}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        className="absolute inset-0 w-full h-full object-cover"
-      />
-
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/60" />
-
-      {/* Cinematic vignette */}
-      <div className="absolute inset-0 cinematic-vignette pointer-events-none" />
-
-      {/* Animated grid background */}
-      {!shouldReduceMotion && (
-      <motion.div
+      {/* Subtle grid background */}
+      <div
         className="absolute inset-0 opacity-[0.03]"
-        animate={{
-          backgroundPosition: ['0px 0px', '60px 60px'],
-        }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
         style={{
-          backgroundImage: 'linear-gradient(rgba(232, 164, 0, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(232, 164, 0, 0.5) 1px, transparent 1px)',
-          backgroundSize: '60px 60px',
+          backgroundImage: `
+            linear-gradient(rgba(232, 164, 0, 0.3) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(232, 164, 0, 0.3) 1px, transparent 1px)
+          `,
+          backgroundSize: '40px 40px',
         }}
       />
-      )}
 
-      {/* Scanning line effect */}
-      {!shouldReduceMotion && (
-      <motion.div
-        className="absolute left-0 right-0 h-px bg-accent/50"
-        initial={{ top: '0%' }}
-        animate={{ top: '100%' }}
-        transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-        style={{ boxShadow: '0 0 20px rgba(232, 164, 0, 0.5)' }}
-      />
-      )}
-
-      {/* Top-left label */}
-      <motion.div
-        className="absolute top-8 left-8 text-xs text-accent uppercase tracking-[0.4em] font-medium"
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-      >
-        <motion.span
-          animate={{ opacity: [1, 0.5, 1] }}
-          transition={{ duration: 1, repeat: Infinity }}
-        >
-          VFX Portfolio
-        </motion.span>
-      </motion.div>
-
-      {/* Center rotating words with 3D effect */}
-      <div className="flex-1 flex items-center justify-center" style={{ perspective: '1000px' }}>
-        <AnimatePresence mode="wait">
-          <motion.span
-            key={wordIndex}
-            className="text-5xl md:text-7xl lg:text-8xl font-display text-accent/80 select-none tracking-wider"
-            initial={{
-              rotateX: 90,
-              y: 50,
-              opacity: 0,
-              filter: 'blur(10px)'
-            }}
-            animate={{
-              rotateX: 0,
-              y: 0,
-              opacity: 1,
-              filter: 'blur(0px)'
-            }}
-            exit={{
-              rotateX: -90,
-              y: -50,
-              opacity: 0,
-              filter: 'blur(10px)'
-            }}
-            transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
-            style={{ transformStyle: 'preserve-3d' }}
-          >
-            {WORDS[wordIndex]}
-          </motion.span>
-        </AnimatePresence>
+      {/* Top bar - Timecode style */}
+      <div className="absolute top-0 left-0 right-0 h-12 bg-[#0d0d0d] border-b border-[#1a1a1a] flex items-center px-8">
+        <div className="flex items-center gap-6">
+          <span className="text-[#e8a400] text-xs font-mono tracking-wider">
+            VFX PORTFOLIO
+          </span>
+          <span className="text-[#333] text-xs font-mono">
+            |
+          </span>
+          <span className="text-[#555] text-xs font-mono">
+            00:00:00:00
+          </span>
+        </div>
+        <div className="ml-auto flex items-center gap-4">
+          <div className="w-2 h-2 rounded-full bg-[#e8a400] animate-pulse" />
+          <span className="text-[#555] text-xs font-mono">LOADING</span>
+        </div>
       </div>
 
-      {/* Animated particles around counter */}
-      <div className="absolute bottom-12 right-8">
-        {/* Orbiting dots */}
-        {[...Array(3)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 rounded-full bg-accent"
+      {/* Main content - Timeline centered */}
+      <div className="flex-1 flex flex-col items-center justify-center px-20">
+        {/* Timeline container */}
+        <div className="w-full max-w-5xl">
+          {/* Timeline header */}
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-[#555] text-xs font-mono tracking-widest">
+              COMPOSITING TIMELINE
+            </span>
+            <span className="text-[#e8a400] text-xs font-mono tracking-widest">
+              {STAGES.map((s, i) => (
+                <span key={i}>
+                  <span className={i < Math.floor(progress / 25) ? 'text-[#e8a400]' : 'text-[#333]'}>
+                    {s.label}
+                  </span>
+                  {i < STAGES.length - 1 && ' / '}
+                </span>
+              ))}
+            </span>
+          </div>
+
+          {/* Timeline track */}
+          <div className="relative h-[120px] bg-[#0d0d0d] rounded border border-[#1a1a1a] overflow-hidden">
+            {/* Track background with tick marks */}
+            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-8 flex items-center">
+              {/* Main track line */}
+              <div className="absolute inset-x-0 top-1/2 h-[2px] bg-[#222]" />
+
+              {/* Progress fill */}
+              <motion.div
+                className="absolute left-0 top-1/2 h-[2px] bg-gradient-to-r from-[#e8a400] to-[#ffd700]"
+                initial={{ width: '0%' }}
+                animate={{ width: `${progress}%` }}
+                transition={{ ease: 'linear' }}
+              />
+
+              {/* Time markers */}
+              {[0, 25, 50, 75, 100].map((mark) => (
+                <div
+                  key={mark}
+                  className="absolute flex flex-col items-center"
+                  style={{ left: `${mark}%` }}
+                >
+                  <div className="w-[1px] h-3 bg-[#333]" />
+                  <span className="text-[#444] text-[10px] font-mono mt-1">{mark}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Keyframes */}
+            {keyframePositions.map((pos, index) => (
+              <motion.div
+                key={index}
+                className="absolute top-1/2 -translate-y-1/2"
+                style={{ left: `${pos}%` }}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{
+                  scale: activeKeyframes > index ? 1 : 0,
+                  opacity: activeKeyframes > index ? 1 : 0,
+                }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 300,
+                  damping: 20,
+                  delay: index * 0.05,
+                }}
+              >
+                {/* Keyframe diamond */}
+                <div
+                  className="relative"
+                  style={{
+                    transform: `translateX(-50%) rotate(45deg)`,
+                  }}
+                >
+                  <div
+                    className="w-4 h-4 bg-[#e8a400] shadow-[0_0_10px_rgba(232,164,0,0.5)]"
+                    style={{
+                      boxShadow: activeKeyframes > index
+                        ? '0 0 15px rgba(232, 164, 0, 0.8), 0 0 30px rgba(232, 164, 0, 0.4)'
+                        : 'none',
+                    }}
+                  />
+                </div>
+
+                {/* Keyframe number */}
+                <span
+                  className="absolute left-1/2 -translate-x-1/2 text-[10px] font-mono mt-2 whitespace-nowrap"
+                  style={{
+                    transform: 'translateX(-50%)',
+                    color: activeKeyframes > index ? '#e8a400' : '#333',
+                  }}
+                >
+                  KF{index + 1}
+                </span>
+              </motion.div>
+            ))}
+
+            {/* Active indicator - Playhead */}
+            <motion.div
+              className="absolute top-0 bottom-0 w-[2px] bg-[#fff] z-10"
+              style={{ left: `${Math.max(progress, 2)}%` }}
+              animate={{ left: `${progress}%` }}
+              transition={{ ease: 'linear', type: 'tween' }}
+            >
+              {/* Playhead triangle */}
+              <div
+                className="absolute -top-1 left-1/2 -translate-x-1/2 w-0 h-0"
+                style={{
+                  borderLeft: '6px solid transparent',
+                  borderRight: '6px solid transparent',
+                  borderTop: '8px solid #fff',
+                }}
+              />
+            </motion.div>
+          </div>
+
+          {/* Bottom info bar */}
+          <div className="flex items-center justify-between mt-4">
+            <div className="flex items-center gap-6">
+              <span className="text-[#444] text-xs font-mono">
+                FPS: <span className="text-[#666]">24</span>
+              </span>
+              <span className="text-[#444] text-xs font-mono">
+                RES: <span className="text-[#666]">1920x1080</span>
+              </span>
+              <span className="text-[#444] text-xs font-mono">
+                FRAMES: <span className="text-[#666]">{Math.floor(progress * 2.4)}/240</span>
+              </span>
+            </div>
+            <span className="text-[#444] text-xs font-mono">
+              NODE GRAPH
+            </span>
+          </div>
+        </div>
+
+        {/* Big progress counter with subtle neon glow */}
+        <div className="mt-16 flex items-baseline gap-2">
+          <motion.span
+            className="text-8xl md:text-9xl font-bold font-mono relative"
             style={{
-              top: '50%',
-              left: '50%',
+              color: '#e8a400',
+              textShadow: `
+                0 0 8px rgba(232, 164, 0, 0.6),
+                0 0 20px rgba(232, 164, 0, 0.3)
+              `,
             }}
             animate={{
-              x: [0, Math.cos(i * (Math.PI * 2 / 3)) * 80, 0],
-              y: [0, Math.sin(i * (Math.PI * 2 / 3)) * 80, 0],
-              opacity: [0.3, 1, 0.3],
+              opacity: [1, 0.9, 1],
             }}
             transition={{
               duration: 2,
               repeat: Infinity,
-              delay: i * 0.3,
               ease: 'easeInOut',
             }}
-          />
-        ))}
-
-        {/* Counter with glitch effect */}
-        <motion.span
-          className="relative text-6xl md:text-8xl lg:text-9xl font-display text-text-primary tabular-nums"
-          animate={count > 90 ? {
-            x: [0, -2, 2, 0],
-            textShadow: [
-              '0 0 0 transparent',
-              '-2px 0 #e8a400, 2px 0 #00d4ff',
-              '2px 0 #e8a400, -2px 0 #00d4ff',
-              '0 0 0 transparent',
-            ],
-          } : {}}
-          transition={{ duration: 0.1, repeat: count > 90 ? Infinity : 0 }}
-        >
-          {String(count).padStart(3, '0')}
-        </motion.span>
+          >
+            {Math.floor(displayProgress)}
+          </motion.span>
+          <motion.span
+            className="text-4xl font-mono"
+            style={{
+              color: '#b88800',
+              textShadow: `0 0 5px rgba(232, 164, 0, 0.4)`,
+            }}
+            animate={{ opacity: [0.8, 1, 0.8] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            %
+          </motion.span>
+        </div>
       </div>
 
-      {/* Bottom progress bar with glow */}
-      <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-stroke/30">
-        <motion.div
-          className="h-full bg-accent origin-left"
-          style={{
-            scaleX: count / 100,
-          }}
-        />
-        {/* Animated glow point at the end of progress */}
-        <motion.div
-          className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-accent"
-          style={{
-            left: `${count}%`,
-            boxShadow: '0 0 20px rgba(232, 164, 0, 0.8), 0 0 40px rgba(232, 164, 0, 0.4)',
-          }}
-          animate={{ scale: [1, 1.5, 1] }}
-          transition={{ duration: 0.5, repeat: Infinity }}
-        />
+      {/* Bottom bar */}
+      <div className="absolute bottom-0 left-0 right-0 h-10 bg-[#0d0d0d] border-t border-[#1a1a1a] flex items-center px-8">
+        <div className="flex items-center gap-4">
+          {['◀◀', '▶', '▶▶', '⏹'].map((icon, i) => (
+            <span key={i} className="text-[#444] text-xs cursor-pointer hover:text-[#e8a400] transition-colors">
+              {icon}
+            </span>
+          ))}
+        </div>
+
+        {/* Mini waveform/progress visualization */}
+        <div className="flex-1 mx-8 h-4 flex items-center gap-[2px]">
+          {Array.from({ length: 60 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className="w-[2px] bg-[#333] rounded-full"
+              animate={{
+                height: activeKeyframes > i / 7.5 ? [4, 12 + Math.random() * 8, 4] : 4,
+                backgroundColor: i / 60 * 100 < progress ? '#e8a400' : '#333',
+              }}
+              transition={{
+                duration: 0.3,
+                repeat: activeKeyframes > i / 7.5 ? Infinity : 0,
+                delay: i * 0.02,
+              }}
+              style={{
+                backgroundColor: i / 60 * 100 < progress ? '#e8a400' : '#333',
+              }}
+            />
+          ))}
+        </div>
+
+        <span className="text-[#444] text-xs font-mono">
+          v1.0.0
+        </span>
       </div>
 
-      {/* Film frame corners with stagger animation */}
+      {/* Corner decorations */}
       {[
-        { pos: 'top-8 left-8', border: 'border-l-2 border-t-2' },
-        { pos: 'top-8 right-8', border: 'border-r-2 border-t-2' },
-        { pos: 'bottom-8 left-8', border: 'border-l-2 border-b-2' },
-        { pos: 'bottom-8 right-8', border: 'border-r-2 border-b-2' },
+        { pos: 'top-12 left-4', border: 'border-l border-t' },
+        { pos: 'top-12 right-4', border: 'border-r border-t' },
+        { pos: 'bottom-10 left-4', border: 'border-l border-b' },
+        { pos: 'bottom-10 right-4', border: 'border-r border-b' },
       ].map((corner, i) => (
-        <motion.div
+        <div
           key={i}
-          className={`absolute w-16 h-16 ${corner.pos} ${corner.border} border-accent/30`}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: i * 0.1, duration: 0.4, ease: 'backOut' }}
+          className={`absolute ${corner.pos} w-8 h-8 ${corner.border} border-[#222]`}
         />
       ))}
     </motion.div>

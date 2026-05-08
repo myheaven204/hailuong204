@@ -145,7 +145,7 @@ export const PROJECTS: Project[] = [
     tools: ['Houdini', 'After Effects', 'Pftrack', 'DaVinci Resolve'],
     youtubeId: 'RvnaMwVGCYE',
     challenge:
-      'Creating dynamic particle effects and color grading that match the vibrant, playful brand identity of 7UP while maintaining realistic lighting integration.',
+      'Creating dynamic particle effects and color grading that match the vibrant, playful brand identity while maintaining realistic lighting integration.',
     solution:
       'Designed custom particle systems in Houdini and applied bold color grading in DaVinci Resolve to achieve the signature bright and energetic look.',
     gallery: [
@@ -165,9 +165,9 @@ export const PROJECTS: Project[] = [
       { role: 'VFX Artists', names: 'Luong Minh Hai, Nguyen Thanh Duy, Ly Cam Bieu, Le My Tam' },
     ],
     testimonial: {
-      text: 'The VFX work perfectly captured the fun and energetic spirit of 7UP. Our engagement increased by 40%.',
+      text: 'The VFX work perfectly captured the fun and energetic spirit of 7UP.',
       author: 'Marketing Director',
-      position: '7UP Vietnam',
+      position: 'Client',
     },
   },
   {
@@ -178,16 +178,16 @@ export const PROJECTS: Project[] = [
     image: 'https://res.cloudinary.com/diwzqmwno/image/upload/v1777371060/0425_LAYS_Family_10s_16-9_South.mp4_snapshot_00.10.342_gtrf0c.jpg',
     imagePosition: 'center 30%',
     year: '2026',
-    description: 'A cinematic journey capturing peaceful landscapes, soft light, and timeless moments, inviting viewers to relax and experience pure visual beauty.',
-    client: 'Lays Vietnam',
-    duration: '1 months',
+    description: 'Product-focused VFX with particle effects and dynamic motion graphics for Lay\'s campaign.',
+    client: "Lay's Vietnam",
+    duration: '3 weeks',
     team: '6 artists',
     tools: ['Houdini', 'After Effects', 'Pftrack', 'V-Ray',],
     youtubeId: 'Q3Q-TWRiaDE',
     challenge:
-      'I often face tight deadlines, changing requirements, and unexpected bugs. I need to stay flexible, manage pressure, and handle multiple tasks while still maintaining quality and meeting project expectations.',
+      'Facing tight deadlines and changing client requirements while maintaining quality across multiple shots.',
     solution:
-      'I prioritize tasks clearly, communicate early with stakeholders, and break work into smaller steps. I stay flexible, debug systematically, and manage time effectively to maintain quality under pressure.',
+      'Prioritized tasks clearly, communicated early with stakeholders, and broke work into smaller steps to maintain quality under pressure.',
     gallery: [
       'https://res.cloudinary.com/diwzqmwno/image/upload/v1777374183/0422_LAYS_Family_20s_North.mp4_snapshot_00.11.715_zjzjir.jpg',
       'https://res.cloudinary.com/diwzqmwno/image/upload/v1777374177/0422_LAYS_Family_20s_North.mp4_snapshot_00.10.085_te5idq.jpg',
@@ -205,9 +205,9 @@ export const PROJECTS: Project[] = [
       { role: 'VFX Artists', names: 'Luong Minh Hai, Nguyen Thanh Duy, Ly Cam Bieu, Le My Tam' },
     ],
     testimonial: {
-      text: 'The destruction work elevated the entire third act. The team delivered photoreal results under an incredibly tight schedule.',
-      author: 'Sarah Mitchell',
-      position: 'VFX Supervisor, Universal Pictures',
+      text: 'Excellent VFX work with great attention to detail. Delivered on time with outstanding quality.',
+      author: 'Producer',
+      position: 'SPICE fx',
     },
   },
   {
@@ -243,8 +243,8 @@ export const PROJECTS: Project[] = [
     ],
     testimonial: {
       text: 'A masterclass in bringing CG and live action together. Every frame feels intentional and premium.',
-      author: 'David Chen',
-      position: 'Creative Director, Aether Motors',
+      author: 'Creative Director',
+      position: 'Client',
     },
   },
   {
@@ -283,7 +283,7 @@ export const PROJECTS: Project[] = [
     testimonial: {
       text: 'Outstanding visual effects work that elevated our film to international standards.',
       author: 'Film Director',
-      position: 'Rihair Production',
+      position: 'Client',
     },
   },
   {
@@ -1340,9 +1340,9 @@ export const PROJECTS: Project[] = [
       { role: 'VFX Artists', names: 'Luong Minh Hai, Nguyen Thanh Duy, Ly Cam Bieu, Le My Tam' },
     ],
     testimonial: {
-      text: 'The visual storytelling was premium and emotional, exactly what we envisioned for MB Priority.',
+      text: 'The visual storytelling was premium and emotional, exactly what we envisioned for the campaign.',
       author: 'Brand Manager',
-      position: 'MB Bank',
+      position: 'Client',
     },
   },
   {

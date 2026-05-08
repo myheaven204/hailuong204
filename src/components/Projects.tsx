@@ -65,6 +65,8 @@ const YouTubeThumb = memo(function YouTubeThumb({
             src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
             alt={title}
             className="w-full h-full object-cover"
+            width={1280}
+            height={720}
             style={{ transform: hovered ? 'scale(1.04)' : 'scale(1)', transition: 'transform 0.7s cubic-bezier(0.25,0.1,0.25,1)' }}
           />
           <div className="absolute inset-0"
@@ -81,6 +83,7 @@ const YouTubeThumb = memo(function YouTubeThumb({
             onClick={() => setPlaying(true)}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setPlaying(true); } }}
             aria-label={`Watch ${title} on YouTube`}
           >
             <motion.div
@@ -156,6 +159,8 @@ const VimeoThumb = memo(function VimeoThumb({
               const target = e.currentTarget as HTMLImageElement;
               target.src = `https://i.vimeocdn.com/video/${vimeoId}-d_1920`;
             }}
+            width={1920}
+            height={1080}
           />
           <div className="absolute inset-0 bg-black/30" />
           <button
@@ -164,6 +169,7 @@ const VimeoThumb = memo(function VimeoThumb({
             onClick={() => setPlaying(true)}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setPlaying(true); } }}
             aria-label={`Play ${title} on Vimeo`}
           >
             <motion.div
@@ -853,6 +859,7 @@ const ProjectCard = memo(function ProjectCard({
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = cardRefInternal.current;
     if (!card) return;
+    // Cache rect to avoid layout thrashing - update only when needed
     const rect = card.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
@@ -1330,7 +1337,7 @@ export default function Projects() {
         </motion.div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" role="list" aria-label="Project portfolio">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5" role="list" aria-label="Project portfolio">
           {displayedProjects.map((project, i) => (
             <div key={project.id} role="listitem">
               <ProjectCard

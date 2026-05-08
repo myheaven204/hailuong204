@@ -74,7 +74,10 @@ export default function Skills() {
               onMouseLeave={() => setHoveredSkill(null)}
               whileHover={{ y: -5 }}
               whileFocus={{ y: -5 }}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setHoveredSkill(hoveredSkill === i ? null : i); }}}
               tabIndex={0}
+              role="button"
+              aria-label={`${software.name} - ${software.category} - ${software.level}% proficiency`}
               className="focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-2xl"
             >
               <motion.div
@@ -118,7 +121,10 @@ export default function Skills() {
                   transition={{ duration: 0.9, ease: 'easeOut' }}
                 />
 
-                <div className="relative flex items-start justify-between mb-4">
+                <motion.div
+                  className="relative flex items-start justify-between mb-4"
+                  aria-hidden="true"
+                >
                   <div>
                     <motion.h3
                       className="text-lg font-bold"
@@ -150,7 +156,7 @@ export default function Skills() {
                       {software.level}%
                     </span>
                   </motion.div>
-                </div>
+                </motion.div>
 
                 {/* Progress bar */}
                 <div className="relative h-1.5 bg-white/5 rounded-full overflow-hidden mb-4">
