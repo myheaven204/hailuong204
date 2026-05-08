@@ -28,8 +28,8 @@ function Hero() {
         { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
       )
       .fromTo('.hero-title-line',
-        { opacity: 0, y: 50, skewY: 3 },
-        { opacity: 1, y: 0, skewY: 0, duration: 1, ease: 'power3.out' },
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 1, ease: 'power3.out' },
         '-=0.4'
       )
       .fromTo('.hero-subtitle',
@@ -96,20 +96,19 @@ function Hero() {
         </motion.div>
 
         {/* Main Title - New Layout */}
-        <div className="relative mb-8 md:mb-14 w-full min-w-0 px-2 overflow-hidden">
+        <div className="relative mb-8 md:mb-14 w-full min-w-0 px-4 sm:px-6 overflow-hidden">
           <motion.h1 
-            className="hero-title-line text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] font-bold leading-[1] tracking-tight text-white min-w-0"
+            className="hero-title-line text-[2.5rem] xs:text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] font-bold leading-[1] tracking-tight text-white w-full"
             style={{ 
               textWrap: 'balance', 
               wordBreak: 'break-word',
               display: 'block',
-              maxWidth: '100%',
             }}
           >
             HAI
           </motion.h1>
           <motion.h1 
-            className="hero-title-line text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] font-bold leading-[1] tracking-tight min-w-0"
+            className="hero-title-line text-[2.5rem] xs:text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] font-bold leading-[1] tracking-tight w-full"
             style={{
               background: 'linear-gradient(135deg, hsl(43 100% 50%), hsl(35 100% 55%))',
               WebkitBackgroundClip: 'text',
@@ -118,7 +117,6 @@ function Hero() {
               textWrap: 'balance',
               wordBreak: 'break-word',
               display: 'block',
-              maxWidth: '100%',
             }}
           >
             LUONG
