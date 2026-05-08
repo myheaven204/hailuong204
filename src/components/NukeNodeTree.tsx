@@ -16,7 +16,7 @@ const NODE_COLORS = {
   input: { bg: 'rgba(0, 200, 83, 0.15)', border: 'rgba(0, 200, 83, 0.6)', text: '#00c853', glow: 'rgba(0, 200, 83, 0.3)' },
   process: { bg: 'rgba(232, 164, 0, 0.12)', border: 'rgba(232, 164, 0, 0.5)', text: '#f5a623', glow: 'rgba(232, 164, 0, 0.25)' },
   merge: { bg: 'rgba(124, 77, 255, 0.12)', border: 'rgba(124, 77, 255, 0.5)', text: '#a78bfa', glow: 'rgba(124, 77, 255, 0.25)' },
-  output: { bg: 'rgba(244, 67, 54, 0.12)', border: 'rgba(244, 67, 54, 0.5)', text: '#f44336', glow: 'rgba(244, 67, 54, 0.3)' },
+  output: { bg: 'rgba(232, 164, 0, 0.15)', border: 'rgba(232, 164, 0, 0.6)', text: '#f5a623', glow: 'rgba(232, 164, 0, 0.3)' },
 };
 
 const INITIAL_NODES: NodeData[] = [
@@ -27,7 +27,7 @@ const INITIAL_NODES: NodeData[] = [
   { id: 'merge1', label: 'Merge', type: 'merge', x: 45, y: 50, connections: ['blur1'], color: 'rgba(124, 77, 255, 0.5)', icon: 'M' },
   { id: 'blur1', label: 'Blur', type: 'process', x: 63, y: 50, connections: ['grade1'], color: 'rgba(232, 164, 0, 0.5)', icon: 'B' },
   { id: 'grade1', label: 'Grade', type: 'process', x: 78, y: 50, connections: ['write1'], color: 'rgba(232, 164, 0, 0.5)', icon: 'G' },
-  { id: 'write1', label: 'Write', type: 'output', x: 92, y: 50, connections: [], color: 'rgba(244, 67, 54, 0.5)', icon: 'W' },
+  { id: 'write1', label: 'Write', type: 'output', x: 92, y: 50, connections: [], color: 'rgba(232, 164, 0, 0.5)', icon: 'W' },
 ];
 
 function NukeNode({ node, index, isActive, onHover }: {

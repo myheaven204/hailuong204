@@ -28,7 +28,7 @@ const NODE_COLORS = {
   input: { bg: 'rgba(0, 200, 83, 0.12)', border: 'rgba(0, 200, 83, 0.6)', text: '#00c853', glow: 'rgba(0, 200, 83, 0.3)' },
   process: { bg: 'rgba(232, 164, 0, 0.1)', border: 'rgba(232, 164, 0, 0.5)', text: '#f5a623', glow: 'rgba(232, 164, 0, 0.25)' },
   merge: { bg: 'rgba(124, 77, 255, 0.1)', border: 'rgba(124, 77, 255, 0.5)', text: '#a78bfa', glow: 'rgba(124, 77, 255, 0.25)' },
-  output: { bg: 'rgba(244, 67, 54, 0.1)', border: 'rgba(244, 67, 54, 0.5)', text: '#f44336', glow: 'rgba(244, 67, 54, 0.25)' },
+  output: { bg: 'rgba(232, 164, 0, 0.15)', border: 'rgba(232, 164, 0, 0.6)', text: '#f5a623', glow: 'rgba(232, 164, 0, 0.3)' },
   text: { bg: 'rgba(255, 255, 255, 0.08)', border: 'rgba(255, 255, 255, 0.3)', text: '#ffffff', glow: 'rgba(255, 255, 255, 0.2)' },
 };
 
@@ -524,10 +524,10 @@ const TextNodeComponent = memo(function TextNodeComponent({
           {node.label}
         </span>
 
-        {/* Node label */}
+        {/* Node label - hidden on mobile */}
         {node.type !== 'output' && (
           <div
-            className="absolute -top-6 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded text-[8px] font-mono uppercase tracking-wider whitespace-nowrap"
+            className="absolute -top-6 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded text-[8px] font-mono uppercase tracking-wider whitespace-nowrap hidden md:block"
             style={{
               background: 'rgba(0,0,0,0.8)',
               border: `1px solid ${colors.border}`,
@@ -543,9 +543,9 @@ const TextNodeComponent = memo(function TextNodeComponent({
           <div
             className="absolute -bottom-6 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[9px] font-mono uppercase tracking-wider whitespace-nowrap"
             style={{
-              background: 'rgba(244, 67, 54, 0.2)',
-              border: '1px solid rgba(244, 67, 54, 0.5)',
-              color: '#f44336',
+              background: 'rgba(232, 164, 0, 0.2)',
+              border: '1px solid rgba(232, 164, 0, 0.5)',
+              color: '#f5a623',
             }}
           >
             FINAL OUTPUT
@@ -579,7 +579,7 @@ const DataFlowParticles = memo(function DataFlowParticles() {
     delay: i * 0.5,
     duration: 3 + Math.random() * 2,
     size: 2 + Math.random() * 2,
-    color: ['#00c853', '#f5a623', '#a78bfa', '#f44336'][Math.floor(Math.random() * 4)],
+    color: ['#00c853', '#f5a623', '#a78bfa', '#f5a623'][Math.floor(Math.random() * 4)],
   }));
 
   return (

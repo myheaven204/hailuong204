@@ -83,7 +83,7 @@ function Hero() {
       >
         {/* Role Badge - Redesigned */}
         <motion.div 
-          className="hero-badge mb-8 md:mb-14"
+          className="hero-badge mb-10 md:mb-14"
           initial={{ opacity: 0 }}
         >
           <div className="flex items-center gap-3">
@@ -142,7 +142,7 @@ function Hero() {
 
         {/* VFX Badge */}
         <motion.div 
-          className="hero-badge mb-8 md:mb-12"
+          className="hero-badge mb-10 md:mb-14"
           initial={{ opacity: 0 }}
         >
           <span 
@@ -159,7 +159,7 @@ function Hero() {
 
         {/* Subtitle - Location & Description */}
         <motion.p 
-          className="hero-subtitle text-sm md:text-base text-gray-400 mb-10 md:mb-16 max-w-xl leading-relaxed px-4"
+          className="hero-subtitle text-sm md:text-base text-gray-400 mb-12 md:mb-18 max-w-xl leading-relaxed px-4"
           initial={{ opacity: 0 }}
         >
           <span className="text-white/90">Ho Chi Minh City, Vietnam</span>
@@ -173,7 +173,7 @@ function Hero() {
 
         {/* CTA Buttons */}
         <motion.div 
-          className="hero-cta flex flex-col sm:flex-row items-center gap-4 md:gap-6 mb-12 md:mb-20"
+          className="hero-cta flex flex-col sm:flex-row items-center gap-4 md:gap-6 mb-14 md:mb-22"
           initial={{ opacity: 0 }}
         >
           <a
