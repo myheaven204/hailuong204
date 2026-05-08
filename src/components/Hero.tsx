@@ -96,15 +96,20 @@ function Hero() {
         </motion.div>
 
         {/* Main Title - New Layout */}
-        <div className="relative mb-10 md:mb-14 w-full min-w-0 px-2">
+        <div className="relative mb-8 md:mb-14 w-full min-w-0 px-2 overflow-hidden">
           <motion.h1 
-            className="hero-title-line text-5xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-[8rem] xl:text-[9rem] font-bold leading-[0.95] tracking-tight text-white min-w-0"
-            style={{ textWrap: 'balance', wordBreak: 'break-word' }}
+            className="hero-title-line text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] font-bold leading-[1] tracking-tight text-white min-w-0"
+            style={{ 
+              textWrap: 'balance', 
+              wordBreak: 'break-word',
+              display: 'block',
+              maxWidth: '100%',
+            }}
           >
             HAI
           </motion.h1>
           <motion.h1 
-            className="hero-title-line text-5xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-[8rem] xl:text-[9rem] font-bold leading-[0.95] tracking-tight min-w-0"
+            className="hero-title-line text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] font-bold leading-[1] tracking-tight min-w-0"
             style={{
               background: 'linear-gradient(135deg, hsl(43 100% 50%), hsl(35 100% 55%))',
               WebkitBackgroundClip: 'text',
@@ -112,6 +117,8 @@ function Hero() {
               backgroundClip: 'text',
               textWrap: 'balance',
               wordBreak: 'break-word',
+              display: 'block',
+              maxWidth: '100%',
             }}
           >
             LUONG
