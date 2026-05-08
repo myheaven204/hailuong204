@@ -76,15 +76,15 @@ export default function Navbar({ activeSection }: NavbarProps) {
         {/* Divider */}
         <div className="hidden sm:block w-px h-4 bg-white/[0.06] mx-2" />
 
-        {/* Nav links - hidden on very small screens */}
-        <div className="hidden xs2:flex items-center">
+        {/* Nav links - shown on sm and larger screens */}
+        <div className="hidden sm:flex items-center">
           {NAV_LINKS.map((link, i) => (
             <button
               key={link.id}
               onClick={() => scrollTo(link.id)}
               aria-label={`Navigate to ${link.label}`}
               aria-current={activeSection === link.id ? 'page' : undefined}
-              className="relative text-[13px] xs2:text-sm px-2.5 xs2:px-3.5 py-1.5 rounded-lg font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black transition-colors"
+              className="relative text-[13px] sm:text-sm px-2.5 sm:px-3.5 py-1.5 rounded-lg font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black transition-colors"
               style={{
                 color: activeSection === link.id
                   ? 'rgba(232,164,0,0.95)'
@@ -106,7 +106,7 @@ export default function Navbar({ activeSection }: NavbarProps) {
         {/* Hire Me button */}
         <a
           href="mailto:hailuong.vfx@gmail.com"
-          className="relative text-[13px] xs2:text-sm px-2.5 xs2:px-3 py-1 py-1.5 rounded-lg font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black transition-transform hover:scale-[1.02] active:scale-[0.98]"
+          className="relative text-[13px] sm:text-sm px-2.5 sm:px-3 py-1.5 rounded-lg font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black transition-transform hover:scale-[1.02] active:scale-[0.98]"
           aria-label="Hire me via email"
           style={{
             background: 'linear-gradient(135deg, hsl(43 100% 46%), hsl(35 100% 50%))',

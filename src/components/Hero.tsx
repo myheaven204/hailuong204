@@ -61,6 +61,7 @@ function Hero() {
       id="home" 
       ref={sectionRef} 
       className="relative w-full min-h-screen flex items-center justify-center overflow-hidden py-20 md:py-0"
+      style={{ overflowX: 'hidden' }}
       aria-labelledby="hero-heading"
     >
       <h2 id="hero-heading" className="sr-only">VFX Compositor Portfolio — Hai Luong</h2>
@@ -95,21 +96,22 @@ function Hero() {
         </motion.div>
 
         {/* Main Title - New Layout */}
-        <div className="relative mb-10 md:mb-14">
+        <div className="relative mb-10 md:mb-14 w-full min-w-0 px-2">
           <motion.h1 
-            className="hero-title-line text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-[8rem] xl:text-[9rem] font-bold leading-[0.95] tracking-tight text-white"
-            style={{ textWrap: 'balance' }}
+            className="hero-title-line text-5xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-[8rem] xl:text-[9rem] font-bold leading-[0.95] tracking-tight text-white min-w-0"
+            style={{ textWrap: 'balance', wordBreak: 'break-word' }}
           >
             HAI
           </motion.h1>
           <motion.h1 
-            className="hero-title-line text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-[8rem] xl:text-[9rem] font-bold leading-[0.95] tracking-tight"
+            className="hero-title-line text-5xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-[8rem] xl:text-[9rem] font-bold leading-[0.95] tracking-tight min-w-0"
             style={{
               background: 'linear-gradient(135deg, hsl(43 100% 50%), hsl(35 100% 55%))',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
               textWrap: 'balance',
+              wordBreak: 'break-word',
             }}
           >
             LUONG
