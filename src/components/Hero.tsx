@@ -362,13 +362,19 @@ function Hero() {
         style={{ y: contentY, opacity: contentOpacity }}
       >
         {/* Title */}
-        <div className="relative mb-6 md:mb-10 lg:mb-12 w-full px-4 sm:px-6">
-          <div className="w-full">
-            <TextPressure
-              text="HAI LUONG"
-              textColor="hsl(43 100% 50%)"
-            />
-          </div>
+        <div className="relative mb-6 md:mb-10 lg:mb-12 w-full px-4 sm:px-6 h-32 sm:h-40 md:h-48 lg:h-64 xl:h-80">
+          <TextPressure
+            text="HAI LUONG"
+            textColor="hsl(43 100% 50%)"
+            width={true}
+            weight={true}
+            italic={false}
+            alpha={false}
+            flex={false}
+            stroke={false}
+            scale={true}
+            minFontSize={48}
+          />
 
           {/* VFX Compositor label under name */}
           <div
