@@ -54,7 +54,7 @@ const TextPressure = ({
   strokeColor = '#FF0000',
   strokeWidth = 2,
   className = '',
-  minFontSize = 24
+  minFontSize = 48
 }: TextPressureProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -136,7 +136,7 @@ const TextPressure = ({
 
       if (titleRef.current) {
         const titleRect = titleRef.current.getBoundingClientRect();
-        const maxDist = titleRect.width / 2;
+        const maxDist = Math.max(titleRect.width, titleRect.height) * 0.6;
 
         spansRef.current.forEach(span => {
           if (!span) return;
@@ -148,11 +148,12 @@ const TextPressure = ({
           };
 
           const d = dist(mouseRef.current, charCenter);
+          const influence = Math.max(0, 1 - d / maxDist);
 
-          const wdth = width ? Math.floor(getAttr(d, maxDist, 5, 200)) : 100;
-          const wght = weight ? Math.floor(getAttr(d, maxDist, 100, 900)) : 400;
-          const italVal = italic ? getAttr(d, maxDist, 0, 1).toFixed(2) : '0';
-          const alphaVal = alpha ? getAttr(d, maxDist, 0, 1).toFixed(2) : '1';
+          const wdth = width ? Math.floor(50 + influence * 150) : 100;
+          const wght = weight ? Math.floor(400 + influence * 500) : 400;
+          const italVal = italic ? (influence * 1).toFixed(2) : '0';
+          const alphaVal = alpha ? (0.5 + influence * 0.5).toFixed(2) : '1';
 
           const newFontVariationSettings = `'wght' ${wght}, 'wdth' ${wdth}, 'ital' ${italVal}`;
 
@@ -200,27 +201,28 @@ const TextPressure = ({
   }, [fontFamily, fontUrl, textColor, strokeColor, strokeWidth]);
 
   return (
-    <div ref={containerRef} className="relative w-full h-full overflow-hidden bg-transparent">
+    <div ref={containerRef} className="relative w-full h-full overflow-hidden bg-transparent flex items-center justify-center">
       {styleElement}
       <h1
         ref={titleRef}
         className={`text-pressure-title ${className} ${
           flex ? 'flex justify-between' : ''
-        } ${stroke ? 'text-pressure-stroke' : ''} uppercase text-center`}
+        } ${stroke ? 'text-pressure-stroke' : ''} uppercase`}
         style={{
           fontFamily,
           fontSize: fontSize,
           lineHeight,
           transform: `scale(1, ${scaleY})`,
-          transformOrigin: 'center top',
+          transformOrigin: 'center',
           margin: 0,
           fontWeight: 100,
-          color: stroke ? undefined : textColor
+          color: stroke ? undefined : textColor,
+          whiteSpace: 'nowrap'
         }}
       >
         {chars.map((char, i) => (
           <span key={i} ref={el => (spansRef.current[i] = el)} data-char={char} className="inline-block">
-            {char}
+            {char === ' ' ? ' ' : char}
           </span>
         ))}
       </h1>
