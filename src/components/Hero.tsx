@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, useReducedMotion, AnimatePresence } fr
 import EnhancedCTA from './EnhancedCTA';
 import AnimatedStats from './AnimatedStats';
 import EnhancedScrollIndicator from './EnhancedScrollIndicator';
-import TextPressure from './TextPressure';
+import Shuffle from './Shuffle';
 
 // ─── VIEWER UI CONSTANTS ──────────────────────────────────────────────────────
 const CHANNELS = ['RGBA', 'R', 'G', 'B', 'A'];
@@ -362,18 +362,29 @@ function Hero() {
         style={{ y: contentY, opacity: contentOpacity }}
       >
         {/* Title */}
-        <div className="relative mb-10 md:mb-14 lg:mb-20 w-full px-4 sm:px-6 h-44 sm:h-52 md:h-60 lg:h-80 xl:h-96">
-          <TextPressure
+        <div className="relative mb-10 md:mb-14 lg:mb-20 w-full px-4 sm:px-6">
+          <Shuffle
             text="HAI LUONG"
-            textColor="hsl(43 100% 50%)"
-            width={true}
-            weight={true}
-            italic={false}
-            alpha={false}
-            flex={false}
-            stroke={false}
-            scale={true}
-            minFontSize={64}
+            shuffleDirection="right"
+            duration={0.4}
+            ease="power3.out"
+            stagger={0.05}
+            shuffleTimes={2}
+            animationMode="evenodd"
+            colorFrom="hsl(43 100% 50%)"
+            colorTo="hsl(43 100% 50%)"
+            triggerOnHover={true}
+            triggerOnce={true}
+            className="font-bold"
+            style={{
+              fontSize: 'clamp(64px, 12vw, 160px)',
+              fontFamily: "'Roboto Flex', sans-serif",
+              fontWeight: 700,
+              letterSpacing: '-0.03em',
+              color: 'hsl(43 100% 50%)',
+              lineHeight: 1
+            }}
+            tag="h1"
           />
 
           {/* VFX Compositor label under name */}
