@@ -20,7 +20,7 @@ const VIDEOS = [
   {
     id: 0,
     category: 'all',
-    label: 'VFX Breakdown 2026 - Part 1',
+    label: 'VFX Breakdown 2026',
     youtubeId: '8gOTa_S-3Tc',
     duration: '5:42',
     featured: true,
@@ -29,7 +29,7 @@ const VIDEOS = [
   {
     id: 1,
     category: 'all',
-    label: 'VFX Breakdown 2026 - Part 2',
+    label: 'VFX Breakdown 2026',
     youtubeId: '9sF7bsbNBuA',
     duration: '6:15',
     featured: true,
@@ -38,7 +38,7 @@ const VIDEOS = [
   {
     id: 2,
     category: 'all',
-    label: 'VFX Breakdown 2026 - Part 3',
+    label: 'VFX Breakdown 2026',
     youtubeId: '2sFMS0KIjTg',
     duration: '4:58',
     featured: true,
@@ -47,7 +47,7 @@ const VIDEOS = [
   {
     id: 3,
     category: 'all',
-    label: 'VFX Breakdown 2026 - Part 4',
+    label: 'VFX Breakdown 2026',
     youtubeId: 'Fa7U2LzL-N8',
     duration: '5:30',
     featured: true,
