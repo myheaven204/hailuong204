@@ -358,11 +358,11 @@ function Hero() {
 
       {/* ── CONTENT ── */}
       <motion.div
-        className="relative z-20 text-center px-6 max-w-5xl mx-auto flex flex-col items-center pointer-events-none pt-0 md:pt-0 lg:pt-0"
+        className="relative z-20 text-center px-6 max-w-6xl mx-auto flex flex-col items-center pointer-events-none pt-0 md:pt-0 lg:pt-0"
         style={{ y: contentY, opacity: contentOpacity }}
       >
         {/* Title */}
-        <div className="relative w-full px-4 sm:px-6" style={{ marginTop: 'clamp(40px, 6vh, 80px)', marginBottom: 'clamp(12px, 2vh, 24px)' }}>
+        <div className="relative w-full px-4 sm:px-6" style={{ marginTop: 'clamp(48px, 7vh, 96px)', marginBottom: 'clamp(8px, 0.8vh, 14px)' }}>
           <Shuffle
             text="HAI LUONG"
             shuffleDirection="right"
@@ -377,12 +377,12 @@ function Hero() {
             triggerOnce={false}
             className="font-bold"
             style={{
-              fontSize: 'clamp(56px, 10vw, 140px)',
+              fontSize: 'clamp(48px, 9vw, 120px)',
               fontFamily: "'Roboto Flex', sans-serif",
               fontWeight: 700,
               letterSpacing: '-0.03em',
               color: 'hsl(43 100% 50%)',
-              lineHeight: 1,
+              lineHeight: 1.05,
               cursor: 'pointer'
             }}
             tag="h1"
@@ -391,13 +391,13 @@ function Hero() {
           {/* VFX Compositor label under name */}
           <div
             className="hero-title-line flex items-center justify-center gap-3"
-            style={{ opacity: 0, marginTop: 'clamp(6px, 1vh, 12px)' }}
+            style={{ opacity: 0, marginTop: 'clamp(4px, 0.6vh, 8px)' }}
           >
-            <div className="h-[1px] w-8 md:w-14 bg-gradient-to-r from-transparent to-amber-500/50" />
-            <span className="text-[11px] md:text-[12px] uppercase tracking-[0.4em] md:tracking-[0.5em] font-medium text-amber-400/70 whitespace-nowrap" style={{ fontFamily: "'Space Mono', monospace" }}>
+            <div className="h-[1px] w-8 md:w-12 bg-gradient-to-r from-transparent to-amber-500/50" />
+            <span className="text-[10px] md:text-[11px] uppercase tracking-[0.35em] md:tracking-[0.45em] font-medium text-amber-400/70 whitespace-nowrap" style={{ fontFamily: "'Space Mono', monospace" }}>
               VFX Compositor
             </span>
-            <div className="h-[1px] w-8 md:w-14 bg-gradient-to-l from-transparent to-amber-500/50" />
+            <div className="h-[1px] w-8 md:w-12 bg-gradient-to-l from-transparent to-amber-500/50" />
           </div>
 
           {/* Vertical label — desktop */}
@@ -418,8 +418,8 @@ function Hero() {
 
         {/* Subtitle */}
         <p
-          className="hero-subtitle text-sm md:text-base text-gray-400 max-w-lg leading-relaxed px-4"
-          style={{ opacity: 0, marginBottom: 'clamp(20px, 3vh, 36px)' }}
+          className="hero-subtitle text-sm md:text-base text-gray-400 max-w-2xl leading-relaxed px-4"
+          style={{ opacity: 0, marginTop: 'clamp(18px, 2.2vh, 32px)', marginBottom: 'clamp(24px, 3.2vh, 40px)' }}
         >
           <span className="text-white/90">Ho Chi Minh City, Vietnam</span>
           <span className="mx-2 md:mx-3 text-amber-500/40">—</span>
@@ -431,19 +431,19 @@ function Hero() {
         </p>
 
         {/* CTA */}
-        <div className="pointer-events-auto" style={{ marginBottom: 'clamp(16px, 2.5vh, 28px)' }}>
+        <div className="pointer-events-auto" style={{ marginBottom: 'clamp(20px, 2.8vh, 32px)' }}>
           <EnhancedCTA />
         </div>
 
         {/* Stats */}
-        <div style={{ marginBottom: 'clamp(20px, 3vh, 40px)' }}>
+        <div style={{ marginBottom: 'clamp(28px, 3.8vh, 48px)' }}>
           <AnimatedStats />
         </div>
 
         {/* Divider */}
         <motion.div
           className="w-px h-10 md:h-12 bg-gradient-to-b from-amber-500/30 to-transparent"
-          style={{ marginTop: 'clamp(20px, 3vh, 40px)' }}
+          style={{ marginTop: 'clamp(16px, 2.2vh, 32px)' }}
           initial={{ opacity: 0, scaleY: 0 }}
           animate={{ opacity: 1, scaleY: 1 }}
           transition={{ delay: 1.8, duration: 0.6 }}

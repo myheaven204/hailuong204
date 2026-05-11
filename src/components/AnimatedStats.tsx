@@ -44,7 +44,7 @@ const AnimatedStats = memo(function AnimatedStats() {
   return (
     <motion.div
       ref={ref}
-      className="hero-stats flex items-center justify-center gap-8 md:gap-14 lg:gap-20"
+      className="hero-stats flex items-center justify-center gap-10 md:gap-16 lg:gap-24"
       initial={{ opacity: 0 }}
       animate={isInView ? { opacity: 1 } : { opacity: 0 }}
       transition={{ duration: 0.6 }}
@@ -73,7 +73,7 @@ const AnimatedStats = memo(function AnimatedStats() {
             </span>
             <span className="text-base md:text-lg text-amber-500/60">+</span>
           </div>
-          <span className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.25em] text-gray-500 mt-2 md:mt-2">
+          <span className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.25em] text-gray-500 mt-2.5 md:mt-2.5 block">
             {stat.label}
           </span>
         </motion.div>

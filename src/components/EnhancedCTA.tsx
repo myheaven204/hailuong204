@@ -5,7 +5,7 @@ import { ArrowRight, Play } from 'lucide-react';
 const EnhancedCTA = memo(function EnhancedCTA() {
   return (
     <motion.div
-      className="hero-cta flex flex-col sm:flex-row items-center gap-5 md:gap-7"
+      className="hero-cta flex flex-col sm:flex-row items-center gap-4 md:gap-5"
       initial={{ opacity: 0 }}
     >
       {/* Watch Showreel Button */}
