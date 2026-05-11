@@ -7,6 +7,20 @@ const getYouTubeThumbnail = (youtubeId: string) => {
   return `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
 };
 
+const getYouTubeTitle = async (youtubeId: string): Promise<string | null> => {
+  try {
+    const response = await fetch(
+      `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${youtubeId}&format=json`
+    );
+    if (!response.ok) return null;
+    const data = await response.json();
+    return data.title || null;
+  } catch (error) {
+    console.error(`Failed to fetch YouTube title for ${youtubeId}:`, error);
+    return null;
+  }
+};
+
 // ─── CONSTANTS ─────────────────────────────────────────────────────────────
 const VIDEO_CATEGORIES = [
   { id: 'all', label: 'All', icon: <Grid3X3 size={14} /> },
@@ -270,11 +284,13 @@ const VideoModal = memo(function VideoModal({
 const VideoCard = memo(function VideoCard({
   video,
   index,
-  onClick
+  onClick,
+  youtubeTitle
 }: {
   video: typeof VIDEOS[0];
   index: number;
   onClick: () => void;
+  youtubeTitle?: string;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -489,7 +505,7 @@ const VideoCard = memo(function VideoCard({
                 fontFamily: "'Unbounded', sans-serif",
               }}
             >
-              {video.label}
+              {youtubeTitle || video.label}
             </h4>
             <div className="flex items-center gap-1 text-white/25 mt-0.5 shrink-0">
               <Clock size={11} />
@@ -529,6 +545,29 @@ const VideoCard = memo(function VideoCard({
 export default function Breakdown() {
   const [activeCategory, setActiveCategory] = useState('all');
   const [selectedVideo, setSelectedVideo] = useState<typeof VIDEOS[0] | null>(null);
+  const [videoTitles, setVideoTitles] = useState<Record<string, string>>({});
+
+  // Fetch YouTube titles for videos with youtubeId
+  useEffect(() => {
+    const fetchTitles = async () => {
+      const titles: Record<string, string> = {};
+
+      for (const video of VIDEOS) {
+        if (video.youtubeId && !videoTitles[video.youtubeId]) {
+          const title = await getYouTubeTitle(video.youtubeId);
+          if (title) {
+            titles[video.youtubeId] = title;
+          }
+        }
+      }
+
+      if (Object.keys(titles).length > 0) {
+        setVideoTitles(prev => ({ ...prev, ...titles }));
+      }
+    };
+
+    fetchTitles();
+  }, []);
 
   const filteredVideos = useMemo(() => {
     if (activeCategory === 'all') return VIDEOS;
@@ -635,6 +674,7 @@ export default function Breakdown() {
               key={video.id}
               video={video}
               index={index}
+              youtubeTitle={video.youtubeId ? videoTitles[video.youtubeId] : undefined}
               onClick={() => {
                 if (video.vimeoUrl) {
                   window.open(video.vimeoUrl, '_blank', 'noopener,noreferrer');
