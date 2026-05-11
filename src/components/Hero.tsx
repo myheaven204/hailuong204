@@ -358,11 +358,11 @@ function Hero() {
 
       {/* ── CONTENT ── */}
       <motion.div
-        className="relative z-20 text-center px-6 max-w-5xl mx-auto flex flex-col items-center pointer-events-none pt-4 md:pt-8 lg:pt-12"
+        className="relative z-20 text-center px-6 max-w-5xl mx-auto flex flex-col items-center pointer-events-none pt-0 md:pt-0 lg:pt-0"
         style={{ y: contentY, opacity: contentOpacity }}
       >
         {/* Title */}
-        <div className="relative mb-12 md:mb-16 lg:mb-24 w-full px-4 sm:px-6">
+        <div className="relative mb-16 md:mb-20 lg:mb-28 w-full px-4 sm:px-6 mt-20 md:mt-24 lg:mt-32">
           <Shuffle
             text="HAI LUONG"
             shuffleDirection="right"
@@ -390,7 +390,7 @@ function Hero() {
 
           {/* VFX Compositor label under name */}
           <div
-            className="hero-title-line flex items-center justify-center gap-3 mt-10 md:mt-12 lg:mt-16"
+            className="hero-title-line flex items-center justify-center gap-3 mt-12 md:mt-14 lg:mt-18"
             style={{ opacity: 0 }}
           >
             <div className="h-[1px] w-8 md:w-14 bg-gradient-to-r from-transparent to-amber-500/50" />
@@ -418,7 +418,7 @@ function Hero() {
 
         {/* Subtitle */}
         <p
-          className="hero-subtitle text-sm md:text-base text-gray-400 mb-24 md:mb-32 lg:mb-40 max-w-xl leading-relaxed px-4"
+          className="hero-subtitle text-sm md:text-base text-gray-400 mb-20 md:mb-28 lg:mb-36 max-w-xl leading-relaxed px-4"
           style={{ opacity: 0 }}
         >
           <span className="text-white/90">Ho Chi Minh City, Vietnam</span>
@@ -431,12 +431,14 @@ function Hero() {
         </p>
 
         {/* CTA */}
-        <div className="pointer-events-auto">
+        <div className="pointer-events-auto mb-16 md:mb-20 lg:mb-24">
           <EnhancedCTA />
         </div>
 
         {/* Stats */}
-        <AnimatedStats />
+        <div className="mb-12 md:mb-16 lg:mb-20">
+          <AnimatedStats />
+        </div>
 
         {/* Divider */}
         <motion.div
