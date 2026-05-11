@@ -363,18 +363,10 @@ function Hero() {
       >
         {/* Title */}
         <div className="relative mb-6 md:mb-10 lg:mb-12 w-full px-4 sm:px-6">
-          <div className="w-full h-[8rem] sm:h-[10rem] md:h-[14rem] lg:h-[18rem] xl:h-[20rem]">
+          <div className="w-full">
             <TextPressure
               text="HAI LUONG"
               textColor="hsl(43 100% 50%)"
-              width={true}
-              weight={true}
-              italic={false}
-              alpha={false}
-              flex={true}
-              stroke={false}
-              scale={true}
-              minFontSize={48}
             />
           </div>
 
