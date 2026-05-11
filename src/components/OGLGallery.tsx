@@ -226,7 +226,7 @@ class Media {
       uniforms: {
         tMap: { value: texture },
         uPlaneSizes: { value: [0, 0] },
-        uImageSizes: { value: [0, 0] },
+        uImageSizes: { value: [1, 1] },
         uSpeed: { value: 0 },
         uTime: { value: 100 * Math.random() },
         uBorderRadius: { value: this.borderRadius }
@@ -240,6 +240,23 @@ class Media {
     img.onload = () => {
       texture.image = img;
       this.program.uniforms.uImageSizes.value = [img.naturalWidth, img.naturalHeight];
+    };
+    img.onerror = () => {
+      console.warn(`Failed to load image: ${this.image}`);
+      const canvas = document.createElement('canvas');
+      canvas.width = 800;
+      canvas.height = 600;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.fillStyle = '#1a1a1f';
+        ctx.fillRect(0, 0, 800, 600);
+        ctx.fillStyle = '#666';
+        ctx.font = '24px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Image not available', 400, 300);
+      }
+      texture.image = canvas;
+      this.program.uniforms.uImageSizes.value = [800, 600];
     };
   }
 
@@ -375,12 +392,12 @@ class App {
 
   createRenderer() {
     this.renderer = new Renderer({
-      alpha: true,
+      alpha: false,
       antialias: true,
       dpr: Math.min(window.devicePixelRatio || 1, 2)
     });
     this.gl = this.renderer.gl;
-    this.gl.clearColor(0, 0, 0, 0);
+    this.gl.clearColor(0.05, 0.05, 0.08, 1);
     this.container.appendChild(this.gl.canvas);
   }
 
@@ -550,7 +567,11 @@ export default function OGLGallery({
     <div
       className="w-full h-96 md:h-[500px] lg:h-[600px] overflow-hidden cursor-grab active:cursor-grabbing rounded-2xl"
       ref={containerRef}
-      style={{ background: 'rgba(0,0,0,0.3)' }}
+      style={{
+        background: 'linear-gradient(135deg, rgba(20,20,24,0.8) 0%, rgba(12,12,15,0.9) 100%)',
+        border: '1px solid rgba(255,255,255,0.08)',
+        position: 'relative'
+      }}
     />
   );
 }
