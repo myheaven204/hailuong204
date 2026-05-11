@@ -236,11 +236,15 @@ class Media {
 
     const img = new Image();
     img.crossOrigin = 'anonymous';
+    img.loading = 'eager';
     img.src = this.image;
-    img.onload = () => {
+
+    const updateTexture = () => {
       texture.image = img;
-      this.program.uniforms.uImageSizes.value = [img.naturalWidth, img.naturalHeight];
+      this.program.uniforms.uImageSizes.value = [img.naturalWidth || 1, img.naturalHeight || 1];
     };
+
+    img.onload = updateTexture;
     img.onerror = () => {
       console.warn(`Failed to load image: ${this.image}`);
       const canvas = document.createElement('canvas');
@@ -258,6 +262,10 @@ class Media {
       texture.image = canvas;
       this.program.uniforms.uImageSizes.value = [800, 600];
     };
+
+    if (img.complete) {
+      updateTexture();
+    }
   }
 
   createMesh() {
@@ -392,12 +400,12 @@ class App {
 
   createRenderer() {
     this.renderer = new Renderer({
-      alpha: false,
+      alpha: true,
       antialias: true,
       dpr: Math.min(window.devicePixelRatio || 1, 2)
     });
     this.gl = this.renderer.gl;
-    this.gl.clearColor(0.05, 0.05, 0.08, 1);
+    this.gl.clearColor(0, 0, 0, 0);
     this.container.appendChild(this.gl.canvas);
   }
 
@@ -568,8 +576,7 @@ export default function OGLGallery({
       className="w-full h-96 md:h-[500px] lg:h-[600px] overflow-hidden cursor-grab active:cursor-grabbing rounded-2xl"
       ref={containerRef}
       style={{
-        background: 'linear-gradient(135deg, rgba(20,20,24,0.8) 0%, rgba(12,12,15,0.9) 100%)',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'transparent',
         position: 'relative'
       }}
     />
