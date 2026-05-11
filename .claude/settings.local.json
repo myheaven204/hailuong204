@@ -12,7 +12,8 @@
       "Bash(git config *)",
       "Bash(git commit -m 'Redesign hero title with elegant fonts *)",
       "Bash(git commit -m 'Update hero title to modern bold style *)",
-      "Bash(git commit -m 'Update hero title with Clash Display - Premium WOW font *)"
+      "Bash(git commit -m 'Update hero title with Clash Display - Premium WOW font *)",
+      "Bash(git commit -m 'Adjust hero section spacing - move content down *)"
     ]
   }
 }

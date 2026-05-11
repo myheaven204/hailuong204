@@ -357,15 +357,15 @@ function Hero() {
 
       {/* ── CONTENT ── */}
       <motion.div
-        className="relative z-20 text-center px-6 max-w-5xl mx-auto flex flex-col items-center pointer-events-none"
+        className="relative z-20 text-center px-6 max-w-5xl mx-auto flex flex-col items-center pointer-events-none pt-20 md:pt-32 lg:pt-40"
         style={{ y: contentY, opacity: contentOpacity }}
       >
         {/* Title */}
-        <div className="relative mb-8 md:mb-14 w-full px-4 sm:px-6">
+        <div className="relative mb-6 md:mb-10 lg:mb-12 w-full px-4 sm:px-6">
           <div className="flex flex-col items-center gap-0">
             {/* HAI - Clash Display Bold */}
             <h1
-              className="hero-title-line text-[2.5rem] xs:text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] leading-[0.8] tracking-tighter text-white w-full block"
+              className="hero-title-line text-[2.5rem] xs:text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] leading-[0.75] tracking-tighter text-white w-full block"
               style={{
                 opacity: 0,
                 fontFamily: "'Clash Display', sans-serif",
@@ -378,7 +378,7 @@ function Hero() {
 
             {/* LUONG - Clash Display Bold Gradient */}
             <h1
-              className="hero-title-line text-[2.5rem] xs:text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] leading-[0.8] tracking-tighter w-full block"
+              className="hero-title-line text-[2.5rem] xs:text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] leading-[0.75] tracking-tighter w-full block"
               style={{
                 opacity: 0,
                 fontFamily: "'Clash Display', sans-serif",
@@ -396,7 +396,7 @@ function Hero() {
 
           {/* VFX Compositor label under name */}
           <div
-            className="hero-title-line flex items-center justify-center gap-3 mt-4 md:mt-6"
+            className="hero-title-line flex items-center justify-center gap-3 mt-5 md:mt-7 lg:mt-8"
             style={{ opacity: 0 }}
           >
             <div className="h-[1px] w-8 md:w-14 bg-gradient-to-r from-transparent to-amber-500/50" />
@@ -424,7 +424,7 @@ function Hero() {
 
         {/* Subtitle */}
         <p
-          className="hero-subtitle text-sm md:text-base text-gray-400 mb-12 md:mb-18 max-w-xl leading-relaxed px-4"
+          className="hero-subtitle text-sm md:text-base text-gray-400 mb-14 md:mb-20 lg:mb-24 max-w-xl leading-relaxed px-4"
           style={{ opacity: 0 }}
         >
           <span className="text-white/90">Ho Chi Minh City, Vietnam</span>
