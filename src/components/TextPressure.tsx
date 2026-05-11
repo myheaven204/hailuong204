@@ -1,4 +1,5 @@
 // Component ported from https://codepen.io/JuanFuentes/full/rgXKGQ
+// Modified to work with Roboto Flex which supports wdth axis
 
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 
@@ -25,8 +26,8 @@ const debounce = (func, delay) => {
 
 const TextPressure = ({
   text = 'HAI LUONG',
-  fontFamily = 'Inter Variable',
-  fontUrl = 'https://rsms.me/inter/inter.var.woff2',
+  fontFamily = 'Roboto Flex',
+  fontUrl = 'https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,75..100,100..900&display=swap',
 
   width = true,
   weight = true,
@@ -90,8 +91,9 @@ const TextPressure = ({
 
     const { width: containerW, height: containerH } = containerRef.current.getBoundingClientRect();
 
-    let newFontSize = Math.min(containerW / 2.5, containerH * 0.8);
-    newFontSize = Math.max(newFontSize, minFontSize);
+    // Tính font size dựa trên container width, nhưng giới hạn hợp lý
+    let newFontSize = containerW / 3;
+    newFontSize = Math.max(minFontSize, Math.min(newFontSize, 120));
 
     setFontSize(newFontSize);
     setScaleY(1);
@@ -103,8 +105,8 @@ const TextPressure = ({
 
       if (scale && textRect.height > 0) {
         const yRatio = containerH / textRect.height;
-        setScaleY(yRatio);
-        setLineHeight(yRatio);
+        setScaleY(Math.min(yRatio, 1.2));
+        setLineHeight(Math.min(yRatio, 1.2));
       }
     });
   }, [minFontSize, scale]);
@@ -124,7 +126,7 @@ const TextPressure = ({
 
       if (titleRef.current) {
         const titleRect = titleRef.current.getBoundingClientRect();
-        const maxDist = Math.max(titleRect.width, titleRect.height) * 0.6;
+        const maxDist = Math.max(titleRect.width, titleRect.height) * 0.5;
 
         spansRef.current.forEach(span => {
           if (!span) return;
@@ -136,19 +138,16 @@ const TextPressure = ({
           };
 
           const d = dist(mouseRef.current, charCenter);
+          const influence = Math.max(0, 1 - d / maxDist);
 
-          const wdth = width ? Math.floor(getAttr(d, maxDist, 50, 200)) : 100;
-          const wght = weight ? Math.floor(getAttr(d, maxDist, 400, 900)) : 400;
-          const italVal = italic ? getAttr(d, maxDist, 0, 1).toFixed(2) : '0';
-          const alphaVal = alpha ? getAttr(d, maxDist, 0.3, 1).toFixed(2) : '1';
+          // Roboto Flex supports: wght, wdth, opsz
+          const wdth = width ? Math.floor(getAttr(d, maxDist, 75, 100)) : 100;
+          const wght = weight ? Math.floor(getAttr(d, maxDist, 300, 900)) : 400;
 
-          const newFontVariationSettings = `'wght' ${wght}, 'wdth' ${wdth}, 'ital' ${italVal}`;
+          const newFontVariationSettings = `'wdth' ${wdth}, 'wght' ${wght}`;
 
           if (span.style.fontVariationSettings !== newFontVariationSettings) {
             span.style.fontVariationSettings = newFontVariationSettings;
-          }
-          if (alpha && span.style.opacity !== alphaVal) {
-            span.style.opacity = alphaVal;
           }
         });
       }
@@ -158,17 +157,13 @@ const TextPressure = ({
 
     animate();
     return () => cancelAnimationFrame(rafId);
-  }, [width, weight, italic, alpha]);
+  }, [width, weight]);
 
   const styleElement = useMemo(() => {
     return (
       <style>{`
-        @font-face {
-          font-family: '${fontFamily}';
-          src: url('${fontUrl}');
-          font-style: normal;
-          font-weight: 100 900;
-        }
+        @import url('${fontUrl}');
+
         .text-pressure-stroke span {
           position: relative;
           color: ${textColor};
@@ -185,7 +180,7 @@ const TextPressure = ({
         }
       `}</style>
     );
-  }, [fontFamily, fontUrl, textColor, strokeColor, strokeWidth]);
+  }, [fontUrl, textColor, strokeColor, strokeWidth]);
 
   return (
     <div ref={containerRef} className="relative w-full h-full overflow-hidden bg-transparent">
@@ -196,22 +191,31 @@ const TextPressure = ({
           flex ? 'flex justify-between' : ''
         } ${stroke ? 'text-pressure-stroke' : ''} uppercase`}
         style={{
-          fontFamily,
+          fontFamily: `'${fontFamily}', sans-serif`,
           fontSize: fontSize,
           lineHeight,
           transform: `scale(1, ${scaleY})`,
           transformOrigin: 'center',
           margin: 0,
-          fontWeight: 100,
+          fontWeight: 400,
           color: stroke ? undefined : textColor,
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          whiteSpace: 'nowrap'
+          whiteSpace: 'nowrap',
+          letterSpacing: '-0.02em'
         }}
       >
         {chars.map((char, i) => (
-          <span key={i} ref={el => (spansRef.current[i] = el)} data-char={char} className="inline-block">
+          <span
+            key={i}
+            ref={el => (spansRef.current[i] = el)}
+            data-char={char}
+            className="inline-block"
+            style={{
+              willChange: 'font-variation-settings'
+            }}
+          >
             {char === ' ' ? ' ' : char}
           </span>
         ))}
