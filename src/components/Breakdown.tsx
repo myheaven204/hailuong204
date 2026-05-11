@@ -215,7 +215,7 @@ const VideoModal = memo(function VideoModal({
               </span>
             </div>
           </div>
-          <button
+          <motion.button
             onClick={onClose}
             className="p-2.5 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             aria-label="Close video"
@@ -228,7 +228,7 @@ const VideoModal = memo(function VideoModal({
             whileTap={{ scale: 0.95 }}
           >
             <X size={16} className="text-white/50" />
-          </button>
+          </motion.button>
         </div>
       </motion.div>
     </motion.div>
@@ -481,15 +481,15 @@ const VideoCard = memo(function VideoCard({
         />
       </div>
 
-      {/* Top shimmer line */}
-      <motion.div
+      {/* Top shimmer line - disabled */}
+      {/* <motion.div
         className="absolute inset-x-0 top-0 h-px z-20 pointer-events-none rounded-t-2xl overflow-hidden"
         animate={{ opacity: isHovered ? 1 : 0 }}
         transition={{ duration: 0.4 }}
         style={{
           background: 'linear-gradient(90deg, transparent, rgba(232,164,0,0.5), transparent)',
         }}
-      />
+      /> */}
     </motion.div>
   );
 });

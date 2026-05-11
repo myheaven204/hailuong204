@@ -1,5 +1,4 @@
 import { useEffect, useRef, useCallback } from 'react';
-import { motion } from 'framer-motion';
 
 interface DynamicBackgroundProps {
   className?: string;

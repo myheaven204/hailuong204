@@ -1,24 +1,27 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion';
+import {
+  fadeInUp as fadeInUpVariant,
+  scaleIn as scaleInVariant,
+  slideInLeft as slideInLeftVariant,
+  slideInRight as slideInRightVariant,
+  staggerContainer as staggerContainerVariant,
+  timing,
+  easings,
+} from './useAnimationSystem';
 
-/**
- * Hook chuẩn cho scroll-driven animations dùng framer-motion.
- */
 export function useScrollAnimation(
   containerRef?: React.RefObject<HTMLElement | null>,
   options?: { offset?: [string, string] }
 ) {
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: options?.offset ?? ['start end', 'end start'],
+    offset: (options?.offset ?? ['start end', 'end start']) as [`start end` | `end start`, `start end` | `end start`],
   });
 
   return { scrollYProgress };
 }
 
-/**
- * Tạo transform value từ scroll progress.
- */
 export function useScrollTransform(
   scrollYProgress: MotionValue<number>,
   inputRange: number[],
@@ -27,86 +30,56 @@ export function useScrollTransform(
   return useTransform(scrollYProgress, inputRange, outputRange);
 }
 
-/**
- * Fade in từ dưới lên khi cuộn vào viewport.
- */
 export const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: fadeInUpVariant.hidden,
   visible: (i: number = 0) => ({
-    opacity: 1,
-    y: 0,
+    ...fadeInUpVariant.visible,
     transition: {
-      duration: 0.7,
-      delay: i * 0.1,
-      ease: [0.25, 0.1, 0.25, 1],
+      duration: timing.slow,
+      delay: i * timing.staggerNormal,
+      ease: easings.easeOut,
     },
   }),
 };
 
-/**
- * Scale in animation.
- */
 export const scaleIn = {
-  hidden: { opacity: 0, scale: 0.9 },
+  hidden: scaleInVariant.hidden,
   visible: (i: number = 0) => ({
-    opacity: 1,
-    scale: 1,
+    ...scaleInVariant.visible,
     transition: {
-      duration: 0.6,
-      delay: i * 0.12,
-      ease: [0.25, 0.1, 0.25, 1],
+      duration: timing.normal,
+      delay: i * timing.staggerSlow,
+      ease: easings.easeOut,
     },
   }),
 };
 
-/**
- * Slide in từ bên trái.
- */
 export const slideInLeft = {
-  hidden: { opacity: 0, x: -60 },
+  hidden: slideInLeftVariant.hidden,
   visible: (i: number = 0) => ({
-    opacity: 1,
-    x: 0,
+    ...slideInLeftVariant.visible,
     transition: {
-      duration: 0.8,
-      delay: i * 0.1,
-      ease: [0.25, 0.1, 0.25, 1],
+      duration: timing.verySlow,
+      delay: i * timing.staggerNormal,
+      ease: easings.easeOut,
     },
   }),
 };
 
-/**
- * Slide in từ bên phải.
- */
 export const slideInRight = {
-  hidden: { opacity: 0, x: 60 },
+  hidden: slideInRightVariant.hidden,
   visible: (i: number = 0) => ({
-    opacity: 1,
-    x: 0,
+    ...slideInRightVariant.visible,
     transition: {
-      duration: 0.8,
-      delay: i * 0.1,
-      ease: [0.25, 0.1, 0.25, 1],
+      duration: timing.verySlow,
+      delay: i * timing.staggerNormal,
+      ease: easings.easeOut,
     },
   }),
 };
 
-/**
- * Stagger container cho children.
- */
-export const staggerContainer = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.1,
-    },
-  },
-};
+export const staggerContainer = staggerContainerVariant;
 
-/**
- * Parallax wrapper - dùng motion.div với y transform dựa trên scroll.
- */
 export function ParallaxSection({
   children,
   speed = 0.5,

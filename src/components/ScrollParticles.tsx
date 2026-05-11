@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, memo } from 'react';
+import { useState, memo } from 'react';
 import { motion } from 'framer-motion';
 import { useLenis } from '../hooks/useLenis';
 
@@ -137,15 +137,8 @@ export default function ScrollParticles() {
             height: '60px',
             background: 'linear-gradient(to bottom, hsl(43 100% 46%), hsl(35 100% 55%))',
             translateY: '-50%',
+            boxShadow: '0 0 16px rgba(232,164,0,0.5)',
           }}
-          animate={{
-            boxShadow: [
-              '0 0 12px rgba(232,164,0,0.5)',
-              '0 0 24px rgba(232,164,0,0.8)',
-              '0 0 12px rgba(232,164,0,0.5)',
-            ],
-          }}
-          transition={{ duration: 1.5, repeat: Infinity }}
         />
         <div
           className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full pointer-events-none"

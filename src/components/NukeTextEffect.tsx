@@ -1,5 +1,5 @@
-import { memo, useEffect, useRef, useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 
 type EffectMode = 'glitch' | 'scanline' | 'corruption' | 'hologram' | 'compositing';
 
@@ -97,10 +97,8 @@ function NukeTextEffect({ className = '' }: { className?: string }) {
     { id: 'compositing', label: 'COMP', desc: 'Layer merge' },
   ];
 
-  const renderText = (chars: string[], baseDelay: number = 0) => {
+  const renderText = (chars: string[]) => {
     return chars.map((char, i) => {
-      const corruptionIndex = corruptionChars[i];
-
       return (
         <motion.span
           key={`${char}-${i}`}
@@ -121,7 +119,7 @@ function NukeTextEffect({ className = '' }: { className?: string }) {
           transition={
             effectMode === 'glitch'
               ? { duration: 0.05 }
-              : { duration: 0.3, delay: baseDelay + i * 0.05 }
+              : { duration: 0.3, delay: i * 0.05 }
           }
           style={{ display: 'inline-block' }}
         >

@@ -1,14 +1,249 @@
-import { useEffect, useRef, memo } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Play } from 'lucide-react';
+import { motion, useScroll, useTransform, useReducedMotion, AnimatePresence } from 'framer-motion';
+import EnhancedCTA from './EnhancedCTA';
+import AnimatedStats from './AnimatedStats';
+import EnhancedScrollIndicator from './EnhancedScrollIndicator';
 
-const ROLE = 'VFX Compositor & Motion Designer';
+// ─── VIEWER UI CONSTANTS ──────────────────────────────────────────────────────
+const CHANNELS = ['RGBA', 'R', 'G', 'B', 'A'];
+const ZOOM_LEVELS = ['25%', '50%', '75%', '100%', '200%'];
+const EXPOSURE_STOPS = ['-2', '-1', '0', '+1', '+2'];
 
+// ─── TIMECODE ─────────────────────────────────────────────────────────────────
+function useTimecode() {
+  const [tc, setTc] = useState('00:00:00:00');
+  useEffect(() => {
+    let frame = 0;
+    const id = setInterval(() => {
+      frame++;
+      const f = frame % 24;
+      const s = Math.floor(frame / 24) % 60;
+      const m = Math.floor(frame / (24 * 60)) % 60;
+      const h = Math.floor(frame / (24 * 60 * 60)) % 24;
+      setTc(
+        `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}:${String(f).padStart(2, '0')}`
+      );
+    }, 1000 / 24);
+    return () => clearInterval(id);
+  }, []);
+  return tc;
+}
+
+// ─── SCANLINE OVERLAY ─────────────────────────────────────────────────────────
+function ScanlineOverlay() {
+  return (
+    <div
+      className="absolute inset-0 pointer-events-none z-20"
+      style={{
+        backgroundImage: `repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0,0,0,0.06) 2px,
+          rgba(0,0,0,0.06) 4px
+        )`,
+        backgroundSize: '100% 4px',
+      }}
+    />
+  );
+}
+
+// ─── VIEWER CHROME TOP BAR ────────────────────────────────────────────────────
+function ViewerTopBar({
+  activeChannel,
+  onChannel,
+  zoom,
+  onZoom,
+  timecode,
+}: {
+  activeChannel: string;
+  onChannel: (c: string) => void;
+  zoom: string;
+  onZoom: (z: string) => void;
+  timecode: string;
+}) {
+  return (
+    <div
+      className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between px-3 py-1.5"
+      style={{
+        background: 'rgba(8,8,10,0.92)',
+        borderBottom: '1px solid rgba(255,255,255,0.07)',
+        backdropFilter: 'blur(4px)',
+      }}
+    >
+      {/* Left: comp name + status */}
+      <div className="flex items-center gap-3">
+        <span className="text-[9px] font-mono text-white/30 tracking-widest uppercase">
+          COMP_v001
+        </span>
+        <span
+          className="text-[8px] font-mono font-bold tracking-widest uppercase px-1.5 py-0.5 rounded-sm"
+          style={{
+            background: 'rgba(0,200,83,0.15)',
+            border: '1px solid rgba(0,200,83,0.4)',
+            color: '#00c853',
+          }}
+        >
+          APPROVED
+        </span>
+      </div>
+
+      {/* Center: channel buttons */}
+      <div className="flex items-center gap-1">
+        {CHANNELS.map(ch => (
+          <button
+            key={ch}
+            onClick={() => onChannel(ch)}
+            className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-sm transition-all duration-150 cursor-pointer"
+            style={{
+              background: activeChannel === ch ? 'rgba(232,164,0,0.2)' : 'rgba(255,255,255,0.04)',
+              border: `1px solid ${activeChannel === ch ? 'rgba(232,164,0,0.5)' : 'rgba(255,255,255,0.08)'}`,
+              color: activeChannel === ch ? '#f5a623' : 'rgba(255,255,255,0.35)',
+            }}
+          >
+            {ch}
+          </button>
+        ))}
+      </div>
+
+      {/* Right: timecode */}
+      <div className="flex items-center gap-3">
+        <span className="text-[9px] font-mono text-amber-400/50 tracking-widest">
+          {timecode}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// ─── VIEWER CHROME BOTTOM BAR ─────────────────────────────────────────────────
+function ViewerBottomBar({
+  zoom,
+  onZoom,
+  exposure,
+  onExposure,
+}: {
+  zoom: string;
+  onZoom: (z: string) => void;
+  exposure: string;
+  onExposure: (e: string) => void;
+}) {
+  return (
+    <div
+      className="absolute bottom-0 left-0 right-0 z-30 flex items-center justify-between px-3 py-1.5"
+      style={{
+        background: 'rgba(8,8,10,0.92)',
+        borderTop: '1px solid rgba(255,255,255,0.07)',
+        backdropFilter: 'blur(4px)',
+      }}
+    >
+      {/* Left: resolution + frame info */}
+      <div className="flex items-center gap-3">
+        <span className="text-[9px] font-mono text-white/25 tracking-wider">1920×1080</span>
+        <span className="text-[9px] font-mono text-white/20">|</span>
+        <span className="text-[9px] font-mono text-white/25 tracking-wider">24fps</span>
+        <span className="text-[9px] font-mono text-white/20">|</span>
+        <span className="text-[9px] font-mono text-white/25 tracking-wider">EXR 16bit</span>
+      </div>
+
+      {/* Center: zoom */}
+      <div className="flex items-center gap-1">
+        <span className="text-[8px] font-mono text-white/20 mr-1 tracking-wider">ZOOM</span>
+        {ZOOM_LEVELS.map(z => (
+          <button
+            key={z}
+            onClick={() => onZoom(z)}
+            className="text-[8px] font-mono px-1.5 py-0.5 rounded-sm transition-all duration-150 cursor-pointer"
+            style={{
+              background: zoom === z ? 'rgba(232,164,0,0.15)' : 'transparent',
+              color: zoom === z ? '#f5a623' : 'rgba(255,255,255,0.25)',
+            }}
+          >
+            {z}
+          </button>
+        ))}
+      </div>
+
+      {/* Right: exposure */}
+      <div className="flex items-center gap-1">
+        <span className="text-[8px] font-mono text-white/20 mr-1 tracking-wider">EXP</span>
+        {EXPOSURE_STOPS.map(e => (
+          <button
+            key={e}
+            onClick={() => onExposure(e)}
+            className="text-[8px] font-mono px-1.5 py-0.5 rounded-sm transition-all duration-150 cursor-pointer"
+            style={{
+              background: exposure === e ? 'rgba(232,164,0,0.15)' : 'transparent',
+              color: exposure === e ? '#f5a623' : 'rgba(255,255,255,0.25)',
+            }}
+          >
+            {e}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── CHANNEL TINT ─────────────────────────────────────────────────────────────
+function ChannelTint({ channel }: { channel: string }) {
+  if (channel === 'RGBA') return null;
+  const tints: Record<string, string> = {
+    R: 'rgba(255,60,60,0.08)',
+    G: 'rgba(60,255,60,0.08)',
+    B: 'rgba(60,60,255,0.08)',
+    A: 'rgba(255,255,255,0.06)',
+  };
+  return (
+    <motion.div
+      key={channel}
+      className="absolute inset-0 pointer-events-none z-10"
+      style={{ background: tints[channel] }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+    />
+  );
+}
+
+// ─── CORNER CROSSHAIRS ────────────────────────────────────────────────────────
+function ViewerCrosshairs() {
+  const corners = [
+    { top: 8, left: 8, rotate: 0 },
+    { top: 8, right: 8, rotate: 90 },
+    { bottom: 8, right: 8, rotate: 180 },
+    { bottom: 8, left: 8, rotate: 270 },
+  ];
+  return (
+    <>
+      {corners.map((pos, i) => (
+        <div
+          key={i}
+          className="absolute w-5 h-5 pointer-events-none z-20"
+          style={{
+            ...pos,
+            transform: `rotate(${pos.rotate}deg)`,
+            borderTop: '1px solid rgba(232,164,0,0.35)',
+            borderLeft: '1px solid rgba(232,164,0,0.35)',
+          }}
+        />
+      ))}
+    </>
+  );
+}
+
+// ─── MAIN HERO ────────────────────────────────────────────────────────────────
 function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const shouldReduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll();
+  const timecode = useTimecode();
+
+  const [activeChannel, setActiveChannel] = useState('RGBA');
+  const [zoom, setZoom] = useState('100%');
+  const [exposure, setExposure] = useState('0');
 
   const contentY = shouldReduceMotion
     ? useTransform(scrollYProgress, [0, 1], [0, 0])
@@ -19,117 +254,153 @@ function Hero() {
     : useTransform(scrollYProgress, [0, 0.25], [1, 0]);
 
   useEffect(() => {
-    if (shouldReduceMotion) return;
+    if (shouldReduceMotion) {
+      gsap.set('.viewer-chrome, .hero-title-line, .hero-subtitle', { opacity: 1, y: 0 });
+      return;
+    }
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ delay: 0.2 });
-      
-      tl.fromTo('.hero-badge',
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
+
+      tl.fromTo('.viewer-chrome',
+        { opacity: 0 },
+        { opacity: 1, duration: 0.4, ease: 'power2.out' }
       )
       .fromTo('.hero-title-line',
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 1, ease: 'power3.out' },
-        '-=0.4'
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.12 },
+        '-=0.1'
       )
       .fromTo('.hero-subtitle',
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' },
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' },
         '-=0.5'
       )
       .fromTo('.hero-cta',
-        { opacity: 0, y: 20, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'back.out(1.5)' },
+        { opacity: 0, y: 16, scale: 0.97 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: 'back.out(1.5)' },
         '-=0.4'
       )
       .fromTo('.hero-stats',
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' },
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' },
         '-=0.3'
-      )
-      .fromTo('.hero-line-left, .hero-line-right',
-        { scaleX: 0 },
-        { scaleX: 1, duration: 1.2, ease: 'power3.inOut' },
-        '-=0.8'
       );
     }, sectionRef);
     return () => ctx.revert();
   }, [shouldReduceMotion]);
 
   return (
-    <section 
-      id="home" 
-      ref={sectionRef} 
-      className="relative w-full min-h-screen flex items-center justify-center overflow-hidden py-20 md:py-0"
+    <section
+      id="home"
+      ref={sectionRef}
+      className="relative w-full min-h-screen flex items-center justify-center overflow-hidden"
       style={{ overflowX: 'hidden' }}
       aria-labelledby="hero-heading"
     >
       <h2 id="hero-heading" className="sr-only">VFX Compositor Portfolio — Hai Luong</h2>
 
-      {/* Decorative Lines */}
-      <motion.div 
-        className="hero-line-left absolute top-1/2 left-0 w-[15%] h-[1px] origin-left hidden md:block"
-        style={{ background: 'linear-gradient(90deg, transparent, hsl(43 100% 46% / 0.6))' }}
-      />
-      <motion.div 
-        className="hero-line-right absolute top-1/2 right-0 w-[15%] h-[1px] origin-right hidden md:block"
-        style={{ background: 'linear-gradient(270deg, transparent, hsl(43 100% 46% / 0.6))' }}
-      />
+      {/* ── VIEWER FRAME ── */}
+      <div
+        className="viewer-chrome absolute left-4 right-4 bottom-4 md:left-8 md:right-8 md:bottom-8 lg:left-12 lg:right-12 lg:bottom-12 rounded-sm z-10"
+        style={{
+          top: 80,
+          border: '1px solid rgba(255,255,255,0.09)',
+          boxShadow: '0 0 0 1px rgba(0,0,0,0.8), inset 0 0 80px rgba(0,0,0,0.3)',
+        }}
+      >
+        {/* Top bar */}
+        <ViewerTopBar
+          activeChannel={activeChannel}
+          onChannel={setActiveChannel}
+          zoom={zoom}
+          onZoom={setZoom}
+          timecode={timecode}
+        />
 
-      {/* Content */}
-      <motion.div 
-        className="relative z-10 text-center px-6 max-w-5xl mx-auto flex flex-col items-center"
+        {/* Bottom bar */}
+        <ViewerBottomBar
+          zoom={zoom}
+          onZoom={setZoom}
+          exposure={exposure}
+          onExposure={setExposure}
+        />
+
+        {/* Corner crosshairs */}
+        <ViewerCrosshairs />
+
+        {/* Scanlines */}
+        <ScanlineOverlay />
+
+        {/* Channel tint */}
+        <AnimatePresence>
+          <ChannelTint key={activeChannel} channel={activeChannel} />
+        </AnimatePresence>
+
+        {/* Center crosshair */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+          <div className="relative w-6 h-6">
+            <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-amber-500/20" />
+            <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-amber-500/20" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full border border-amber-500/30" />
+          </div>
+        </div>
+
+        {/* Safe area guides (subtle) */}
+        <div
+          className="absolute pointer-events-none z-10 hidden md:block"
+          style={{
+            inset: '8%',
+            border: '1px dashed rgba(255,255,255,0.04)',
+          }}
+        />
+      </div>
+
+      {/* ── CONTENT ── */}
+      <motion.div
+        className="relative z-20 text-center px-6 max-w-5xl mx-auto flex flex-col items-center pointer-events-none"
         style={{ y: contentY, opacity: contentOpacity }}
       >
-        {/* Role Badge - Redesigned */}
-        <motion.div 
-          className="hero-badge mb-10 md:mb-14"
-          initial={{ opacity: 0 }}
-        >
-          <div className="flex items-center gap-3">
-            <div className="hidden md:block w-8 h-[1px] bg-gradient-to-r from-transparent to-amber-500/60" />
-            <span className="text-[10px] md:text-[11px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-medium text-amber-400/80">
-              {ROLE}
-            </span>
-            <div className="hidden md:block w-8 h-[1px] bg-gradient-to-l from-transparent to-amber-500/60" />
-          </div>
-        </motion.div>
-
-        {/* Main Title - New Layout */}
-        <div className="relative mb-8 md:mb-14 w-full min-w-0 px-4 sm:px-6 overflow-hidden">
-          <motion.h1 
-            className="hero-title-line text-[2.5rem] xs:text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] font-bold leading-[1] tracking-tight text-white w-full"
-            style={{ 
-              textWrap: 'balance', 
-              wordBreak: 'break-word',
-              display: 'block',
-            }}
+        {/* Title */}
+        <div className="relative mb-8 md:mb-14 w-full px-4 sm:px-6">
+          <h1
+            className="hero-title-line text-[2.5rem] xs:text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] font-bold leading-[1] tracking-tight text-white w-full block"
+            style={{ opacity: 0 }}
           >
             HAI
-          </motion.h1>
-          <motion.h1 
-            className="hero-title-line text-[2.5rem] xs:text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] font-bold leading-[1] tracking-tight w-full"
+          </h1>
+          <h1
+            className="hero-title-line text-[2.5rem] xs:text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] font-bold leading-[1] tracking-tight w-full block"
             style={{
+              opacity: 0,
               background: 'linear-gradient(135deg, hsl(43 100% 50%), hsl(35 100% 55%))',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
-              textWrap: 'balance',
-              wordBreak: 'break-word',
-              display: 'block',
             }}
           >
             LUONG
-          </motion.h1>
-          
-          {/* Decorative VFX text - Desktop only */}
-          <motion.div 
+          </h1>
+
+          {/* VFX Compositor label under name */}
+          <div
+            className="hero-title-line flex items-center justify-center gap-3 mt-3 md:mt-5"
+            style={{ opacity: 0 }}
+          >
+            <div className="h-[1px] w-8 md:w-14 bg-gradient-to-r from-transparent to-amber-500/50" />
+            <span className="text-[10px] md:text-[13px] uppercase tracking-[0.4em] md:tracking-[0.5em] font-medium text-amber-400/70 whitespace-nowrap">
+              VFX Compositor
+            </span>
+            <div className="h-[1px] w-8 md:w-14 bg-gradient-to-l from-transparent to-amber-500/50" />
+          </div>
+
+          {/* Vertical label — desktop */}
+          <motion.div
             className="absolute -right-4 lg:-right-16 top-1/2 -translate-y-1/2 hidden lg:block"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1, duration: 0.8 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
           >
-            <span 
+            <span
               className="text-[10px] uppercase tracking-[0.5em] text-white/10 font-bold"
               style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
             >
@@ -138,27 +409,10 @@ function Hero() {
           </motion.div>
         </div>
 
-        {/* VFX Badge */}
-        <motion.div 
-          className="hero-badge mb-10 md:mb-14"
-          initial={{ opacity: 0 }}
-        >
-          <span 
-            className="inline-block px-5 md:px-6 py-1.5 text-[9px] md:text-[10px] uppercase tracking-[0.4em] md:tracking-[0.5em] font-semibold rounded-full"
-            style={{
-              background: 'linear-gradient(135deg, hsl(43 100% 46% / 0.15), hsl(35 100% 50% / 0.1))',
-              border: '1px solid hsl(43 100% 46% / 0.3)',
-              color: 'hsl(43 100% 60%)',
-            }}
-          >
-            VFX ARTIST
-          </span>
-        </motion.div>
-
-        {/* Subtitle - Location & Description */}
-        <motion.p 
+        {/* Subtitle */}
+        <p
           className="hero-subtitle text-sm md:text-base text-gray-400 mb-12 md:mb-18 max-w-xl leading-relaxed px-4"
-          initial={{ opacity: 0 }}
+          style={{ opacity: 0 }}
         >
           <span className="text-white/90">Ho Chi Minh City, Vietnam</span>
           <span className="mx-2 md:mx-3 text-amber-500/40">—</span>
@@ -167,129 +421,27 @@ function Hero() {
             <span className="text-amber-400/80">photorealistic VFX</span>
             {' '}for film, TVC & music videos
           </span>
-        </motion.p>
+        </p>
 
-        {/* CTA Buttons */}
-        <motion.div 
-          className="hero-cta flex flex-col sm:flex-row items-center gap-4 md:gap-6 mb-14 md:mb-22"
-          initial={{ opacity: 0 }}
-        >
-          <a
-            href="#showreel"
-            className="group relative flex items-center gap-2.5 xs:gap-3 px-6 xs:px-8 py-3.5 xs:py-4 rounded-full overflow-hidden transition-all duration-300 hover:scale-105"
-            style={{
-              background: 'linear-gradient(135deg, hsl(43 100% 46%), hsl(35 100% 50%))',
-              boxShadow: '0 4px 30px rgba(232, 164, 0, 0.3)',
-            }}
-          >
-            <span className="relative text-[13px] xs:text-sm font-semibold text-gray-900 tracking-wide">
-              Watch Showreel
-            </span>
-            <Play size={16} className="relative text-gray-900 ml-1" fill="currentColor" />
-            
-            {/* Hover glow effect */}
-            <div 
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              style={{
-                background: 'linear-gradient(135deg, hsl(43 100% 55%), hsl(35 100% 60%))',
-                filter: 'blur(20px)',
-              }}
-            />
-          </a>
+        {/* CTA */}
+        <div className="pointer-events-auto">
+          <EnhancedCTA />
+        </div>
 
-          <a
-            href="#projects"
-            className="group relative flex items-center gap-2.5 xs:gap-3 px-6 xs:px-8 py-3.5 xs:py-4 rounded-full overflow-hidden transition-all duration-300 hover:scale-105"
-            style={{
-              background: 'rgba(255, 255, 255, 0.03)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-            }}
-          >
-            <span className="text-[13px] xs:text-sm font-medium text-white/80 tracking-wide">
-              View Projects
-            </span>
-            <ArrowRight 
-              size={16} 
-              className="text-white/50 group-hover:text-amber-400 group-hover:translate-x-1 transition-all duration-300" 
-            />
-          </a>
-        </motion.div>
-
-        {/* Stats Row - Redesigned */}
-        <motion.div 
-          className="hero-stats flex items-center justify-center gap-6 md:gap-12 lg:gap-16"
-          initial={{ opacity: 0 }}
-        >
-          {[
-            { value: '50+', label: 'Projects', accent: true },
-            { value: '5+', label: 'Years Exp', accent: true },
-            { value: '20+', label: 'Clients', accent: false },
-          ].map((stat) => (
-            <div key={stat.label} className="flex flex-col items-center">
-              <div className="flex items-baseline gap-0.5 md:gap-1">
-                <span 
-                  className="text-2xl sm:text-3xl md:text-4xl font-bold"
-                  style={{
-                    background: stat.accent 
-                      ? 'linear-gradient(135deg, hsl(43 100% 55%), hsl(35 100% 60%))'
-                      : 'linear-gradient(135deg, hsl(0 0% 90%), hsl(0 0% 70%))',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                  }}
-                >
-                  {stat.value}
-                </span>
-                <span className="text-base md:text-lg text-amber-500/60">+</span>
-              </div>
-              <span className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.25em] text-gray-500 mt-1.5 md:mt-1">
-                {stat.label}
-              </span>
-            </div>
-          ))}
-        </motion.div>
+        {/* Stats */}
+        <AnimatedStats />
 
         {/* Divider */}
-        <motion.div 
+        <motion.div
           className="w-px h-10 md:h-12 bg-gradient-to-b from-amber-500/30 to-transparent mt-10 md:mt-16"
           initial={{ opacity: 0, scaleY: 0 }}
           animate={{ opacity: 1, scaleY: 1 }}
-          transition={{ delay: 1.5, duration: 0.6 }}
+          transition={{ delay: 1.8, duration: 0.6 }}
         />
       </motion.div>
 
-      {/* Scroll Indicator - Minimal */}
-      <motion.div 
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 2 }}
-      >
-        <div className="flex flex-col items-center gap-2">
-          <span className="text-[9px] uppercase tracking-[0.3em] text-gray-500 font-medium">
-            Scroll
-          </span>
-          <motion.div 
-            className="w-[1px] h-8 bg-gradient-to-b from-amber-500/50 to-transparent"
-            animate={{ scaleY: [0, 1, 0], originY: 0 }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        </div>
-      </motion.div>
-
-      {/* Corner Accents - Desktop only */}
-      <div 
-        className="absolute top-8 left-8 w-16 h-16 border-l border-t border-amber-500/20 pointer-events-none hidden md:block"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-      />
-      <div 
-        className="absolute bottom-8 right-8 w-16 h-16 border-r border-b border-amber-500/20 pointer-events-none hidden md:block"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-      />
+      {/* Scroll indicator */}
+      <EnhancedScrollIndicator />
     </section>
   );
 }

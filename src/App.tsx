@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero_Pipeline';
+import Hero from './components/Hero';
 import { ScrollProvider, useScrollContext } from './hooks/ScrollProvider';
 import { ProjectProvider, useProjectContext } from './hooks/ProjectContext';
 import ProjectDetail from './pages/ProjectDetail';
@@ -17,8 +17,6 @@ const Clients = lazy(() => import('./components/Clients'));
 const About = lazy(() => import('./components/About'));
 const Contact = lazy(() => import('./components/Contact'));
 
-const VIDEO_URL = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260307_083826_e938b29f-a43a-41ec-a153-3d4730578ab8.mp4';
-
 // Initialize UnicornStudio
 function useUnicornStudio() {
   useEffect(() => {
@@ -28,8 +26,8 @@ function useUnicornStudio() {
       script.src = 'https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js';
       script.onload = () => {
         if (!window.UnicornStudio?.isInitialized) {
-          window.UnicornStudio && window.UnicornStudio.init();
-          window.UnicornStudio && (window.UnicornStudio.isInitialized = true);
+          window.UnicornStudio?.init?.();
+          window.UnicornStudio!.isInitialized = true;
         }
       };
       document.head.appendChild(script);
@@ -200,10 +198,7 @@ function AppContent() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <ProjectDetail
-              project={selectedProject}
-              onClose={handleCloseProject}
-            />
+            <ProjectDetail />
           </motion.div>
         )}
       </AnimatePresence>

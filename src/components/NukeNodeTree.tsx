@@ -90,10 +90,9 @@ function NukeNode({ node, index, isActive, onHover }: {
   );
 }
 
-function ConnectionLine({ from, to, nodes, isActive }: {
+function ConnectionLine({ from, to, isActive }: {
   from: NodeData;
   to: NodeData;
-  nodes: NodeData[];
   isActive: boolean;
 }) {
   const colors = NODE_COLORS[to.type];
@@ -129,7 +128,7 @@ function ConnectionLine({ from, to, nodes, isActive }: {
 }
 
 const NukeNodeTree = memo(function NukeNodeTree({ className = '' }: { className?: string }) {
-  const [activeNode, setActiveNode] = useState<string | null>(null);
+  const [activeNode] = useState<string | null>(null);
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [dataStream, setDataStream] = useState(0);
 
@@ -146,10 +145,9 @@ const NukeNodeTree = memo(function NukeNodeTree({ className = '' }: { className?
     return node.connections;
   }, []);
 
-  const isNodeActive = useCallback((nodeId: string) => {
-    if (!activeNode) return true;
-    return nodeId === activeNode || activeConnections(activeNode).includes(nodeId);
-  }, [activeNode, activeConnections]);
+  const isNodeActive = useCallback((_nodeId: string) => {
+    return true;
+  }, []);
 
   return (
     <div className={`relative w-full h-full overflow-hidden ${className}`} style={{ minHeight: '400px' }}>
@@ -165,8 +163,8 @@ const NukeNodeTree = memo(function NukeNodeTree({ className = '' }: { className?
         }}
       />
 
-      {/* Data stream indicators */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {/* Data stream indicators - disabled */}
+      {/* <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[0, 1, 2, 3].map(i => (
           <motion.div
             key={i}
@@ -188,7 +186,7 @@ const NukeNodeTree = memo(function NukeNodeTree({ className = '' }: { className?
             }}
           />
         ))}
-      </div>
+      </div> */}
 
       {/* Connection lines */}
       {INITIAL_NODES.map(node =>
@@ -200,7 +198,6 @@ const NukeNodeTree = memo(function NukeNodeTree({ className = '' }: { className?
               key={`${node.id}-${connId}`}
               from={node}
               to={target}
-              nodes={INITIAL_NODES}
               isActive={hoveredNode === node.id || hoveredNode === connId}
             />
           );

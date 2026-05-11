@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface LoadingScreenProps {
   onComplete: () => void;
@@ -18,7 +18,6 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [progress, setProgress] = useState(0);
   const [activeKeyframes, setActiveKeyframes] = useState(0);
   const [displayProgress, setDisplayProgress] = useState(0);
-  const shouldReduceMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
   const startTime = useRef<number | null>(null);
   const rafRef = useRef<number>(0);

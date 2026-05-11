@@ -191,12 +191,13 @@ export default function AuroraBorealisBackground() {
       ctx.fillStyle = gradient;
       ctx.fill();
 
-      const shimmerGradient = ctx.createLinearGradient(0, y - 10, 0, y + 15);
-      shimmerGradient.addColorStop(0, `hsla(${hue}, 100%, 95%, 0)`);
-      shimmerGradient.addColorStop(0.5, `hsla(${hue + 15}, 100%, 98%, ${opacity * 0.6})`);
-      shimmerGradient.addColorStop(1, `hsla(${hue + 30}, 80%, 50%, 0)`);
-      ctx.fillStyle = shimmerGradient;
-      ctx.fill();
+      // Shimmer effect - disabled for cleaner look
+      // const shimmerGradient = ctx.createLinearGradient(0, y - 10, 0, y + 15);
+      // shimmerGradient.addColorStop(0, `hsla(${hue}, 100%, 95%, 0)`);
+      // shimmerGradient.addColorStop(0.5, `hsla(${hue + 15}, 100%, 98%, ${opacity * 0.6})`);
+      // shimmerGradient.addColorStop(1, `hsla(${hue + 30}, 80%, 50%, 0)`);
+      // ctx.fillStyle = shimmerGradient;
+      // ctx.fill();
 
       ctx.restore();
     };

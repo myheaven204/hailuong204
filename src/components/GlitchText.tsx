@@ -6,6 +6,9 @@ interface GlitchTextProps {
   className?: string;
   glitchInterval?: number;
   effect?: 'glitch' | 'wave' | 'bounce' | 'neon';
+  revealDelay?: number;
+  showScanline?: boolean;
+  showChromaticAberration?: boolean;
 }
 
 const GLITCH_CHARS = '!<>-_\\/[]{}=+*^?#________▓░█▄▀■□';
@@ -15,11 +18,32 @@ export default function GlitchText({
   className = '',
   glitchInterval = 50,
   effect = 'glitch',
+  revealDelay = 0,
+  showScanline = false,
+  showChromaticAberration = false,
 }: GlitchTextProps) {
   const [displayText, setDisplayText] = useState(text);
   const [isGlitching, setIsGlitching] = useState(false);
   const [randomGlitch, setRandomGlitch] = useState(false);
+  const [revealedChars, setRevealedChars] = useState(0);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Character reveal animation
+  useEffect(() => {
+    if (revealDelay === 0) {
+      setRevealedChars(text.length);
+      return;
+    }
+
+    let charIndex = 0;
+    const interval = setInterval(() => {
+      charIndex++;
+      setRevealedChars(charIndex);
+      if (charIndex >= text.length) clearInterval(interval);
+    }, revealDelay);
+
+    return () => clearInterval(interval);
+  }, [text, revealDelay]);
 
   // Random glitch trigger every 3-7 seconds
   useEffect(() => {

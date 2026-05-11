@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState, memo } from 'react';
+import { useEffect, useRef, useState, memo, useCallback } from 'react';
 import { gsap } from 'gsap';
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion, useSpring, AnimatePresence } from 'framer-motion';
 import { Play } from 'lucide-react';
 import MagneticButton from './MagneticButton';
+import { springs, easings } from '../hooks/useAnimationSystem';
 
 const ROLES = ['VFX Artist', 'Compositor', 'Motion Designer', 'Visual Effects'];
 
@@ -20,7 +21,7 @@ interface PipelineNode {
 interface Connection {
   from: string;
   to: string;
-  toSocket?: string; // 'A', 'B', etc. for merge nodes
+  toSocket?: string;
 }
 
 // ─── NODE COLORS (Nuke-inspired) ──────────────────────────────────────────────
@@ -46,18 +47,13 @@ const PIPELINE_NODES: PipelineNode[] = [
 ];
 
 const PIPELINE_CONNECTIONS: Connection[] = [
-  // Top flow: READ_01 → COLOR → MERGE_COMP (input A)
   { from: 'read1', to: 'color1' },
   { from: 'color1', to: 'merge1', toSocket: 'A' },
-  // Middle flow: READ_02 → MERGE_COMP (input B)
   { from: 'read2', to: 'merge1', toSocket: 'B' },
-  // Bottom flow: READ_03 → BLUR → GRADE → MERGE_FINAL (input A)
   { from: 'read3', to: 'blur1' },
   { from: 'blur1', to: 'grade1' },
   { from: 'grade1', to: 'merge2', toSocket: 'A' },
-  // Connect MERGE_COMP → MERGE_FINAL (input B)
   { from: 'merge1', to: 'merge2', toSocket: 'B' },
-  // Final output
   { from: 'merge2', to: 'write1' },
 ];
 
@@ -89,6 +85,9 @@ const MarqueeStrip = memo(function MarqueeStrip({ reversed, top }: { reversed?: 
     <motion.div
       className="absolute left-0 right-0 z-20 overflow-hidden pointer-events-none select-none"
       style={top ? { top: 0 } : { bottom: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 1.5, duration: 0.5 }}
     >
       <div
         className="flex items-center py-3"
@@ -165,7 +164,7 @@ const PipelineNodeComponent = memo(function PipelineNodeComponent({
       className="absolute cursor-pointer"
       initial={{ opacity: 0, scale: 0.4 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5, delay, ease: 'backOut' }}
+      transition={{ duration: 0.5, delay, ease: easings.backOut }}
       onMouseEnter={() => onHover?.(node.id)}
       onMouseLeave={() => onHover?.(null)}
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onHover?.(isHovered ? null : node.id); } }}
@@ -215,7 +214,7 @@ const PipelineNodeComponent = memo(function PipelineNodeComponent({
           )}
         </div>
 
-        {/* Output socket - right side (all nodes) */}
+        {/* Output socket - right side */}
         <div
           className="absolute rounded-full socket-output"
           data-node-id={node.id}
@@ -235,7 +234,6 @@ const PipelineNodeComponent = memo(function PipelineNodeComponent({
         {/* Input sockets - left side */}
         {isMergeNode ? (
           <>
-            {/* Input A */}
             <div
               className="absolute left-0 socket-input socket-input-a"
               data-node-id={node.id}
@@ -260,7 +258,6 @@ const PipelineNodeComponent = memo(function PipelineNodeComponent({
                 }}
               />
             </div>
-            {/* Input B */}
             <div
               className="absolute left-0 socket-input socket-input-b"
               data-node-id={node.id}
@@ -323,17 +320,7 @@ const PipelineNodeComponent = memo(function PipelineNodeComponent({
   );
 });
 
-// ─── CONNECTION LINE (Smooth Bezier Wire) ──────────────────────────────────────
-interface ConnectionLineProps {
-  fromNodeId: string;
-  toNodeId: string;
-  toSocketType: 'inputSingle' | 'inputA' | 'inputB';
-  isActive: boolean;
-  delay: number;
-  color: string;
-  containerRef: React.RefObject<HTMLDivElement | null>;
-}
-
+// ─── CONNECTION LINE ─────────────────────────────────────────────────────────
 const ConnectionLine = memo(function ConnectionLine({
   fromNodeId,
   toNodeId,
@@ -342,7 +329,15 @@ const ConnectionLine = memo(function ConnectionLine({
   delay,
   color,
   containerRef,
-}: ConnectionLineProps) {
+}: {
+  fromNodeId: string;
+  toNodeId: string;
+  toSocketType: 'inputSingle' | 'inputA' | 'inputB';
+  isActive: boolean;
+  delay: number;
+  color: string;
+  containerRef: React.RefObject<HTMLDivElement | null>;
+}) {
   const [path, setPath] = useState<string>('');
   const [isVisible, setIsVisible] = useState(false);
 
@@ -352,7 +347,6 @@ const ConnectionLine = memo(function ConnectionLine({
     const container = containerRef.current;
     const containerRect = container.getBoundingClientRect();
 
-    // Find sockets
     const outputSocket = container.querySelector(
       `[data-node-id="${fromNodeId}"][data-socket-type="output"]`
     ) as HTMLElement | null;
@@ -373,37 +367,31 @@ const ConnectionLine = memo(function ConnectionLine({
     const outputRect = outputSocket.getBoundingClientRect();
     const inputRect = inputSocket.getBoundingClientRect();
 
-    // Calculate positions relative to container
     const startX = outputRect.left + outputRect.width / 2 - containerRect.left;
     const startY = outputRect.top + outputRect.height / 2 - containerRect.top;
     const endX = inputRect.left + inputRect.width / 2 - containerRect.left;
     const endY = inputRect.top + inputRect.height / 2 - containerRect.top;
 
-    // Calculate bezier control points for smooth horizontal flow
     const dx = endX - startX;
     const controlOffset = Math.max(Math.abs(dx) * 0.5, 30);
 
-    // Control points for cubic bezier - creates smooth S-curve
     const cp1x = startX + controlOffset;
     const cp1y = startY;
     const cp2x = endX - controlOffset;
     const cp2y = endY;
 
-    // Create smooth bezier path
     const pathD = `M ${startX} ${startY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${endX} ${endY}`;
 
     setPath(pathD);
     setIsVisible(true);
   }, [fromNodeId, toNodeId, toSocketType, containerRef]);
 
-  // Update on mount, resize, and periodically
   useEffect(() => {
     updatePath();
 
     const handleResize = () => updatePath();
     window.addEventListener('resize', handleResize);
 
-    // Periodic update for any dynamic changes
     const interval = setInterval(updatePath, 100);
 
     return () => {
@@ -438,7 +426,6 @@ const ConnectionLine = memo(function ConnectionLine({
         </filter>
       </defs>
 
-      {/* Shadow/glow effect */}
       <motion.path
         d={path}
         fill="none"
@@ -449,7 +436,6 @@ const ConnectionLine = memo(function ConnectionLine({
         filter={`url(#glow-${fromNodeId}-${toNodeId})`}
       />
 
-      {/* Main wire */}
       <motion.path
         d={path}
         fill="none"
@@ -459,7 +445,6 @@ const ConnectionLine = memo(function ConnectionLine({
         strokeLinecap="round"
       />
 
-      {/* Animated dot traveling along path */}
       {isActive && (
         <circle r={3} fill={color} filter={`url(#glow-${fromNodeId}-${toNodeId})`}>
           <animateMotion dur="2s" repeatCount="indefinite" path={path} />
@@ -469,7 +454,7 @@ const ConnectionLine = memo(function ConnectionLine({
   );
 });
 
-// ─── TEXT NODE COMPONENT ───────────────────────────────────────────────────────
+// ─── TEXT NODE COMPONENT ─────────────────────────────────────────────────────
 const TextNodeComponent = memo(function TextNodeComponent({
   node,
   index,
@@ -482,21 +467,21 @@ const TextNodeComponent = memo(function TextNodeComponent({
   onHover?: (id: string | null) => void;
 }) {
   const colors = node.color;
-  const delay = index * 0.1;
+  const delay = index * 0.08;
 
   return (
     <motion.div
       className="relative cursor-pointer"
-      initial={{ opacity: 0, y: 20, scale: 0.8 }}
+      initial={{ opacity: 0, y: 60, scale: 0.7 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.6, delay, ease: 'backOut' }}
+      transition={{ duration: 0.8, delay, ease: easings.backOut }}
       onMouseEnter={() => onHover?.(node.id)}
       onMouseLeave={() => onHover?.(null)}
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onHover?.(isHovered ? null : node.id); } }}
       tabIndex={0}
     >
       <motion.div
-        className="relative px-4 py-3 rounded-xl"
+        className="relative px-2 sm:px-3 py-2 sm:py-3 rounded-xl"
         style={{
           background: isHovered ? 'rgba(232,164,0,0.15)' : 'rgba(255,255,255,0.03)',
           border: `1px solid ${isHovered ? 'rgba(232,164,0,0.8)' : 'rgba(255,255,255,0.15)'}`,
@@ -507,12 +492,11 @@ const TextNodeComponent = memo(function TextNodeComponent({
         } : {}}
         transition={{ duration: 0.6, repeat: isHovered ? Infinity : 0 }}
       >
-        {/* Text */}
         <span
           className={`font-bold tracking-wide ${
             node.type === 'output'
-              ? 'text-5xl md:text-6xl lg:text-7xl xl:text-8xl'
-              : 'text-4xl md:text-5xl lg:text-6xl xl:text-7xl'
+              ? 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl'
+              : 'text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl'
           }`}
           style={{
             color: isHovered ? '#f5a623' : colors.text,
@@ -524,7 +508,6 @@ const TextNodeComponent = memo(function TextNodeComponent({
           {node.label}
         </span>
 
-        {/* Node label - hidden on mobile */}
         {node.type !== 'output' && (
           <div
             className="absolute -top-6 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded text-[8px] font-mono uppercase tracking-wider whitespace-nowrap hidden md:block"
@@ -538,7 +521,6 @@ const TextNodeComponent = memo(function TextNodeComponent({
           </div>
         )}
 
-        {/* Output badge */}
         {node.type === 'output' && (
           <div
             className="absolute -bottom-6 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[9px] font-mono uppercase tracking-wider whitespace-nowrap"
@@ -552,7 +534,6 @@ const TextNodeComponent = memo(function TextNodeComponent({
           </div>
         )}
 
-        {/* Glow effect */}
         {isHovered && (
           <motion.div
             className="absolute inset-0 rounded-xl pointer-events-none"
@@ -568,7 +549,7 @@ const TextNodeComponent = memo(function TextNodeComponent({
   );
 });
 
-// ─── DATA FLOW PARTICLES ───────────────────────────────────────────────────────
+// ─── DATA FLOW PARTICLES ─────────────────────────────────────────────────────
 const DataFlowParticles = memo(function DataFlowParticles() {
   const particles = Array.from({ length: 6 }, (_, i) => ({
     id: i,
@@ -612,12 +593,13 @@ const DataFlowParticles = memo(function DataFlowParticles() {
   );
 });
 
-// ─── MAIN HERO COMPONENT ───────────────────────────────────────────────────────
+// ─── MAIN HERO COMPONENT ────────────────────────────────────────────────────
 function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const [roleIndex, setRoleIndex] = useState(0);
   const shouldReduceMotion = useReducedMotion();
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const heroContentRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll();
 
@@ -629,6 +611,40 @@ function Hero() {
     ? useTransform(scrollYProgress, [0, 1], [1, 1])
     : useTransform(scrollYProgress, [0, 0.2], [1, 0.92]);
 
+  // GSAP entrance animation for character-by-character reveal
+  useEffect(() => {
+    if (shouldReduceMotion) return;
+    
+    const ctx = gsap.context(() => {
+      // Create a timeline for orchestrated entrance
+      const tl = gsap.timeline({ delay: 0.2 });
+      
+      // 1. First, set all text nodes to initial state
+      tl.set('.hero-char', { opacity: 0, y: 60 }, 0);
+      
+      // 2. Animate characters in with staggered reveal
+      tl.to('.hero-char', {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.06,
+        ease: 'power3.out',
+      }, 0.3);
+      
+      // 3. Add a subtle scale bounce
+      tl.from('.hero-char', {
+        scale: 0.8,
+        duration: 0.6,
+        stagger: 0.04,
+        ease: 'back.out(1.7)',
+      }, 0.3);
+      
+    }, sectionRef);
+    
+    return () => ctx.revert();
+  }, [shouldReduceMotion]);
+
+  // Role cycling
   useEffect(() => {
     if (shouldReduceMotion) return;
     const interval = setInterval(() => {
@@ -637,19 +653,8 @@ function Hero() {
     return () => clearInterval(interval);
   }, [shouldReduceMotion]);
 
-  useEffect(() => {
-    if (shouldReduceMotion) return;
-    const ctx = gsap.context(() => {
-      gsap.fromTo('.hero-char',
-        { opacity: 0, y: 80 },
-        { opacity: 1, y: 0, duration: 1, stagger: 0.04, ease: 'power3.out', delay: 0.3 }
-      );
-    }, sectionRef);
-    return () => ctx.revert();
-  }, [shouldReduceMotion]);
-
   return (
-    <section id="home" ref={sectionRef} className="relative w-full min-h-screen flex items-center justify-center overflow-hidden" aria-labelledby="hero-heading">
+    <section id="home" ref={sectionRef} className="relative w-full min-h-screen flex items-center justify-center overflow-hidden" style={{ overflowX: 'hidden' }} aria-labelledby="hero-heading">
       <h2 id="hero-heading" className="sr-only">VFX Artist Portfolio — Hai Luong</h2>
 
       {/* ── MARQUEE TOP ── */}
@@ -657,15 +662,20 @@ function Hero() {
 
       {/* Main Content Area */}
       <motion.div
+        ref={heroContentRef}
         className="relative z-10 text-center px-6 max-w-5xl mx-auto flex flex-col items-center"
         style={{ opacity, scale: contentScale }}
       >
         {/* Role badge */}
         <motion.div
           className="mb-8"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
+          initial={{ opacity: 0, scale: 0.8, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ 
+            duration: 0.6, 
+            delay: 0.4,
+            ease: easings.backOut,
+          }}
         >
           <div
             className="relative px-6 py-2.5 rounded-full"
@@ -675,6 +685,7 @@ function Hero() {
               backdropFilter: 'blur(20px)',
             }}
           >
+            {/* Shimmer effect */}
             <motion.div
               className="absolute inset-0 rounded-full"
               style={{
@@ -683,16 +694,20 @@ function Hero() {
               animate={shouldReduceMotion ? {} : { x: ['-100%', '200%'] }}
               transition={shouldReduceMotion ? {} : { duration: 2.5, repeat: Infinity, ease: 'linear' }}
             />
-            <motion.span
-              key={roleIndex}
-              className="relative text-xs uppercase tracking-[0.4em] font-semibold text-amber-400"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-            >
-              {ROLES[roleIndex]}
-            </motion.span>
+            
+            {/* Role text with crossfade */}
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={roleIndex}
+                className="relative text-xs uppercase tracking-[0.4em] font-semibold text-amber-400 inline-block"
+                initial={{ opacity: 0, y: 10, rotateX: 20 }}
+                animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                exit={{ opacity: 0, y: -10, rotateX: -20 }}
+                transition={{ duration: 0.3, ease: easings.easeOut }}
+              >
+                {ROLES[roleIndex]}
+              </motion.span>
+            </AnimatePresence>
           </div>
         </motion.div>
 
@@ -704,121 +719,142 @@ function Hero() {
             style={{
               backgroundImage: `
                 radial-gradient(circle at 20% 50%, rgba(232,164,0,0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(244,67,54,0.3) 0%, transparent 50%)
+                radial-gradient(circle at 80% 50%, rgba(232,164,0,0.3) 0%, transparent 50%)
               `,
             }}
           />
 
-          {/* Text nodes - Row 1: HAI LUONG (single line, no wrap) */}
-          <div className="flex justify-center items-center gap-2 md:gap-4 flex-nowrap pt-8">
+          {/* Text nodes - Row 1: HAI LUONG */}
+          <div className="flex justify-center items-center gap-1 sm:gap-2 md:gap-3 lg:gap-4 flex-nowrap pt-6 sm:pt-8 overflow-x-auto">
             {TEXT_NODES.filter(n => n.id !== 'vfx').map((node, i) => (
-              <TextNodeComponent
-                key={node.id}
-                node={node}
-                index={i}
-                isHovered={hoveredNode === node.id}
-                onHover={setHoveredNode}
-              />
+              <div key={node.id} className="hero-char">
+                <TextNodeComponent
+                  node={node}
+                  index={i}
+                  isHovered={hoveredNode === node.id}
+                  onHover={setHoveredNode}
+                />
+              </div>
             ))}
           </div>
 
-          {/* VFX - Row 2 (separate) */}
+          {/* VFX - Row 2 */}
           <div className="flex justify-center items-center mt-4">
             {TEXT_NODES.filter(n => n.id === 'vfx').map((node, i) => (
-              <TextNodeComponent
-                key={node.id}
-                node={node}
-                index={i + TEXT_NODES.length}
-                isHovered={hoveredNode === node.id}
-                onHover={setHoveredNode}
-              />
+              <div key={node.id} className="hero-char">
+                <TextNodeComponent
+                  node={node}
+                  index={i + TEXT_NODES.length}
+                  isHovered={hoveredNode === node.id}
+                  onHover={setHoveredNode}
+                />
+              </div>
             ))}
           </div>
         </div>
 
         {/* Description */}
-        <p className="text-base md:text-lg mb-4 max-w-xl text-gray-400">
+        <motion.p 
+          className="text-base md:text-lg mb-4 max-w-xl text-gray-400"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 0.6, ease: easings.easeOut }}
+        >
           VFX Compositor based in <span className="text-amber-400 font-medium">Ho Chi Minh City</span>
-        </p>
+        </motion.p>
 
         <motion.p
           className="text-sm max-w-md mb-8 text-gray-500"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.4, duration: 0.6, ease: easings.easeOut }}
         >
           5 years of experience in compositing, matchmoving, and visual effects.
         </motion.p>
 
-        <MagneticButton
-          onClick={() => {
-            const el = document.getElementById('showreel');
-            if (el) {
-              el.scrollIntoView({ behavior: 'smooth' });
-              el.setAttribute('tabindex', '-1');
-              el.focus({ preventScroll: true });
-            }
-          }}
-          aria-label="Watch showreel"
-          className="group relative flex items-center gap-4 px-10 py-4 rounded-full overflow-hidden"
-          strength={0.4}
+        {/* CTA Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 30, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ delay: 1.6, duration: 0.7, ease: easings.backOut }}
         >
-          <div
-            className="absolute inset-0 rounded-full"
-            style={{
-              background: 'rgba(18, 18, 18, 0.9)',
-              border: '2px solid rgba(232, 164, 0, 0.4)',
-              backdropFilter: 'blur(20px)',
+          <MagneticButton
+            onClick={() => {
+              const el = document.getElementById('showreel');
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+                el.setAttribute('tabindex', '-1');
+                el.focus({ preventScroll: true });
+              }
             }}
-          />
-
-          <motion.div
-            className="absolute inset-0 rounded-full"
-            style={{
-              background: 'linear-gradient(135deg, hsl(43 100% 46%), hsl(35 100% 50%))',
-            }}
-            initial={{ x: '-100%' }}
-            whileHover={{ x: 0 }}
-            transition={{ duration: 0.4 }}
-          />
-
-          <div
-            className="relative w-12 h-12 rounded-full flex items-center justify-center"
-            style={{
-              background: 'linear-gradient(135deg, hsl(43 100% 46%), hsl(35 100% 50%))',
-              boxShadow: '0 0 30px rgba(232, 164, 0, 0.5)',
-            }}
+            aria-label="Watch showreel"
+            className="group relative flex items-center gap-4 px-10 py-4 rounded-full overflow-hidden"
+            strength={0.4}
           >
+            <div
+              className="absolute inset-0 rounded-full"
+              style={{
+                background: 'rgba(18, 18, 18, 0.9)',
+                border: '2px solid rgba(232, 164, 0, 0.4)',
+                backdropFilter: 'blur(20px)',
+              }}
+            />
+
+            {/* Fill animation on hover */}
             <motion.div
               className="absolute inset-0 rounded-full"
-              animate={{
-                scale: [1, 1.4, 1],
-                opacity: [0.5, 0, 0.5]
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
               style={{
                 background: 'linear-gradient(135deg, hsl(43 100% 46%), hsl(35 100% 50%))',
               }}
+              initial={{ x: '-100%' }}
+              whileHover={{ x: 0 }}
+              transition={{ duration: 0.4, ease: easings.easeOut }}
             />
-            <Play size={20} className="text-gray-900 ml-0.5" fill="currentColor" />
-          </div>
 
-          <span className="relative text-white font-medium tracking-wide">
-            Watch Showreel
-          </span>
-        </MagneticButton>
+            {/* Play icon */}
+            <motion.div
+              className="relative w-12 h-12 rounded-full flex items-center justify-center"
+              style={{
+                background: 'linear-gradient(135deg, hsl(43 100% 46%), hsl(35 100% 50%))',
+                boxShadow: '0 0 30px rgba(232, 164, 0, 0.5)',
+              }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {/* Pulse rings */}
+              <motion.div
+                className="absolute inset-0 rounded-full"
+                animate={{
+                  scale: [1, 1.4, 1],
+                  opacity: [0.5, 0, 0.5],
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+                style={{
+                  background: 'linear-gradient(135deg, hsl(43 100% 46%), hsl(35 100% 50%))',
+                }}
+              />
+              <Play size={20} className="text-gray-900 ml-0.5" fill="currentColor" />
+            </motion.div>
 
-        {/* Secondary CTA - Contact */}
+            <span className="relative text-white font-medium tracking-wide group-hover:text-black transition-colors duration-300">
+              Watch Showreel
+            </span>
+          </MagneticButton>
+        </motion.div>
+
+        {/* Secondary CTA */}
         <motion.a
           href="mailto:hailuong.vfx@gmail.com"
           className="group mt-6 relative flex items-center justify-center gap-2 text-sm text-white/50 hover:text-white/80 transition-colors duration-300"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
+          transition={{ delay: 1.8 }}
         >
           <span>Have a project?</span>
           <motion.span
-            className="relative underline decoration-amber-400/30 group-hover:decoration-amber-400/60 decoration-1 underline-offset-4 transition-all"
+            className="relative underline decoration-amber-400/30 group-hover:decoration-amber-400/60 decoration-1 underline-offset-4"
+            whileHover={{ x: 3 }}
+            transition={{ duration: 0.2 }}
           >
             Let&apos;s talk
           </motion.span>
@@ -829,13 +865,13 @@ function Hero() {
           className="flex flex-wrap items-center justify-center gap-5 mt-8"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.8, duration: 0.7 }}
+          transition={{ delay: 2, duration: 0.7, ease: easings.easeOut }}
         >
           {[
             { value: '50+', label: 'Projects' },
             { value: '5+', label: 'Years Exp' },
             { value: '10+', label: 'Awards' },
-          ].map((stat) => (
+          ].map((stat, i) => (
             <motion.div
               key={stat.label}
               className="relative flex items-center gap-3 px-6 py-3 rounded-full"
@@ -852,6 +888,7 @@ function Hero() {
                 background: 'rgba(20,20,26,0.7)',
                 boxShadow: '0 12px 40px rgba(0,0,0,0.4), 0 0 30px rgba(232,164,0,0.1)',
               }}
+              transition={springs.gentle}
             >
               <span
                 className="text-2xl font-bold"
@@ -875,30 +912,44 @@ function Hero() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.2 }}
+        transition={{ delay: 2.5, duration: 0.5 }}
       >
-        <span className="text-xs uppercase tracking-[0.2em] text-gray-500 font-medium">
+        <motion.span 
+          className="text-xs uppercase tracking-[0.2em] text-gray-500 font-medium"
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
           Scroll
-        </span>
-        <div
+        </motion.span>
+        
+        {/* Animated scroll indicator */}
+        <motion.div
           className="w-6 h-10 rounded-full flex justify-center pt-2"
           style={{
             background: 'rgba(18, 18, 18, 0.8)',
             border: '1px solid rgba(255, 255, 255, 0.1)',
             backdropFilter: 'blur(20px)',
           }}
+          whileHover={{ scale: 1.1 }}
         >
           <motion.div
             className="w-1 h-2.5 rounded-full"
+            animate={{ 
+              y: [0, 14, 0],
+              opacity: [1, 0.3, 1],
+              scale: [1, 0.8, 1],
+            }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
             style={{
               background: 'linear-gradient(180deg, hsl(43 100% 46%), hsl(35 100% 50%))',
               boxShadow: '0 0 10px rgba(232, 164, 0, 0.6)',
             }}
-            animate={{ y: [0, 14, 0], opacity: [1, 0.3, 1] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
           />
-        </div>
+        </motion.div>
       </motion.div>
+
+      {/* ── MARQUEE BOTTOM ── */}
+      <MarqueeStrip />
     </section>
   );
 }
