@@ -267,7 +267,7 @@ function Hero() {
       )
       .fromTo('.hero-title-line',
         { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.12 },
+        { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.15 },
         '-=0.1'
       )
       .fromTo('.hero-subtitle',
@@ -362,24 +362,36 @@ function Hero() {
       >
         {/* Title */}
         <div className="relative mb-8 md:mb-14 w-full px-4 sm:px-6">
-          <h1
-            className="hero-title-line text-[2.5rem] xs:text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] font-bold leading-[1] tracking-tight text-white w-full block"
-            style={{ opacity: 0 }}
-          >
-            HAI
-          </h1>
-          <h1
-            className="hero-title-line text-[2.5rem] xs:text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] font-bold leading-[1] tracking-tight w-full block"
-            style={{
-              opacity: 0,
-              background: 'linear-gradient(135deg, hsl(43 100% 50%), hsl(35 100% 55%))',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
-          >
-            LUONG
-          </h1>
+          <div className="flex flex-col items-center gap-0 md:gap-2">
+            {/* HAI - Elegant serif */}
+            <h1
+              className="hero-title-line text-[2.5rem] xs:text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] font-black leading-[0.9] tracking-tighter text-white w-full block"
+              style={{
+                opacity: 0,
+                fontFamily: "'Playfair Display', serif",
+                letterSpacing: '-0.02em',
+              }}
+            >
+              HAI
+            </h1>
+
+            {/* LUONG - Modern gradient */}
+            <h1
+              className="hero-title-line text-[2.5rem] xs:text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] font-black leading-[0.9] tracking-tighter w-full block"
+              style={{
+                opacity: 0,
+                fontFamily: "'Syne', sans-serif",
+                fontWeight: 800,
+                background: 'linear-gradient(135deg, hsl(43 100% 50%), hsl(35 100% 55%))',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                letterSpacing: '-0.02em',
+              }}
+            >
+              LUONG
+            </h1>
+          </div>
 
           {/* VFX Compositor label under name */}
           <div
@@ -387,7 +399,7 @@ function Hero() {
             style={{ opacity: 0 }}
           >
             <div className="h-[1px] w-8 md:w-14 bg-gradient-to-r from-transparent to-amber-500/50" />
-            <span className="text-[10px] md:text-[13px] uppercase tracking-[0.4em] md:tracking-[0.5em] font-medium text-amber-400/70 whitespace-nowrap">
+            <span className="text-[10px] md:text-[13px] uppercase tracking-[0.4em] md:tracking-[0.5em] font-medium text-amber-400/70 whitespace-nowrap" style={{ fontFamily: "'Space Mono', monospace" }}>
               VFX Compositor
             </span>
             <div className="h-[1px] w-8 md:w-14 bg-gradient-to-l from-transparent to-amber-500/50" />
