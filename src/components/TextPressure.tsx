@@ -26,8 +26,8 @@ const debounce = (func, delay) => {
 
 const TextPressure = ({
   text = 'HAI LUONG',
-  fontFamily = 'Space Grotesk',
-  fontUrl = 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap',
+  fontFamily = 'Roboto Flex',
+  fontUrl = 'https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,75..100,100..900&display=swap',
 
   width = true,
   weight = true,
@@ -142,7 +142,7 @@ const TextPressure = ({
 
           // Roboto Flex supports: wght, wdth, opsz
           const wdth = width ? Math.floor(getAttr(d, maxDist, 75, 100)) : 100;
-          const wght = weight ? Math.floor(getAttr(d, maxDist, 500, 700)) : 600;
+          const wght = weight ? Math.floor(getAttr(d, maxDist, 400, 900)) : 700;
 
           const newFontVariationSettings = `'wdth' ${wdth}, 'wght' ${wght}`;
 
@@ -203,7 +203,8 @@ const TextPressure = ({
           justifyContent: 'center',
           alignItems: 'center',
           whiteSpace: 'nowrap',
-          letterSpacing: '-0.02em'
+          letterSpacing: '-0.03em',
+          textTransform: 'uppercase'
         }}
       >
         {chars.map((char, i) => (
