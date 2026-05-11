@@ -358,11 +358,11 @@ function Hero() {
 
       {/* ── CONTENT ── */}
       <motion.div
-        className="relative z-20 text-center px-6 max-w-5xl mx-auto flex flex-col items-center pointer-events-none pt-8 md:pt-12 lg:pt-16"
+        className="relative z-20 text-center px-6 max-w-5xl mx-auto flex flex-col items-center pointer-events-none pt-4 md:pt-8 lg:pt-12"
         style={{ y: contentY, opacity: contentOpacity }}
       >
         {/* Title */}
-        <div className="relative mb-10 md:mb-14 lg:mb-20 w-full px-4 sm:px-6">
+        <div className="relative mb-12 md:mb-16 lg:mb-24 w-full px-4 sm:px-6">
           <Shuffle
             text="HAI LUONG"
             shuffleDirection="right"
@@ -374,7 +374,7 @@ function Hero() {
             colorFrom="hsl(43 100% 50%)"
             colorTo="hsl(43 100% 50%)"
             triggerOnHover={true}
-            triggerOnce={true}
+            triggerOnce={false}
             className="font-bold"
             style={{
               fontSize: 'clamp(64px, 12vw, 160px)',
@@ -382,14 +382,15 @@ function Hero() {
               fontWeight: 700,
               letterSpacing: '-0.03em',
               color: 'hsl(43 100% 50%)',
-              lineHeight: 1
+              lineHeight: 1,
+              cursor: 'pointer'
             }}
             tag="h1"
           />
 
           {/* VFX Compositor label under name */}
           <div
-            className="hero-title-line flex items-center justify-center gap-3 mt-8 md:mt-10 lg:mt-12"
+            className="hero-title-line flex items-center justify-center gap-3 mt-10 md:mt-12 lg:mt-16"
             style={{ opacity: 0 }}
           >
             <div className="h-[1px] w-8 md:w-14 bg-gradient-to-r from-transparent to-amber-500/50" />
@@ -417,7 +418,7 @@ function Hero() {
 
         {/* Subtitle */}
         <p
-          className="hero-subtitle text-sm md:text-base text-gray-400 mb-20 md:mb-28 lg:mb-36 max-w-xl leading-relaxed px-4"
+          className="hero-subtitle text-sm md:text-base text-gray-400 mb-24 md:mb-32 lg:mb-40 max-w-xl leading-relaxed px-4"
           style={{ opacity: 0 }}
         >
           <span className="text-white/90">Ho Chi Minh City, Vietnam</span>

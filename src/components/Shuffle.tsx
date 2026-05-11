@@ -341,10 +341,19 @@ const Shuffle = ({
         setReady(true);
       };
 
-      const st = ScrollTrigger.create({ trigger: el, start, once: triggerOnce, onEnter: create });
+      if (triggerOnHover && !triggerOnce) {
+        create();
+      } else {
+        const st = ScrollTrigger.create({ trigger: el, start, once: triggerOnce, onEnter: create });
+        return () => {
+          st.kill();
+          removeHover();
+          teardown();
+          setReady(false);
+        };
+      }
 
       return () => {
-        st.kill();
         removeHover();
         teardown();
         setReady(false);
