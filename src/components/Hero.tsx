@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform, useReducedMotion, AnimatePresence } fr
 import EnhancedCTA from './EnhancedCTA';
 import AnimatedStats from './AnimatedStats';
 import EnhancedScrollIndicator from './EnhancedScrollIndicator';
+import TextPressureEffect from './TextPressureEffect';
 
 // ─── VIEWER UI CONSTANTS ──────────────────────────────────────────────────────
 const CHANNELS = ['RGBA', 'R', 'G', 'B', 'A'];
@@ -362,36 +363,12 @@ function Hero() {
       >
         {/* Title */}
         <div className="relative mb-6 md:mb-10 lg:mb-12 w-full px-4 sm:px-6">
-          <div className="flex flex-col items-center gap-0">
-            {/* HAI - Clash Display Bold */}
-            <h1
-              className="hero-title-line text-[2.5rem] xs:text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] leading-[0.75] tracking-tighter text-white w-full block"
-              style={{
-                opacity: 0,
-                fontFamily: "'Clash Display', sans-serif",
-                fontWeight: 700,
-                letterSpacing: '-0.04em',
-              }}
-            >
-              HAI
-            </h1>
-
-            {/* LUONG - Clash Display Bold Gradient */}
-            <h1
-              className="hero-title-line text-[2.5rem] xs:text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] leading-[0.75] tracking-tighter w-full block"
-              style={{
-                opacity: 0,
-                fontFamily: "'Clash Display', sans-serif",
-                fontWeight: 700,
-                background: 'linear-gradient(90deg, hsl(43 100% 50%), hsl(35 100% 55%), hsl(43 100% 50%))',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                letterSpacing: '-0.04em',
-              }}
-            >
-              LUONG
-            </h1>
+          <div className="text-[2.5rem] xs:text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] font-black leading-[0.75] tracking-tighter">
+            <TextPressureEffect
+              text="HAI LUONG"
+              textColor="hsl(43 100% 50%)"
+              intensity={1.2}
+            />
           </div>
 
           {/* VFX Compositor label under name */}

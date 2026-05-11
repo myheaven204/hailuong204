@@ -16,7 +16,10 @@
       "Bash(git commit -m 'Adjust hero section spacing - move content down *)",
       "Bash(git commit -m 'Add YouTube videos to VFX Breakdown section with auto-generated thumbnails *)",
       "Bash(git commit -m 'Remove part numbers from video titles *)",
-      "Bash(git commit -m 'Fetch YouTube video titles and display on cards *)"
+      "Bash(git commit -m 'Fetch YouTube video titles and display on cards *)",
+      "Bash(git commit -m 'Add TextPressure interactive effect to HAI LUONG title *)",
+      "Bash(git reset *)",
+      "Bash(git commit -m 'Add Text Pressure effect to HAI LUONG title \\(reactbits.dev style\\) *)"
     ]
   }
 }
