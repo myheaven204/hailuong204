@@ -92,8 +92,8 @@ const TextPressure = ({
     const { width: containerW, height: containerH } = containerRef.current.getBoundingClientRect();
 
     // Tính font size dựa trên container width, nhưng giới hạn hợp lý
-    let newFontSize = containerW / 3;
-    newFontSize = Math.max(minFontSize, Math.min(newFontSize, 120));
+    let newFontSize = containerW / 2.8;
+    newFontSize = Math.max(minFontSize, Math.min(newFontSize, 140));
 
     setFontSize(newFontSize);
     setScaleY(1);
@@ -197,7 +197,7 @@ const TextPressure = ({
           transform: `scale(1, ${scaleY})`,
           transformOrigin: 'center',
           margin: 0,
-          fontWeight: 400,
+          fontWeight: 600,
           color: stroke ? undefined : textColor,
           display: 'flex',
           justifyContent: 'center',
