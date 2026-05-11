@@ -2,6 +2,11 @@ import { useState, useRef, useEffect, useMemo, memo } from 'react';
 import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion';
 import { Play, X, Youtube, Layers, Image, Wand2, Sparkles, Grid3X3, Film, Clock, ArrowUpRight } from 'lucide-react';
 
+// ─── HELPER FUNCTIONS ──────────────────────────────────────────────────────
+const getYouTubeThumbnail = (youtubeId: string) => {
+  return `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
+};
+
 // ─── CONSTANTS ─────────────────────────────────────────────────────────────
 const VIDEO_CATEGORIES = [
   { id: 'all', label: 'All', icon: <Grid3X3 size={14} /> },
@@ -15,12 +20,38 @@ const VIDEOS = [
   {
     id: 0,
     category: 'all',
-    label: 'VFX Showreel 2026',
-    thumb: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&q=80',
-    youtubeId: 'mdgq7pWm_KE',
-    duration: '1:30',
+    label: 'VFX Breakdown 2026 - Part 1',
+    youtubeId: '8gOTa_S-3Tc',
+    duration: '5:42',
     featured: true,
-    description: 'A compilation of the latest VFX work, featuring compositing, matchmoving, and visual effects across film and TVC projects.'
+    description: 'VFX breakdown showcasing compositing techniques, color grading, and visual effects integration.'
+  },
+  {
+    id: 1,
+    category: 'all',
+    label: 'VFX Breakdown 2026 - Part 2',
+    youtubeId: '9sF7bsbNBuA',
+    duration: '6:15',
+    featured: true,
+    description: 'Advanced VFX breakdown featuring matchmoving, rotoscoping, and complex compositing workflows.'
+  },
+  {
+    id: 2,
+    category: 'all',
+    label: 'VFX Breakdown 2026 - Part 3',
+    youtubeId: '2sFMS0KIjTg',
+    duration: '4:58',
+    featured: true,
+    description: 'VFX breakdown demonstrating particle effects, motion graphics, and post-production techniques.'
+  },
+  {
+    id: 3,
+    category: 'all',
+    label: 'VFX Breakdown 2026 - Part 4',
+    youtubeId: 'Fa7U2LzL-N8',
+    duration: '5:30',
+    featured: true,
+    description: 'Comprehensive VFX breakdown covering color correction, keying, and final compositing.'
   },
   {
     id: 9,
@@ -335,7 +366,7 @@ const VideoCard = memo(function VideoCard({
         {/* Thumbnail with light sweep */}
         <div className="relative overflow-hidden rounded-2xl shrink-0" style={{ aspectRatio: '16 / 10' }}>
           <motion.img
-            src={video.thumb}
+            src={video.youtubeId ? getYouTubeThumbnail(video.youtubeId) : video.thumb}
             alt={video.label}
             className="w-full h-full object-cover"
             style={{ scale: imageScale }}
