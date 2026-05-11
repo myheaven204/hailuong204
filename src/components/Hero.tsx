@@ -358,11 +358,11 @@ function Hero() {
 
       {/* ── CONTENT ── */}
       <motion.div
-        className="relative z-20 text-center px-6 max-w-5xl mx-auto flex flex-col items-center pointer-events-none pt-12 md:pt-20 lg:pt-28"
+        className="relative z-20 text-center px-6 max-w-5xl mx-auto flex flex-col items-center pointer-events-none pt-8 md:pt-12 lg:pt-16"
         style={{ y: contentY, opacity: contentOpacity }}
       >
         {/* Title */}
-        <div className="relative mb-8 md:mb-12 lg:mb-16 w-full px-4 sm:px-6 h-40 sm:h-48 md:h-56 lg:h-72 xl:h-96">
+        <div className="relative mb-10 md:mb-14 lg:mb-20 w-full px-4 sm:px-6 h-44 sm:h-52 md:h-60 lg:h-80 xl:h-96">
           <TextPressure
             text="HAI LUONG"
             textColor="hsl(43 100% 50%)"
@@ -373,12 +373,12 @@ function Hero() {
             flex={false}
             stroke={false}
             scale={true}
-            minFontSize={56}
+            minFontSize={64}
           />
 
           {/* VFX Compositor label under name */}
           <div
-            className="hero-title-line flex items-center justify-center gap-3 mt-6 md:mt-8 lg:mt-10"
+            className="hero-title-line flex items-center justify-center gap-3 mt-8 md:mt-10 lg:mt-12"
             style={{ opacity: 0 }}
           >
             <div className="h-[1px] w-8 md:w-14 bg-gradient-to-r from-transparent to-amber-500/50" />
@@ -406,7 +406,7 @@ function Hero() {
 
         {/* Subtitle */}
         <p
-          className="hero-subtitle text-sm md:text-base text-gray-400 mb-16 md:mb-24 lg:mb-32 max-w-xl leading-relaxed px-4"
+          className="hero-subtitle text-sm md:text-base text-gray-400 mb-20 md:mb-28 lg:mb-36 max-w-xl leading-relaxed px-4"
           style={{ opacity: 0 }}
         >
           <span className="text-white/90">Ho Chi Minh City, Vietnam</span>

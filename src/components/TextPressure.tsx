@@ -26,8 +26,8 @@ const debounce = (func, delay) => {
 
 const TextPressure = ({
   text = 'HAI LUONG',
-  fontFamily = 'Roboto Flex',
-  fontUrl = 'https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,75..100,100..900&display=swap',
+  fontFamily = 'Space Grotesk',
+  fontUrl = 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap',
 
   width = true,
   weight = true,
@@ -43,7 +43,7 @@ const TextPressure = ({
   strokeWidth = 2,
   className = '',
 
-  minFontSize = 48
+  minFontSize = 64
 }) => {
   const containerRef = useRef(null);
   const titleRef = useRef(null);
@@ -92,8 +92,8 @@ const TextPressure = ({
     const { width: containerW, height: containerH } = containerRef.current.getBoundingClientRect();
 
     // Tính font size dựa trên container width, nhưng giới hạn hợp lý
-    let newFontSize = containerW / 2.8;
-    newFontSize = Math.max(minFontSize, Math.min(newFontSize, 140));
+    let newFontSize = containerW / 2.5;
+    newFontSize = Math.max(minFontSize, Math.min(newFontSize, 160));
 
     setFontSize(newFontSize);
     setScaleY(1);
@@ -142,7 +142,7 @@ const TextPressure = ({
 
           // Roboto Flex supports: wght, wdth, opsz
           const wdth = width ? Math.floor(getAttr(d, maxDist, 75, 100)) : 100;
-          const wght = weight ? Math.floor(getAttr(d, maxDist, 300, 900)) : 400;
+          const wght = weight ? Math.floor(getAttr(d, maxDist, 500, 700)) : 600;
 
           const newFontVariationSettings = `'wdth' ${wdth}, 'wght' ${wght}`;
 
@@ -197,7 +197,7 @@ const TextPressure = ({
           transform: `scale(1, ${scaleY})`,
           transformOrigin: 'center',
           margin: 0,
-          fontWeight: 600,
+          fontWeight: 700,
           color: stroke ? undefined : textColor,
           display: 'flex',
           justifyContent: 'center',
