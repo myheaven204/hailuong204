@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, useReducedMotion, AnimatePresence } fr
 import EnhancedCTA from './EnhancedCTA';
 import AnimatedStats from './AnimatedStats';
 import EnhancedScrollIndicator from './EnhancedScrollIndicator';
-import TextPressureEffect from './TextPressureEffect';
+import TextPressure from './TextPressure';
 
 // ─── VIEWER UI CONSTANTS ──────────────────────────────────────────────────────
 const CHANNELS = ['RGBA', 'R', 'G', 'B', 'A'];
@@ -364,10 +364,17 @@ function Hero() {
         {/* Title */}
         <div className="relative mb-6 md:mb-10 lg:mb-12 w-full px-4 sm:px-6">
           <div className="text-[2.5rem] xs:text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[8rem] xl:text-[9rem] font-black leading-[0.75] tracking-tighter">
-            <TextPressureEffect
+            <TextPressure
               text="HAI LUONG"
               textColor="hsl(43 100% 50%)"
-              intensity={1.2}
+              width={true}
+              weight={true}
+              italic={false}
+              alpha={false}
+              flex={true}
+              stroke={false}
+              scale={false}
+              minFontSize={48}
             />
           </div>
 
