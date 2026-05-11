@@ -362,7 +362,7 @@ function Hero() {
         style={{ y: contentY, opacity: contentOpacity }}
       >
         {/* Title */}
-        <div className="relative mb-16 md:mb-20 lg:mb-28 w-full px-4 sm:px-6 mt-20 md:mt-24 lg:mt-32">
+        <div className="relative w-full px-4 sm:px-6" style={{ marginTop: 'clamp(40px, 6vh, 80px)', marginBottom: 'clamp(12px, 2vh, 24px)' }}>
           <Shuffle
             text="HAI LUONG"
             shuffleDirection="right"
@@ -377,7 +377,7 @@ function Hero() {
             triggerOnce={false}
             className="font-bold"
             style={{
-              fontSize: 'clamp(64px, 12vw, 160px)',
+              fontSize: 'clamp(56px, 10vw, 140px)',
               fontFamily: "'Roboto Flex', sans-serif",
               fontWeight: 700,
               letterSpacing: '-0.03em',
@@ -390,11 +390,11 @@ function Hero() {
 
           {/* VFX Compositor label under name */}
           <div
-            className="hero-title-line flex items-center justify-center gap-3 mt-12 md:mt-14 lg:mt-18"
-            style={{ opacity: 0 }}
+            className="hero-title-line flex items-center justify-center gap-3"
+            style={{ opacity: 0, marginTop: 'clamp(6px, 1vh, 12px)' }}
           >
             <div className="h-[1px] w-8 md:w-14 bg-gradient-to-r from-transparent to-amber-500/50" />
-            <span className="text-[10px] md:text-[13px] uppercase tracking-[0.4em] md:tracking-[0.5em] font-medium text-amber-400/70 whitespace-nowrap" style={{ fontFamily: "'Space Mono', monospace" }}>
+            <span className="text-[11px] md:text-[12px] uppercase tracking-[0.4em] md:tracking-[0.5em] font-medium text-amber-400/70 whitespace-nowrap" style={{ fontFamily: "'Space Mono', monospace" }}>
               VFX Compositor
             </span>
             <div className="h-[1px] w-8 md:w-14 bg-gradient-to-l from-transparent to-amber-500/50" />
@@ -418,8 +418,8 @@ function Hero() {
 
         {/* Subtitle */}
         <p
-          className="hero-subtitle text-sm md:text-base text-gray-400 mb-20 md:mb-28 lg:mb-36 max-w-xl leading-relaxed px-4"
-          style={{ opacity: 0 }}
+          className="hero-subtitle text-sm md:text-base text-gray-400 max-w-lg leading-relaxed px-4"
+          style={{ opacity: 0, marginBottom: 'clamp(20px, 3vh, 36px)' }}
         >
           <span className="text-white/90">Ho Chi Minh City, Vietnam</span>
           <span className="mx-2 md:mx-3 text-amber-500/40">—</span>
@@ -431,18 +431,19 @@ function Hero() {
         </p>
 
         {/* CTA */}
-        <div className="pointer-events-auto mb-16 md:mb-20 lg:mb-24">
+        <div className="pointer-events-auto" style={{ marginBottom: 'clamp(16px, 2.5vh, 28px)' }}>
           <EnhancedCTA />
         </div>
 
         {/* Stats */}
-        <div className="mb-12 md:mb-16 lg:mb-20">
+        <div style={{ marginBottom: 'clamp(20px, 3vh, 40px)' }}>
           <AnimatedStats />
         </div>
 
         {/* Divider */}
         <motion.div
-          className="w-px h-10 md:h-12 bg-gradient-to-b from-amber-500/30 to-transparent mt-10 md:mt-16"
+          className="w-px h-10 md:h-12 bg-gradient-to-b from-amber-500/30 to-transparent"
+          style={{ marginTop: 'clamp(20px, 3vh, 40px)' }}
           initial={{ opacity: 0, scaleY: 0 }}
           animate={{ opacity: 1, scaleY: 1 }}
           transition={{ delay: 1.8, duration: 0.6 }}
