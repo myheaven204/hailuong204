@@ -14,7 +14,24 @@ const EXPOSURE_STOPS = ['-2', '-1', '0', '+1', '+2'];
 // ─── TIMECODE ─────────────────────────────────────────────────────────────────
 function useTimecode() {
   const [tc, setTc] = useState('00:00:00:00');
+  const [isVisible, setIsVisible] = useState(true);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0 }
+    );
+
+    const element = document.querySelector('[data-timecode]');
+    if (element) observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
     let frame = 0;
     const id = setInterval(() => {
       frame++;
@@ -25,9 +42,11 @@ function useTimecode() {
       setTc(
         `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}:${String(f).padStart(2, '0')}`
       );
-    }, 1000 / 24);
+    }, 1000 / 10);
+    timerRef.current = id;
     return () => clearInterval(id);
-  }, []);
+  }, [isVisible]);
+
   return tc;
 }
 
@@ -303,6 +322,7 @@ function Hero() {
       {/* ── VIEWER FRAME ── */}
       <div
         className="viewer-chrome absolute left-4 right-4 bottom-4 md:left-8 md:right-8 md:bottom-8 lg:left-12 lg:right-12 lg:bottom-12 rounded-sm z-10"
+        data-timecode
         style={{
           top: 80,
           border: '1px solid rgba(255,255,255,0.09)',

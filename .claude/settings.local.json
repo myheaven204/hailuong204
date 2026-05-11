@@ -21,7 +21,9 @@
       "Bash(git reset *)",
       "Bash(git commit -m 'Add Text Pressure effect to HAI LUONG title \\(reactbits.dev style\\) *)",
       "Bash(git commit -m ' *)",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "Bash(Get-ChildItem -Path \"D:\\\\WEB\\\\Porfolio_2-motion-effects\\\\Porfolio_2-motion-effects\" -Recurse -Filter \"*.tsx\" -o Name)",
+      "Bash(Select-Object -First 20)"
     ]
   }
 }

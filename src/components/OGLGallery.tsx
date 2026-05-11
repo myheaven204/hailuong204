@@ -436,7 +436,7 @@ class App {
       { image: `https://picsum.photos/seed/6/800/600?grayscale`, text: 'Project 6' },
     ];
     const galleryItems = items && items.length ? items : defaultItems;
-    this.mediasImages = galleryItems.concat(galleryItems);
+    this.mediasImages = galleryItems;
     this.medias = this.mediasImages.map((data, index) => {
       return new Media({
         geometry: this.planeGeometry,
@@ -562,14 +562,53 @@ export default function OGLGallery({
   scrollEase = 0.05
 }: any) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const appRef = useRef<App | null>(null);
+  const isVisibleRef = useRef(true);
 
   useEffect(() => {
     if (!containerRef.current) return;
+
     const app = new App(containerRef.current, { items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase });
+    appRef.current = app;
+
+    // Intersection Observer to pause rendering when off-screen
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(containerRef.current);
+
     return () => {
+      observer.disconnect();
       app.destroy();
+      appRef.current = null;
     };
   }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase]);
+
+  // Pause/resume rendering based on visibility
+  useEffect(() => {
+    const checkVisibility = () => {
+      if (appRef.current) {
+        if (isVisibleRef.current) {
+          // Resume rendering
+          if (!appRef.current.raf) {
+            appRef.current.update();
+          }
+        } else {
+          // Pause rendering
+          if (appRef.current.raf) {
+            cancelAnimationFrame(appRef.current.raf);
+            appRef.current.raf = 0;
+          }
+        }
+      }
+    };
+
+    const interval = setInterval(checkVisibility, 500);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div

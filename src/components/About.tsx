@@ -172,17 +172,17 @@ export default function About() {
     offset: ['start end', 'end start']
   });
 
-  // Parallax transforms
+  // Parallax transforms - reduced intensity for better performance
   const imageY = useTransform(
-    scrollYProgress, 
-    shouldReduceMotion ? [0, 1, 1, 1] : [0, 1], 
-    shouldReduceMotion ? [0, 0, 0, 0] : [40, -40]
-  );
-  
-  const contentY = useTransform(
-    scrollYProgress, 
-    shouldReduceMotion ? [0, 1, 1, 1] : [0, 1], 
+    scrollYProgress,
+    shouldReduceMotion ? [0, 1, 1, 1] : [0, 1],
     shouldReduceMotion ? [0, 0, 0, 0] : [20, -20]
+  );
+
+  const contentY = useTransform(
+    scrollYProgress,
+    shouldReduceMotion ? [0, 1, 1, 1] : [0, 1],
+    shouldReduceMotion ? [0, 0, 0, 0] : [10, -10]
   );
 
   return (

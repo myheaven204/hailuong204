@@ -186,8 +186,8 @@ const VimeoThumb = memo(function VimeoThumb({
           >
             <motion.div
               className="w-16 h-16 rounded-full flex items-center justify-center"
-              animate={{ scale: hovered ? [1, 1.15, 1] : 1 }}
-              transition={{ duration: 1.5, repeat: hovered ? Infinity : 0 }}
+              animate={{ scale: hovered ? 1.15 : 1 }}
+              transition={{ duration: 0.3 }}
               style={{ background: `linear-gradient(135deg, ${accentColor}, ${accentBright})`, boxShadow: `0 0 30px ${accentGlow}` }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="ml-1">
@@ -1390,9 +1390,9 @@ export default function Projects() {
                   whileHover={{ opacity: 1 }}
                 />
                 <span className="relative text-sm font-medium text-white/70 group-hover:text-black transition-colors">Load More</span>
-                <motion.span 
-                  animate={{ y: [0, 4, 0] }} 
-                  transition={{ duration: 1.5, repeat: Infinity }} 
+                <motion.span
+                  animate={{ y: [0, 4, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 0.5 }}
                   className="relative text-white/70 group-hover:text-black transition-colors"
                 >
                   <ChevronDown size={16} />
