@@ -26,7 +26,8 @@
       "Bash(Select-Object -First 20)",
       "Bash(pkill *)",
       "Bash(git commit -m 'Create modern-animated-multi-words component with original text *)",
-      "Bash(git commit -m 'Integrate modern-animated-multi-words component into Hero section *)"
+      "Bash(git commit -m 'Integrate modern-animated-multi-words component into Hero section *)",
+      "Bash(git commit -m 'Add variant switcher to Hero title *)"
     ]
   }
 }

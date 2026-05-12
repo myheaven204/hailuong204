@@ -264,6 +264,7 @@ function Hero() {
   const [activeChannel, setActiveChannel] = useState('RGBA');
   const [zoom, setZoom] = useState('100%');
   const [exposure, setExposure] = useState('0');
+  const [titleVariant, setTitleVariant] = useState<"gradient" | "primary" | "neon" | "glass">("gradient");
 
   const contentY = shouldReduceMotion
     ? useTransform(scrollYProgress, [0, 1], [0, 0])
@@ -452,15 +453,37 @@ function Hero() {
         style={{ y: contentY, opacity: contentOpacity }}
       >
         {/* Title */}
-        <div className="relative w-full px-4 sm:px-6 flex justify-center" style={{ marginTop: 'clamp(48px, 7vh, 96px)', marginBottom: 'clamp(16px, 1.5vh, 24px)' }}>
+        <div className="relative w-full px-4 sm:px-6 flex flex-col items-center" style={{ marginTop: 'clamp(48px, 7vh, 96px)', marginBottom: 'clamp(16px, 1.5vh, 24px)' }}>
           <ContainerTextFlip
             words={["HAI LUONG", "HAI LUONG", "HAI LUONG", "HAI LUONG"]}
             interval={3500}
             animationDuration={800}
-            variant="gradient"
+            variant={titleVariant}
             className="px-4 py-2 md:px-6 md:py-3"
             textClassName="text-5xl md:text-7xl lg:text-8xl"
           />
+
+          {/* Variant switcher */}
+          <motion.div
+            className="flex gap-2 mt-6 justify-center flex-wrap"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1, duration: 0.6 }}
+          >
+            {(["gradient", "primary", "neon", "glass"] as const).map((variant) => (
+              <button
+                key={variant}
+                onClick={() => setTitleVariant(variant)}
+                className={`px-3 py-1.5 rounded-lg text-xs md:text-sm font-medium transition-all duration-300 border backdrop-blur-sm ${
+                  titleVariant === variant
+                    ? "bg-amber-500/30 text-amber-300 border-amber-400/60"
+                    : "bg-white/5 text-white/50 border-white/10 hover:bg-white/10 hover:text-white/70"
+                }`}
+              >
+                {variant}
+              </button>
+            ))}
+          </motion.div>
 
           {/* Role badge */}
           <motion.div
