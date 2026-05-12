@@ -654,7 +654,7 @@ function Hero() {
   }, [shouldReduceMotion]);
 
   return (
-    <section id="home" ref={sectionRef} className="relative w-full min-h-screen flex items-center justify-center overflow-hidden" style={{ overflowX: 'hidden' }} aria-labelledby="hero-heading">
+    <section id="home" ref={sectionRef} className="relative w-full min-h-screen flex flex-col items-center justify-start pt-20 md:pt-0 overflow-hidden" style={{ overflowX: 'hidden' }} aria-labelledby="hero-heading">
       <h2 id="hero-heading" className="sr-only">VFX Artist Portfolio — Hai Luong</h2>
 
       {/* ── MARQUEE TOP ── */}
@@ -663,7 +663,7 @@ function Hero() {
       {/* Main Content Area */}
       <motion.div
         ref={heroContentRef}
-        className="relative z-10 text-center px-6 max-w-5xl mx-auto flex flex-col items-center pt-24 md:pt-0"
+        className="relative z-10 text-center px-6 max-w-5xl mx-auto flex flex-col items-center"
         style={{ opacity, scale: contentScale }}
       >
         {/* Role badge */}
