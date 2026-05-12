@@ -663,7 +663,7 @@ function Hero() {
       {/* Main Content Area */}
       <motion.div
         ref={heroContentRef}
-        className="relative z-10 text-center px-6 max-w-5xl mx-auto flex flex-col items-center"
+        className="relative z-10 text-center px-6 max-w-5xl mx-auto flex flex-col items-center pt-20 md:pt-0"
         style={{ opacity, scale: contentScale }}
       >
         {/* Role badge */}
