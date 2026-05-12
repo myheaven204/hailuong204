@@ -255,7 +255,6 @@ export default function About() {
                 transition={{ delay: 0.5, duration: 0.5 }}
                 style={{
                   border: '1px solid rgba(255,255,255,0.08)',
-                  backdropFilter: 'blur(8px)',
                 }}
               />
             </motion.div>
