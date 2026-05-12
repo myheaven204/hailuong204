@@ -140,36 +140,6 @@ export default function Navbar({ activeSection }: NavbarProps) {
           ))}
         </div>
 
-        {/* Divider */}
-        <div className="hidden sm:block w-px h-4 bg-white/[0.06] mx-2" />
-
-        {/* Hire Me button */}
-        <motion.a
-          href="mailto:hailuong.vfx@gmail.com"
-          className="relative text-[13px] sm:text-sm px-2.5 sm:px-3 py-1.5 rounded-lg font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black overflow-hidden"
-          aria-label="Hire me via email"
-          style={{
-            background: 'linear-gradient(135deg, hsl(43 100% 46%), hsl(35 100% 50%))',
-            color: 'hsl(0 0% 5%)',
-          }}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {/* Shine effect on hover */}
-          <motion.div
-            className="absolute inset-0"
-            initial={{ x: '-100%' }}
-            whileHover={{ 
-              x: '100%',
-              transition: { duration: 0.6, ease: easings.easeOut },
-            }}
-            style={{
-              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
-            }}
-          />
-          <span className="relative z-10">Hire Me</span>
-        </motion.a>
-
         {/* Mobile menu button */}
         <motion.button
           className="sm:hidden ml-2 w-8 h-8 flex flex-col items-center justify-center gap-1.5 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
@@ -245,28 +215,6 @@ export default function Navbar({ activeSection }: NavbarProps) {
           )}
         </AnimatePresence>
 
-        {/* Scroll progress indicator */}
-        <div className="hidden md:flex items-center gap-2 ml-3 pl-3" style={{ borderLeft: '1px solid rgba(255,255,255,0.06)' }}>
-          <motion.span
-            className="text-[10px] font-mono font-medium tabular-nums"
-            animate={{
-              color: scrollPct > 0 ? 'hsl(43 100% 55%)' : 'rgba(255,255,255,0.2)',
-            }}
-            transition={{ duration: 0.3 }}
-          >
-            {String(scrollPct).padStart(3, '\u2007')}
-          </motion.span>
-          <div className="w-7 h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
-            <motion.div
-              className="h-full rounded-full"
-              animate={{
-                width: `${scrollPct}%`,
-                background: 'linear-gradient(90deg, hsl(43 100% 46%), hsl(35 100% 50%))',
-              }}
-              transition={{ width: { duration: 0.15, ease: 'linear' } }}
-            />
-          </div>
-        </div>
       </motion.div>
     </nav>
   );
