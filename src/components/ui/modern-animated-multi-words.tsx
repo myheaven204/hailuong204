@@ -45,7 +45,65 @@ export function ContainerTextFlip({
     return () => clearInterval(intervalId);
   }, [words, interval, animationDuration]);
 
-  const getVariantClasses = () => {
+  const getVariantEffects = () => {
+    switch (variant) {
+      case "primary":
+        return {
+          glowAnimation: {
+            scale: [1, 1.1, 1],
+            rotate: [0, 2, -2, 0],
+            boxShadow: [
+              "0 0 20px rgba(59, 130, 246, 0.3)",
+              "0 0 40px rgba(59, 130, 246, 0.6)",
+              "0 0 20px rgba(59, 130, 246, 0.3)"
+            ]
+          },
+          duration: 3
+        };
+      case "neon":
+        return {
+          glowAnimation: {
+            scale: [1, 1.08, 1],
+            opacity: [0.8, 1, 0.8, 1, 0.8],
+            boxShadow: [
+              "0 0 20px rgba(34, 211, 238, 0.4)",
+              "0 0 50px rgba(34, 211, 238, 0.8)",
+              "0 0 20px rgba(34, 211, 238, 0.4)",
+              "0 0 40px rgba(34, 211, 238, 0.6)",
+              "0 0 20px rgba(34, 211, 238, 0.4)"
+            ]
+          },
+          duration: 2.5
+        };
+      case "glass":
+        return {
+          glowAnimation: {
+            scale: [1, 1.05, 1],
+            y: [0, -5, 0],
+            boxShadow: [
+              "0 0 20px rgba(255, 255, 255, 0.2), 0 20px 40px rgba(0, 0, 0, 0.3)",
+              "0 0 40px rgba(255, 255, 255, 0.4), 0 30px 60px rgba(0, 0, 0, 0.4)",
+              "0 0 20px rgba(255, 255, 255, 0.2), 0 20px 40px rgba(0, 0, 0, 0.3)"
+            ]
+          },
+          duration: 3.5
+        };
+      default: // gradient
+        return {
+          glowAnimation: {
+            scale: [1, 1.12, 1],
+            boxShadow: [
+              "0 0 20px rgba(217, 119, 6, 0.4), 0 0 40px rgba(180, 83, 9, 0.2)",
+              "0 0 50px rgba(217, 119, 6, 0.8), 0 0 80px rgba(180, 83, 9, 0.4)",
+              "0 0 20px rgba(217, 119, 6, 0.4), 0 0 40px rgba(180, 83, 9, 0.2)"
+            ]
+          },
+          duration: 3
+        };
+    }
+  };
+
+  const variantEffects = getVariantEffects();
     switch (variant) {
       case "primary":
         return {
@@ -76,12 +134,11 @@ export function ContainerTextFlip({
     <div className="relative inline-flex items-center justify-center">
       {/* Animated background glow */}
       <motion.div
-        animate={{
-          scale: isAnimating ? [1, 1.05, 1] : 1,
-          opacity: isAnimating ? [0.8, 1, 0.8] : 0.8,
-        }}
+        animate={variantEffects.glowAnimation}
         transition={{
-          duration: animationDuration / 1000,
+          duration: variantEffects.duration,
+          repeat: Infinity,
+          repeatType: "loop",
           ease: "easeInOut"
         }}
         className={cn(
