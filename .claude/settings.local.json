@@ -34,7 +34,8 @@
       "Bash(git commit -m 'Apply 4 premium effects to modern-animated-multi-words component *)",
       "Bash(git commit -m 'Fix pointer-events issue blocking variant buttons *)",
       "Bash(git commit -m 'Customize variant colors to match VFX portfolio aesthetic *)",
-      "Bash(git commit -m 'Add motion package to dependencies *)"
+      "Bash(git commit -m 'Add motion package to dependencies *)",
+      "Bash(git push *)"
     ]
   }
 }
