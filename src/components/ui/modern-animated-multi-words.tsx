@@ -51,23 +51,23 @@ export function ContainerTextFlip({
     switch (variant) {
       case "primary":
         return {
-          container: "bg-blue-600 text-white shadow-2xl shadow-blue-500/30 border border-blue-400/50",
-          glow: "before:bg-blue-500/20"
+          container: "bg-gradient-to-r from-blue-950/60 to-blue-900/50 text-blue-300 shadow-2xl shadow-blue-500/20 border border-blue-500/30 backdrop-blur-xl",
+          glow: "before:bg-blue-500/15"
         };
       case "neon":
         return {
-          container: "bg-gray-900 text-cyan-400 shadow-2xl shadow-cyan-500/40 border border-cyan-400/60",
-          glow: "before:bg-cyan-400/30"
+          container: "bg-gradient-to-r from-slate-900/70 to-slate-800/60 text-cyan-300 shadow-2xl shadow-cyan-500/25 border border-cyan-500/40 backdrop-blur-xl",
+          glow: "before:bg-cyan-500/20"
         };
       case "glass":
         return {
-          container: "bg-white/10 backdrop-blur-xl text-white shadow-2xl shadow-black/20 border border-white/20",
+          container: "bg-white/8 backdrop-blur-2xl text-white shadow-2xl shadow-white/10 border border-white/20",
           glow: "before:bg-white/10"
         };
-      default: // gradient
+      default: // gradient - amber/gold for VFX portfolio
         return {
-          container: "bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 text-white shadow-2xl shadow-purple-500/40 border border-white/20",
-          glow: "before:bg-gradient-to-r before:from-purple-600/30 before:via-pink-600/30 before:to-orange-500/30"
+          container: "bg-gradient-to-r from-amber-950/70 via-orange-900/60 to-amber-900/70 text-amber-300 shadow-2xl shadow-amber-500/30 border border-amber-500/40 backdrop-blur-xl",
+          glow: "before:bg-gradient-to-r before:from-amber-500/25 before:via-orange-500/20 before:to-amber-500/25"
         };
     }
   };
@@ -93,8 +93,12 @@ export function ContainerTextFlip({
         )}
         style={{
           background: variant === "gradient"
-            ? "linear-gradient(45deg, rgba(147, 51, 234, 0.3), rgba(219, 39, 119, 0.3), rgba(249, 115, 22, 0.3))"
-            : undefined
+            ? "linear-gradient(45deg, rgba(180, 83, 9, 0.25), rgba(217, 119, 6, 0.2), rgba(180, 83, 9, 0.25))"
+            : variant === "primary"
+            ? "linear-gradient(45deg, rgba(30, 58, 138, 0.2), rgba(37, 99, 235, 0.15))"
+            : variant === "neon"
+            ? "linear-gradient(45deg, rgba(34, 211, 238, 0.2), rgba(6, 182, 212, 0.15))"
+            : "linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))"
         }}
       />
 
