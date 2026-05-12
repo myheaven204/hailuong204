@@ -449,7 +449,7 @@ function Hero() {
 
       {/* ── CONTENT ── */}
       <motion.div
-        className="relative z-30 text-center px-6 max-w-6xl mx-auto flex flex-col items-center pt-0 md:pt-0 lg:pt-0"
+        className="relative z-50 text-center px-6 max-w-6xl mx-auto flex flex-col items-center pt-0 md:pt-0 lg:pt-0"
         style={{ y: contentY, opacity: contentOpacity }}
       >
         {/* Title */}
