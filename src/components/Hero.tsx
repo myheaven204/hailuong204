@@ -538,12 +538,12 @@ function Hero() {
         </p>
 
         {/* CTA */}
-        <div className="pointer-events-auto" style={{ marginBottom: 'clamp(20px, 2.8vh, 32px)' }}>
+        <div className="pointer-events-auto" style={{ marginBottom: 'clamp(16px, 2.8vh, 32px)' }}>
           <EnhancedCTA />
         </div>
 
         {/* Stats */}
-        <div style={{ marginBottom: 'clamp(28px, 3.8vh, 48px)' }}>
+        <div style={{ marginBottom: 'clamp(20px, 3.8vh, 48px)' }}>
           <AnimatedStats />
         </div>
 
