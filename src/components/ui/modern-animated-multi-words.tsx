@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect, useId } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -45,87 +47,27 @@ export function ContainerTextFlip({
     return () => clearInterval(intervalId);
   }, [words, interval, animationDuration]);
 
-  const getVariantEffects = () => {
-    switch (variant) {
-      case "primary":
-        return {
-          glowAnimation: {
-            scale: [1, 1.1, 1],
-            rotate: [0, 2, -2, 0],
-            boxShadow: [
-              "0 0 20px rgba(59, 130, 246, 0.3)",
-              "0 0 40px rgba(59, 130, 246, 0.6)",
-              "0 0 20px rgba(59, 130, 246, 0.3)"
-            ]
-          },
-          duration: 3
-        };
-      case "neon":
-        return {
-          glowAnimation: {
-            scale: [1, 1.08, 1],
-            opacity: [0.8, 1, 0.8, 1, 0.8],
-            boxShadow: [
-              "0 0 20px rgba(34, 211, 238, 0.4)",
-              "0 0 50px rgba(34, 211, 238, 0.8)",
-              "0 0 20px rgba(34, 211, 238, 0.4)",
-              "0 0 40px rgba(34, 211, 238, 0.6)",
-              "0 0 20px rgba(34, 211, 238, 0.4)"
-            ]
-          },
-          duration: 2.5
-        };
-      case "glass":
-        return {
-          glowAnimation: {
-            scale: [1, 1.05, 1],
-            y: [0, -5, 0],
-            boxShadow: [
-              "0 0 20px rgba(255, 255, 255, 0.2), 0 20px 40px rgba(0, 0, 0, 0.3)",
-              "0 0 40px rgba(255, 255, 255, 0.4), 0 30px 60px rgba(0, 0, 0, 0.4)",
-              "0 0 20px rgba(255, 255, 255, 0.2), 0 20px 40px rgba(0, 0, 0, 0.3)"
-            ]
-          },
-          duration: 3.5
-        };
-      default: // gradient
-        return {
-          glowAnimation: {
-            scale: [1, 1.12, 1],
-            boxShadow: [
-              "0 0 20px rgba(217, 119, 6, 0.4), 0 0 40px rgba(180, 83, 9, 0.2)",
-              "0 0 50px rgba(217, 119, 6, 0.8), 0 0 80px rgba(180, 83, 9, 0.4)",
-              "0 0 20px rgba(217, 119, 6, 0.4), 0 0 40px rgba(180, 83, 9, 0.2)"
-            ]
-          },
-          duration: 3
-        };
-    }
-  };
-
-  const variantEffects = getVariantEffects();
-
   const getVariantClasses = () => {
     switch (variant) {
       case "primary":
         return {
-          container: "bg-gradient-to-r from-blue-900/40 to-blue-800/30 text-blue-300 shadow-2xl shadow-blue-500/20 border border-blue-500/40 backdrop-blur-xl",
-          glow: "before:bg-blue-500/15"
+          container: "bg-blue-600 text-white shadow-2xl shadow-blue-500/30 border border-blue-400/50",
+          glow: "before:bg-blue-500/20"
         };
       case "neon":
         return {
-          container: "bg-gradient-to-r from-cyan-900/40 to-cyan-800/30 text-cyan-300 shadow-2xl shadow-cyan-500/20 border border-cyan-500/40 backdrop-blur-xl",
-          glow: "before:bg-cyan-500/15"
+          container: "bg-gray-900 text-cyan-400 shadow-2xl shadow-cyan-500/40 border border-cyan-400/60",
+          glow: "before:bg-cyan-400/30"
         };
       case "glass":
         return {
-          container: "bg-white/8 backdrop-blur-2xl text-white shadow-2xl shadow-white/10 border border-white/20",
-          glow: "before:bg-white/8"
+          container: "bg-white/10 backdrop-blur-xl text-white shadow-2xl shadow-black/20 border border-white/20",
+          glow: "before:bg-white/10"
         };
-      default: // gradient - amber/gold for VFX portfolio
+      default: // gradient
         return {
-          container: "bg-gradient-to-r from-amber-900/40 via-amber-800/30 to-orange-900/40 text-amber-300 shadow-2xl shadow-amber-500/25 border border-amber-500/40 backdrop-blur-xl",
-          glow: "before:bg-gradient-to-r before:from-amber-500/20 before:via-orange-500/15 before:to-amber-500/20"
+          container: "bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 text-white shadow-2xl shadow-purple-500/40 border border-white/20",
+          glow: "before:bg-gradient-to-r before:from-purple-600/30 before:via-pink-600/30 before:to-orange-500/30"
         };
     }
   };
@@ -136,11 +78,12 @@ export function ContainerTextFlip({
     <div className="relative inline-flex items-center justify-center">
       {/* Animated background glow */}
       <motion.div
-        animate={variantEffects.glowAnimation}
+        animate={{
+          scale: isAnimating ? [1, 1.05, 1] : 1,
+          opacity: isAnimating ? [0.8, 1, 0.8] : 0.8,
+        }}
         transition={{
-          duration: variantEffects.duration,
-          repeat: Infinity,
-          repeatType: "loop",
+          duration: animationDuration / 1000,
           ease: "easeInOut"
         }}
         className={cn(
@@ -150,12 +93,8 @@ export function ContainerTextFlip({
         )}
         style={{
           background: variant === "gradient"
-            ? "linear-gradient(45deg, rgba(180, 83, 9, 0.2), rgba(217, 119, 6, 0.15), rgba(180, 83, 9, 0.2))"
-            : variant === "primary"
-            ? "linear-gradient(45deg, rgba(30, 58, 138, 0.2), rgba(37, 99, 235, 0.15))"
-            : variant === "neon"
-            ? "linear-gradient(45deg, rgba(34, 211, 238, 0.2), rgba(6, 182, 212, 0.15))"
-            : "linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))"
+            ? "linear-gradient(45deg, rgba(147, 51, 234, 0.3), rgba(219, 39, 119, 0.3), rgba(249, 115, 22, 0.3))"
+            : undefined
         }}
       />
 

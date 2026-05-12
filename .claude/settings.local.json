@@ -30,7 +30,8 @@
       "Bash(git commit -m 'Add variant switcher to Hero title *)",
       "Bash(git commit -m 'Customize component styling for VFX portfolio aesthetic *)",
       "Bash(git commit -m 'Add premium variant-specific animations and effects *)",
-      "Bash(git commit -m 'Fix syntax error in modern-animated-multi-words component *)"
+      "Bash(git commit -m 'Fix syntax error in modern-animated-multi-words component *)",
+      "Bash(git commit -m 'Apply 4 premium effects to modern-animated-multi-words component *)"
     ]
   }
 }
