@@ -449,11 +449,11 @@ function Hero() {
 
       {/* ── CONTENT ── */}
       <motion.div
-        className="relative z-20 text-center px-6 max-w-6xl mx-auto flex flex-col items-center pointer-events-none pt-0 md:pt-0 lg:pt-0"
+        className="relative z-20 text-center px-6 max-w-6xl mx-auto flex flex-col items-center pt-0 md:pt-0 lg:pt-0"
         style={{ y: contentY, opacity: contentOpacity }}
       >
         {/* Title */}
-        <div className="relative w-full px-4 sm:px-6 flex flex-col items-center" style={{ marginTop: 'clamp(48px, 7vh, 96px)', marginBottom: 'clamp(16px, 1.5vh, 24px)' }}>
+        <div className="relative w-full px-4 sm:px-6 flex flex-col items-center pointer-events-none" style={{ marginTop: 'clamp(48px, 7vh, 96px)', marginBottom: 'clamp(16px, 1.5vh, 24px)' }}>
           <ContainerTextFlip
             words={["HAI LUONG", "HAI LUONG", "HAI LUONG", "HAI LUONG"]}
             interval={3500}
@@ -465,7 +465,7 @@ function Hero() {
 
           {/* Variant switcher */}
           <motion.div
-            className="flex gap-2 mt-6 justify-center flex-wrap"
+            className="flex gap-2 mt-6 justify-center flex-wrap pointer-events-auto"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.6 }}
