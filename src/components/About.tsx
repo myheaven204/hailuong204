@@ -225,7 +225,7 @@ export default function About() {
               style={{ y: imageY }}
             >
               <motion.img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80"
+                src="https://res.cloudinary.com/diwzqmwno/image/upload/v1778142887/ChatGPT_Image_May_7_2026_03_13_05_PM_dl4n6b.png"
                 alt="Hai Luong - VFX Compositor & Motion Designer"
                 width={800}
                 height={1000}
@@ -241,7 +241,7 @@ export default function About() {
               <div
                 className="absolute inset-0"
                 style={{
-                  background: 'linear-gradient(to top, rgba(10,10,14,0.9) 0%, transparent 55%)',
+                  background: 'linear-gradient(to top, rgba(10,10,14,0.4) 0%, transparent 70%)',
                 }}
               />
 

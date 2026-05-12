@@ -451,8 +451,12 @@ function Hero() {
 
       {/* ── CONTENT ── */}
       <motion.div
-        className="relative z-50 text-center px-6 max-w-6xl mx-auto flex flex-col items-center pt-0 md:pt-0 lg:pt-0"
-        style={{ y: contentY, opacity: contentOpacity }}
+        className="relative text-center px-6 max-w-6xl mx-auto flex flex-col items-center pt-0 md:pt-0 lg:pt-0"
+        style={{
+          y: contentY,
+          opacity: contentOpacity,
+          zIndex: window.innerWidth < 768 ? 30 : 50,
+        }}
       >
         {/* Title */}
         <div className="relative w-full px-4 sm:px-6 flex flex-col items-center pointer-events-none" style={{ marginTop: 'clamp(140px, 10vh, 150px)', marginBottom: 'clamp(12px, 1.5vh, 24px)' }}>
