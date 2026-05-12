@@ -322,7 +322,7 @@ function Hero() {
 
       {/* ── VIEWER FRAME ── */}
       <div
-        className="viewer-chrome absolute left-4 right-4 bottom-4 md:left-8 md:right-8 md:bottom-8 lg:left-12 lg:right-12 lg:bottom-12 rounded-sm z-5"
+        className="viewer-chrome absolute left-4 right-4 bottom-4 md:left-8 md:right-8 md:bottom-8 lg:left-12 lg:right-12 lg:bottom-12 rounded-sm z-40"
         data-timecode
         style={{
           top: 80,
