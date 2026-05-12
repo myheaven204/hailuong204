@@ -465,7 +465,7 @@ function Hero() {
 
           {/* Variant switcher */}
           <motion.div
-            className="flex gap-2 mt-6 justify-center flex-wrap pointer-events-auto"
+            className="flex gap-1.5 sm:gap-2 mt-4 sm:mt-6 justify-center flex-wrap pointer-events-auto px-2"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.6 }}
@@ -474,7 +474,7 @@ function Hero() {
               <button
                 key={variant}
                 onClick={() => setTitleVariant(variant)}
-                className={`px-3 py-1.5 rounded-lg text-xs md:text-sm font-medium transition-all duration-300 border backdrop-blur-sm ${
+                className={`px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg text-xs sm:text-xs md:text-sm font-medium transition-all duration-300 border backdrop-blur-sm whitespace-nowrap ${
                   titleVariant === variant
                     ? "bg-amber-500/30 text-amber-300 border-amber-400/60"
                     : "bg-white/5 text-white/50 border-white/10 hover:bg-white/10 hover:text-white/70"

@@ -35,7 +35,8 @@
       "Bash(git commit -m 'Fix pointer-events issue blocking variant buttons *)",
       "Bash(git commit -m 'Customize variant colors to match VFX portfolio aesthetic *)",
       "Bash(git commit -m 'Add motion package to dependencies *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(git commit -m 'Optimize mobile responsiveness - prevent text cutoff *)"
     ]
   }
 }

@@ -114,7 +114,7 @@ export function ContainerTextFlip({
           layout: { duration: 0.3 }
         }}
         className={cn(
-          "relative px-8 py-4 rounded-2xl backdrop-blur-sm",
+          "relative px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-2xl backdrop-blur-sm",
           "transform-gpu transition-all duration-300",
           "hover:scale-105 hover:shadow-3xl",
           variantClasses.container,
@@ -168,8 +168,8 @@ export function ContainerTextFlip({
                 ease: [0.25, 0.25, 0, 1],
               }}
               className={cn(
-                "text-4xl md:text-6xl lg:text-7xl font-black tracking-tight",
-                "text-center whitespace-nowrap",
+                "text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight",
+                "text-center break-words",
                 textClassName
               )}
             >
