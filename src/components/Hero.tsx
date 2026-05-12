@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, useReducedMotion, AnimatePresence } fr
 import EnhancedCTA from './EnhancedCTA';
 import AnimatedStats from './AnimatedStats';
 import EnhancedScrollIndicator from './EnhancedScrollIndicator';
-import Shuffle from './Shuffle';
+import { ContainerTextFlip } from './ui/modern-animated-multi-words';
 
 // ─── VIEWER UI CONSTANTS ──────────────────────────────────────────────────────
 const CHANNELS = ['RGBA', 'R', 'G', 'B', 'A'];
@@ -452,37 +452,15 @@ function Hero() {
         style={{ y: contentY, opacity: contentOpacity }}
       >
         {/* Title */}
-        <div className="relative w-full px-4 sm:px-6" style={{ marginTop: 'clamp(48px, 7vh, 96px)', marginBottom: 'clamp(16px, 1.5vh, 24px)' }}>
-          {/* Glow layer behind title */}
-          <motion.div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: 'radial-gradient(ellipse 100% 50% at 50% 50%, rgba(232,164,0,0.2) 0%, transparent 70%)',
-              filter: 'blur(50px)',
-              top: '-30px',
-              bottom: '-30px',
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
+        <div className="relative w-full px-4 sm:px-6 flex justify-center" style={{ marginTop: 'clamp(48px, 7vh, 96px)', marginBottom: 'clamp(16px, 1.5vh, 24px)' }}>
+          <ContainerTextFlip
+            words={["HAI LUONG", "HAI LUONG", "HAI LUONG", "HAI LUONG"]}
+            interval={3500}
+            animationDuration={800}
+            variant="gradient"
+            className="px-4 py-2 md:px-6 md:py-3"
+            textClassName="text-5xl md:text-7xl lg:text-8xl"
           />
-
-          <h1
-            style={{
-              fontSize: 'clamp(48px, 9vw, 120px)',
-              fontFamily: "'Roboto Flex', sans-serif",
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
-              color: 'hsl(43 100% 50%)',
-              lineHeight: 1.05,
-              cursor: 'pointer',
-              textShadow: '0 0 40px rgba(232,164,0,0.4), 0 0 80px rgba(232,164,0,0.2), 0 0 120px rgba(232,164,0,0.1)',
-              position: 'relative',
-              zIndex: 1,
-            }}
-          >
-            HAI LUONG
-          </h1>
 
           {/* Role badge */}
           <motion.div

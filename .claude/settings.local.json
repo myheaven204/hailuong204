@@ -24,7 +24,9 @@
       "Bash(npm install *)",
       "Bash(Get-ChildItem -Path \"D:\\\\WEB\\\\Porfolio_2-motion-effects\\\\Porfolio_2-motion-effects\" -Recurse -Filter \"*.tsx\" -o Name)",
       "Bash(Select-Object -First 20)",
-      "Bash(pkill *)"
+      "Bash(pkill *)",
+      "Bash(git commit -m 'Create modern-animated-multi-words component with original text *)",
+      "Bash(git commit -m 'Integrate modern-animated-multi-words component into Hero section *)"
     ]
   }
 }
