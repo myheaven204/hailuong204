@@ -322,13 +322,14 @@ function Hero() {
 
       {/* ── VIEWER FRAME ── */}
       <div
-        className="viewer-chrome absolute left-4 right-4 bottom-4 md:left-8 md:right-8 md:bottom-8 lg:left-12 lg:right-12 lg:bottom-12 rounded-sm pointer-events-none"
+        className="viewer-chrome absolute left-4 right-4 bottom-4 md:left-8 md:right-8 md:bottom-8 lg:left-12 lg:right-12 lg:bottom-12 rounded-sm"
         data-timecode
         style={{
           top: 80,
           border: '1px solid rgba(255,255,255,0.09)',
           boxShadow: '0 0 0 1px rgba(0,0,0,0.8), inset 0 0 80px rgba(0,0,0,0.3)',
           zIndex: window.innerWidth < 768 ? 45 : 10,
+          pointerEvents: 'auto',
         }}
       >
         {/* Top bar */}
