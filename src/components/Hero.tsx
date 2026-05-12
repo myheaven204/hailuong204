@@ -322,7 +322,7 @@ function Hero() {
 
       {/* ── VIEWER FRAME ── */}
       <div
-        className="viewer-chrome absolute left-4 right-4 bottom-4 md:left-8 md:right-8 md:bottom-8 lg:left-12 lg:right-12 lg:bottom-12 rounded-sm z-10"
+        className="viewer-chrome absolute left-4 right-4 bottom-4 md:left-8 md:right-8 md:bottom-8 lg:left-12 lg:right-12 lg:bottom-12 rounded-sm z-5 pointer-events-none"
         data-timecode
         style={{
           top: 80,
@@ -449,11 +449,11 @@ function Hero() {
 
       {/* ── CONTENT ── */}
       <motion.div
-        className="relative z-20 text-center px-6 max-w-6xl mx-auto flex flex-col items-center pt-0 md:pt-0 lg:pt-0"
+        className="relative z-30 text-center px-6 max-w-6xl mx-auto flex flex-col items-center pt-0 md:pt-0 lg:pt-0"
         style={{ y: contentY, opacity: contentOpacity }}
       >
         {/* Title */}
-        <div className="relative w-full px-4 sm:px-6 flex flex-col items-center pointer-events-none" style={{ marginTop: 'clamp(140px, 10vh, 120px)', marginBottom: 'clamp(12px, 1.5vh, 24px)' }}>
+        <div className="relative w-full px-4 sm:px-6 flex flex-col items-center pointer-events-none" style={{ marginTop: 'clamp(160px, 10vh, 120px)', marginBottom: 'clamp(12px, 1.5vh, 24px)' }}>
           <ContainerTextFlip
             words={["HAI LUONG", "HAI LUONG", "HAI LUONG", "HAI LUONG"]}
             interval={3500}
@@ -538,7 +538,7 @@ function Hero() {
         </p>
 
         {/* CTA */}
-        <div className="pointer-events-auto" style={{ marginBottom: 'clamp(16px, 2.8vh, 32px)' }}>
+        <div className="hero-cta pointer-events-auto" style={{ marginBottom: 'clamp(16px, 2.8vh, 32px)', opacity: 1 }}>
           <EnhancedCTA />
         </div>
 

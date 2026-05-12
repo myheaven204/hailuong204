@@ -178,6 +178,11 @@ body {
 /* ─── ANIMATION UTILITIES ─────────────────────────────────────────────────── */
 
 @layer utilities {
+  /* Hero CTA - always visible */
+  .hero-cta {
+    opacity: 1 !important;
+  }
+
   /* Fade animations */
   .animate-fade-in {
     animation: fadeIn var(--duration-normal) ease-out forwards;
