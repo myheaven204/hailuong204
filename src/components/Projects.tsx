@@ -3,7 +3,6 @@ import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion'
 import { Film, Tv, ArrowUpRight, ChevronDown, ArrowUpDown, X, Play, Calendar, Users, Clock, ChevronLeft, ChevronRight, Maximize2, Settings, Sparkles, Image } from 'lucide-react';
 import { PROJECTS, Category, Project } from '../data/projects';
 import { springs, easings, timing, staggerContainerFast } from '../hooks/useAnimationSystem';
-import OGLGallery from './OGLGallery';
 
 const CATEGORIES: { label: Category; icon: React.ReactNode }[] = [
   { label: 'All', icon: null },
@@ -1416,69 +1415,6 @@ export default function Projects() {
 
       {/* OGL Gallery Section */}
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 mt-24 md:mt-32">
-        <motion.div
-          className="mb-8"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-        >
-          <motion.div
-            className="flex items-center gap-4 mb-4"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-          >
-            <motion.div
-              className="w-12 h-px"
-              style={{ background: `linear-gradient(90deg, ${sectionAccent.accentColor}, ${sectionAccent.accentBright})` }}
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-            />
-            <span className="text-[11px] uppercase tracking-[0.4em] font-semibold text-amber-400/80">Gallery</span>
-          </motion.div>
-          <motion.h3
-            className="text-3xl md:text-5xl font-bold text-white mb-2"
-            initial={{ y: 40 }}
-            whileInView={{ y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.7, ease: easings.easeOut }}
-          >
-            Featured Work
-          </motion.h3>
-          <motion.p
-            className="text-sm text-white/40 max-w-md"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-          >
-            Scroll or drag to explore our latest VFX projects and visual effects work.
-          </motion.p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3, duration: 0.7 }}
-        >
-          <OGLGallery
-            items={PROJECTS.slice(0, 12).map(p => ({
-              image: p.thumbnail || `https://picsum.photos/seed/${p.id}/800/600?grayscale`,
-              text: p.title
-            }))}
-            bend={2}
-            textColor="#E8A400"
-            borderRadius={0.08}
-            font="bold 24px 'Space Mono'"
-            scrollSpeed={2}
-            scrollEase={0.05}
-          />
-        </motion.div>
       </div>
 
       {/* Modal */}

@@ -376,49 +376,137 @@ function Hero() {
         />
       </div>
 
+      {/* ── ANIMATED BACKGROUND ELEMENTS ── */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none z-0 overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3, duration: 1 }}
+      >
+        {/* Floating orb 1 */}
+        <motion.div
+          className="absolute w-64 h-64 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(232,164,0,0.08) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+            left: '10%',
+            top: '15%',
+          }}
+          animate={{
+            y: [0, 40, 0],
+            x: [0, 20, 0],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+
+        {/* Floating orb 2 */}
+        <motion.div
+          className="absolute w-80 h-80 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(232,164,0,0.06) 0%, transparent 70%)',
+            filter: 'blur(80px)',
+            right: '5%',
+            top: '25%',
+          }}
+          animate={{
+            y: [0, -50, 0],
+            x: [0, -30, 0],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: 1,
+          }}
+        />
+
+        {/* Floating orb 3 */}
+        <motion.div
+          className="absolute w-48 h-48 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(232,164,0,0.05) 0%, transparent 70%)',
+            filter: 'blur(50px)',
+            left: '50%',
+            bottom: '10%',
+          }}
+          animate={{
+            y: [0, 30, 0],
+            x: [0, -15, 0],
+          }}
+          transition={{
+            duration: 9,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: 2,
+          }}
+        />
+      </motion.div>
+
       {/* ── CONTENT ── */}
       <motion.div
         className="relative z-20 text-center px-6 max-w-6xl mx-auto flex flex-col items-center pointer-events-none pt-0 md:pt-0 lg:pt-0"
         style={{ y: contentY, opacity: contentOpacity }}
       >
         {/* Title */}
-        <div className="relative w-full px-4 sm:px-6" style={{ marginTop: 'clamp(48px, 7vh, 96px)', marginBottom: 'clamp(8px, 0.8vh, 14px)' }}>
-          <Shuffle
-            text="HAI LUONG"
-            shuffleDirection="right"
-            duration={0.4}
-            ease="power3.out"
-            stagger={0.05}
-            shuffleTimes={2}
-            animationMode="evenodd"
-            colorFrom="hsl(43 100% 50%)"
-            colorTo="hsl(43 100% 50%)"
-            triggerOnHover={true}
-            triggerOnce={false}
-            className="font-bold"
+        <div className="relative w-full px-4 sm:px-6" style={{ marginTop: 'clamp(48px, 7vh, 96px)', marginBottom: 'clamp(16px, 1.5vh, 24px)' }}>
+          {/* Glow layer behind title */}
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: 'radial-gradient(ellipse 100% 50% at 50% 50%, rgba(232,164,0,0.2) 0%, transparent 70%)',
+              filter: 'blur(50px)',
+              top: '-30px',
+              bottom: '-30px',
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 1 }}
+          />
+
+          <h1
             style={{
               fontSize: 'clamp(48px, 9vw, 120px)',
               fontFamily: "'Roboto Flex', sans-serif",
               fontWeight: 700,
-              letterSpacing: '-0.03em',
+              letterSpacing: '-0.02em',
               color: 'hsl(43 100% 50%)',
               lineHeight: 1.05,
-              cursor: 'pointer'
+              cursor: 'pointer',
+              textShadow: '0 0 40px rgba(232,164,0,0.4), 0 0 80px rgba(232,164,0,0.2), 0 0 120px rgba(232,164,0,0.1)',
+              position: 'relative',
+              zIndex: 1,
             }}
-            tag="h1"
-          />
-
-          {/* VFX Compositor label under name */}
-          <div
-            className="hero-title-line flex items-center justify-center gap-3"
-            style={{ opacity: 0, marginTop: 'clamp(4px, 0.6vh, 8px)' }}
           >
-            <div className="h-[1px] w-8 md:w-12 bg-gradient-to-r from-transparent to-amber-500/50" />
-            <span className="text-[10px] md:text-[11px] uppercase tracking-[0.35em] md:tracking-[0.45em] font-medium text-amber-400/70 whitespace-nowrap" style={{ fontFamily: "'Space Mono', monospace" }}>
+            HAI LUONG
+          </h1>
+
+          {/* Role badge */}
+          <motion.div
+            className="flex items-center justify-center gap-2 mt-4"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.6 }}
+          >
+            <span className="text-[11px] md:text-[12px] uppercase tracking-[0.3em] font-semibold text-amber-400/70" style={{ fontFamily: "'Space Mono', monospace" }}>
               VFX Compositor
             </span>
-            <div className="h-[1px] w-8 md:w-12 bg-gradient-to-l from-transparent to-amber-500/50" />
-          </div>
+          </motion.div>
+
+          {/* Location badge */}
+          <motion.div
+            className="flex items-center justify-center gap-2 mt-2"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+          >
+            <span className="text-[10px] md:text-[11px] text-white/50" style={{ fontFamily: "'Space Mono', monospace" }}>
+              📍 Ho Chi Minh City, Vietnam
+            </span>
+          </motion.div>
 
           {/* Vertical label — desktop */}
           <motion.div
@@ -439,13 +527,11 @@ function Hero() {
         {/* Subtitle */}
         <p
           className="hero-subtitle text-sm md:text-base text-gray-400 max-w-2xl leading-relaxed px-4"
-          style={{ opacity: 0, marginTop: 'clamp(18px, 2.2vh, 32px)', marginBottom: 'clamp(24px, 3.2vh, 40px)' }}
+          style={{ opacity: 0, marginTop: 'clamp(24px, 2.8vh, 40px)', marginBottom: 'clamp(28px, 3.2vh, 40px)' }}
         >
-          <span className="text-white/90">Ho Chi Minh City, Vietnam</span>
-          <span className="mx-2 md:mx-3 text-amber-500/40">—</span>
           <span>
             5+ years crafting{' '}
-            <span className="text-amber-400/80">photorealistic VFX</span>
+            <span className="text-amber-400/80 font-medium">photorealistic VFX</span>
             {' '}for film, TVC & music videos
           </span>
         </p>
