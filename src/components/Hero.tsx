@@ -453,7 +453,7 @@ function Hero() {
         style={{ y: contentY, opacity: contentOpacity }}
       >
         {/* Title */}
-        <div className="relative w-full px-4 sm:px-6 flex flex-col items-center pointer-events-none" style={{ marginTop: 'clamp(120px, 10vh, 120px)', marginBottom: 'clamp(12px, 1.5vh, 24px)' }}>
+        <div className="relative w-full px-4 sm:px-6 flex flex-col items-center pointer-events-none" style={{ marginTop: 'clamp(130px, 10vh, 140px)', marginBottom: 'clamp(12px, 1.5vh, 24px)' }}>
           <ContainerTextFlip
             words={["HAI LUONG", "HAI LUONG", "HAI LUONG", "HAI LUONG"]}
             interval={3500}
