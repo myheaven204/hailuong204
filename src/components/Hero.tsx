@@ -531,9 +531,9 @@ function Hero() {
           style={{ opacity: 0, marginTop: 'clamp(16px, 2.8vh, 40px)', marginBottom: 'clamp(20px, 3.2vh, 40px)' }}
         >
           <span>
-            5+ years crafting{' '}
-            <span className="text-amber-400/80 font-medium">photorealistic VFX</span>
-            {' '}for film, TVC & music videos
+            5+ years creating{' '}
+            <span className="text-amber-400/80 font-medium">cinematic VFX</span>
+            {' '}for commercials & music
           </span>
         </p>
 
