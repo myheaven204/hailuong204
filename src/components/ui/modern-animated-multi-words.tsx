@@ -104,6 +104,8 @@ export function ContainerTextFlip({
   };
 
   const variantEffects = getVariantEffects();
+
+  const getVariantClasses = () => {
     switch (variant) {
       case "primary":
         return {
