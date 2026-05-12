@@ -85,7 +85,7 @@ function ViewerTopBar({
 }) {
   return (
     <div
-      className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between px-3 py-1.5"
+      className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between px-3 py-1.5 pointer-events-auto"
       style={{
         background: 'rgba(8,8,10,0.92)',
         borderBottom: '1px solid rgba(255,255,255,0.07)',
@@ -322,12 +322,13 @@ function Hero() {
 
       {/* ── VIEWER FRAME ── */}
       <div
-        className="viewer-chrome hidden md:block absolute left-4 right-4 bottom-4 md:left-8 md:right-8 md:bottom-8 lg:left-12 lg:right-12 lg:bottom-12 rounded-sm z-10"
+        className="viewer-chrome absolute left-4 right-4 bottom-4 md:left-8 md:right-8 md:bottom-8 lg:left-12 lg:right-12 lg:bottom-12 rounded-sm pointer-events-none"
         data-timecode
         style={{
           top: 80,
           border: '1px solid rgba(255,255,255,0.09)',
           boxShadow: '0 0 0 1px rgba(0,0,0,0.8), inset 0 0 80px rgba(0,0,0,0.3)',
+          zIndex: window.innerWidth < 768 ? 45 : 10,
         }}
       >
         {/* Top bar */}
