@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { PROJECTS } from '../data/projects';
 
 const CLIENTS = [
   { name: 'Tiger Balm', logo: 'TIGER BALM' },
@@ -164,7 +165,7 @@ export default function Clients() {
         <div className="flex flex-wrap justify-center gap-5 md:gap-8">
           {[
             { value: '20+', label: 'Happy Clients', color: '#fbbf24' },
-            { value: '50+', label: 'Projects Delivered', color: '#f59e0b' },
+            { value: `${PROJECTS.length}+`, label: 'Projects Delivered', color: '#f59e0b' },
             { value: '5', label: 'Years Experience', color: '#d97706' },
           ].map((stat) => (
             <motion.div

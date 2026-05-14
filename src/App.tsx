@@ -1,12 +1,9 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLocation } from 'react-router-dom';
 import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import { ScrollProvider, useScrollContext } from './hooks/ScrollProvider';
-import { ProjectProvider, useProjectContext } from './hooks/ProjectContext';
-import ProjectDetail from './pages/ProjectDetail';
 
 // Lazy load heavy components
 const Showreel = lazy(() => import('./components/Showreel'));
@@ -46,18 +43,11 @@ function SectionFallback() {
 
 // Content inside ScrollProvider + ProjectProvider — can access both contexts
 function AppContent() {
-  const location = useLocation();
   const { activeSection } = useScrollContext();
-  const { selectedProject, selectProject } = useProjectContext();
   const [isLoading, setIsLoading] = useState(true);
-  const [isProjectClosing, setIsProjectClosing] = useState(false);
   const [isProjectsModalOpen, setIsProjectsModalOpen] = useState(false);
-  const [showBackgroundVideo] = useState(true);
 
-  // Video background is always shown (controlled by showBackgroundVideo state)
-
-  const isProjectDetail = location.pathname.startsWith('/project/');
-  const shouldHideNavbar = selectedProject || isProjectDetail || isProjectsModalOpen;
+  const shouldHideNavbar = isProjectsModalOpen;
 
   // Listen for projects modal open/close events
   useEffect(() => {
@@ -73,26 +63,11 @@ function AppContent() {
     };
   }, []);
 
-  // Hide body scroll when project detail page is open
-  useEffect(() => {
-    document.body.style.overflow = isProjectDetail ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [isProjectDetail]);
-
-  // Handle project close with animation
-  const handleCloseProject = () => {
-    setIsProjectClosing(true);
-    setTimeout(() => {
-      selectProject(null);
-      setIsProjectClosing(false);
-    }, 50);
-  };
-
   return (
     <>
       {/* Layer 1: Video background */}
       <AnimatePresence>
-        {!selectedProject && (
+        {(
           <motion.div
             className="fixed inset-0 z-[-20]"
             initial={{ opacity: 1 }}
@@ -109,7 +84,7 @@ function AppContent() {
       </AnimatePresence>
 
       <AnimatePresence>
-        {!selectedProject && (
+        {(
           <motion.div
             className="fixed inset-0 z-[-5] pointer-events-none"
             initial={{ opacity: 1 }}
@@ -187,36 +162,6 @@ function AppContent() {
         </>
       )}
 
-      {/* Project Detail Overlay */}
-      <AnimatePresence>
-        {selectedProject && (
-          <motion.div
-            key={selectedProject.id}
-            className="fixed inset-0 z-[9999]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <ProjectDetail />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Project Detail Page - rendered via React Router when on /project/:id route */}
-      <AnimatePresence>
-        {isProjectDetail && (
-          <motion.div
-            className="fixed inset-0 z-[9999] overflow-auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <ProjectDetail />
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 }
@@ -225,9 +170,7 @@ function App() {
   useUnicornStudio();
   return (
     <ScrollProvider>
-      <ProjectProvider>
-        <AppContent />
-      </ProjectProvider>
+      <AppContent />
     </ScrollProvider>
   );
 }

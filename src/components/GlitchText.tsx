@@ -99,9 +99,11 @@ export default function GlitchText({
     };
   }, [text, isGlitching, randomGlitch, glitchInterval]);
 
+  const visibleText = displayText.slice(0, revealedChars);
+
   // Effect-specific animations
   if (effect === 'wave') {
-    const chars = text.split('');
+    const chars = visibleText.split('');
     return (
       <motion.span
         className={`relative inline-block ${className}`}
@@ -226,11 +228,11 @@ export default function GlitchText({
       onHoverStart={() => setIsGlitching(true)}
       onHoverEnd={() => setIsGlitching(false)}
     >
-      <span className="relative z-10">{displayText}</span>
+      <span className="relative z-10">{visibleText}</span>
 
       {/* Cyan glitch layer */}
       <AnimatePresence>
-        {(isGlitching || randomGlitch) && (
+        {showChromaticAberration && (isGlitching || randomGlitch) && (
           <motion.span
             className="absolute inset-0 text-cyan-400/70 pointer-events-none"
             initial={{ x: 0, opacity: 0 }}
@@ -242,14 +244,14 @@ export default function GlitchText({
             transition={{ duration: 0.15, repeat: Infinity }}
             style={{ clipPath: 'inset(0 0 50% 0)' }}
           >
-            {displayText}
+            {visibleText}
           </motion.span>
         )}
       </AnimatePresence>
 
       {/* Red glitch layer */}
       <AnimatePresence>
-        {(isGlitching || randomGlitch) && (
+        {showChromaticAberration && (isGlitching || randomGlitch) && (
           <motion.span
             className="absolute inset-0 text-red-500/70 pointer-events-none"
             initial={{ x: 0, opacity: 0 }}
@@ -261,7 +263,7 @@ export default function GlitchText({
             transition={{ duration: 0.15, repeat: Infinity, delay: 0.05 }}
             style={{ clipPath: 'inset(50% 0 0 0)' }}
           >
-            {displayText}
+            {visibleText}
           </motion.span>
         )}
       </AnimatePresence>
@@ -279,10 +281,21 @@ export default function GlitchText({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.12, repeat: Infinity, delay: 0.08 }}
           >
-            {displayText}
+            {visibleText}
           </motion.span>
         )}
       </AnimatePresence>
+
+      {showScanline && (
+        <span
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none opacity-30"
+          style={{
+            backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.18) 2px, rgba(255,255,255,0.18) 3px)',
+            mixBlendMode: 'screen',
+          }}
+        />
+      )}
     </motion.span>
   );
 }

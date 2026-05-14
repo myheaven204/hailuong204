@@ -3,7 +3,6 @@ import { gsap } from 'gsap';
 import { motion, useScroll, useTransform, useReducedMotion, AnimatePresence } from 'framer-motion';
 import EnhancedCTA from './EnhancedCTA';
 import AnimatedStats from './AnimatedStats';
-import EnhancedScrollIndicator from './EnhancedScrollIndicator';
 import { ContainerTextFlip } from './ui/modern-animated-multi-words';
 
 // ─── VIEWER UI CONSTANTS ──────────────────────────────────────────────────────
@@ -73,8 +72,6 @@ function ScanlineOverlay() {
 function ViewerTopBar({
   activeChannel,
   onChannel,
-  zoom,
-  onZoom,
   timecode,
 }: {
   activeChannel: string;
@@ -238,13 +235,13 @@ function ViewerCrosshairs() {
   ];
   return (
     <>
-      {corners.map((pos, i) => (
+      {corners.map(({ rotate, ...pos }, i) => (
         <div
           key={i}
           className="absolute w-5 h-5 pointer-events-none z-20"
           style={{
             ...pos,
-            transform: `rotate(${pos.rotate}deg)`,
+            transform: `rotate(${rotate}deg)`,
             borderTop: '1px solid rgba(232,164,0,0.35)',
             borderLeft: '1px solid rgba(232,164,0,0.35)',
           }}
@@ -266,13 +263,17 @@ function Hero() {
   const [exposure, setExposure] = useState('0');
   const [titleVariant, setTitleVariant] = useState<"gradient" | "primary" | "neon" | "glass">("gradient");
 
-  const contentY = shouldReduceMotion
-    ? useTransform(scrollYProgress, [0, 1], [0, 0])
-    : useTransform(scrollYProgress, [0, 0.4], [0, -60]);
+  const contentY = useTransform(
+    scrollYProgress,
+    shouldReduceMotion ? [0, 1] : [0, 0.4],
+    shouldReduceMotion ? [0, 0] : [0, -60]
+  );
 
-  const contentOpacity = shouldReduceMotion
-    ? useTransform(scrollYProgress, [0, 1], [1, 1])
-    : useTransform(scrollYProgress, [0, 0.25], [1, 0]);
+  const contentOpacity = useTransform(
+    scrollYProgress,
+    shouldReduceMotion ? [0, 1] : [0, 0.25],
+    shouldReduceMotion ? [1, 1] : [1, 0]
+  );
 
   useEffect(() => {
     if (shouldReduceMotion) {

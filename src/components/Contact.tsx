@@ -34,7 +34,6 @@ function AnimatedInput({
 }) {
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const shouldReduceMotion = useReducedMotion();
 
   return (
     <motion.div

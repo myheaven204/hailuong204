@@ -174,7 +174,7 @@ export default function VolumetricText() {
     });
   }, []);
 
-  const drawReflections = useCallback((ctx: CanvasRenderingContext2D, width: number, height: number) => {
+  const drawReflections = useCallback((ctx: CanvasRenderingContext2D) => {
     const { x, y } = mouseRef.current;
     
     ctx.save();
@@ -206,7 +206,7 @@ export default function VolumetricText() {
     
     drawVolumetricLight(ctx, width, height);
     drawParticles(ctx, width, height);
-    drawReflections(ctx, width, height);
+    drawReflections(ctx);
     
     rafRef.current = requestAnimationFrame(animate);
   }, [drawVolumetricLight, drawParticles, drawReflections]);

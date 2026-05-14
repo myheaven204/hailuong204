@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState, useCallback } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 interface NodeData {
@@ -128,7 +128,6 @@ function ConnectionLine({ from, to, isActive }: {
 }
 
 const NukeNodeTree = memo(function NukeNodeTree({ className = '' }: { className?: string }) {
-  const [activeNode] = useState<string | null>(null);
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [dataStream, setDataStream] = useState(0);
 
@@ -137,16 +136,6 @@ const NukeNodeTree = memo(function NukeNodeTree({ className = '' }: { className?
       setDataStream(d => (d + 1) % 4);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
-
-  const activeConnections = useCallback((nodeId: string) => {
-    const node = INITIAL_NODES.find(n => n.id === nodeId);
-    if (!node) return [];
-    return node.connections;
-  }, []);
-
-  const isNodeActive = useCallback((_nodeId: string) => {
-    return true;
   }, []);
 
   return (

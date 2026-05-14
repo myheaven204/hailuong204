@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useMemo, memo } from 'react';
 import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion';
-import { Play, X, Youtube, Layers, Image, Wand2, Sparkles, Grid3X3, Film, Clock, ArrowUpRight } from 'lucide-react';
+import { Play, X, Youtube, Layers, Grid3X3, Film, Clock, ArrowUpRight, ArrowUpDown } from 'lucide-react';
 
 // ─── HELPER FUNCTIONS ──────────────────────────────────────────────────────
 const getYouTubeThumbnail = (youtubeId: string) => {
@@ -23,11 +23,7 @@ const getYouTubeTitle = async (youtubeId: string): Promise<string | null> => {
 
 // ─── CONSTANTS ─────────────────────────────────────────────────────────────
 const VIDEO_CATEGORIES = [
-  { id: 'all', label: 'All', icon: <Grid3X3 size={14} /> },
-  { id: 'plate', label: 'Plate', icon: <Image size={14} /> },
-  { id: 'cg', label: 'CG', icon: <Layers size={14} /> },
-  { id: 'fx', label: 'FX', icon: <Wand2 size={14} /> },
-  { id: 'comp', label: 'Comp', icon: <Sparkles size={14} /> },
+  { id: 'tvc', label: 'TVC', icon: <Film size={14} /> },
 ];
 
 const VIDEOS = [
@@ -168,6 +164,8 @@ const VIDEOS = [
     description: 'SPICE fx 2020 showreel — best VFX from films, TVC, and music videos.'
   },
 ];
+
+const BREAKDOWN_VIDEOS = VIDEOS.filter(video => video.label.toUpperCase().includes('BREAKDOWN'));
 
 // ─── VIDEO MODAL ───────────────────────────────────────────────────────────
 const VideoModal = memo(function VideoModal({
@@ -543,7 +541,7 @@ const VideoCard = memo(function VideoCard({
 
 // ─── MAIN COMPONENT ────────────────────────────────────────────────────────
 export default function Breakdown() {
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
   const [selectedVideo, setSelectedVideo] = useState<typeof VIDEOS[0] | null>(null);
   const [videoTitles, setVideoTitles] = useState<Record<string, string>>({});
 
@@ -552,8 +550,8 @@ export default function Breakdown() {
     const fetchTitles = async () => {
       const titles: Record<string, string> = {};
 
-      for (const video of VIDEOS) {
-        if (video.youtubeId && !videoTitles[video.youtubeId]) {
+      for (const video of BREAKDOWN_VIDEOS) {
+        if (video.youtubeId) {
           const title = await getYouTubeTitle(video.youtubeId);
           if (title) {
             titles[video.youtubeId] = title;
@@ -569,10 +567,18 @@ export default function Breakdown() {
     fetchTitles();
   }, []);
 
-  const filteredVideos = useMemo(() => {
-    if (activeCategory === 'all') return VIDEOS;
-    return VIDEOS.filter(v => v.category === activeCategory);
-  }, [activeCategory]);
+  const sortedVideos = useMemo(() => {
+    const getYear = (label: string) => {
+      const match = label.match(/20\d{2}/);
+      return match ? Number(match[0]) : 0;
+    };
+
+    return [...BREAKDOWN_VIDEOS].sort((a, b) => {
+      const yearA = getYear(a.label);
+      const yearB = getYear(b.label);
+      return sortOrder === 'newest' ? yearB - yearA : yearA - yearB;
+    });
+  }, [sortOrder]);
 
   return (
     <section id="breakdown" className="py-24 md:py-32 overflow-hidden" aria-labelledby="breakdown-heading">
@@ -628,48 +634,69 @@ export default function Breakdown() {
             </motion.p>
           </div>
 
-          {/* Category filters */}
-          <motion.div
-            className="flex flex-wrap gap-2"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-          >
-            {VIDEO_CATEGORIES.map((cat) => (
-              <motion.button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className="relative flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium overflow-hidden"
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
-                style={{
-                  background: activeCategory === cat.id
-                    ? 'linear-gradient(135deg, hsl(43 100% 46%), hsl(35 100% 50%))'
-                    : 'rgba(12, 12, 15, 0.6)',
-                  border: `1px solid ${activeCategory === cat.id ? 'transparent' : 'rgba(255,255,255,0.08)'}`,
-                  color: activeCategory === cat.id ? 'hsl(0 0% 5%)' : 'rgba(255,255,255,0.5)',
-                  backdropFilter: 'blur(40px)',
-                  WebkitBackdropFilter: 'blur(40px)',
-                  transition: 'all 0.4s cubic-bezier(0.25,0.1,0.25,1)',
-                }}
-              >
-                {cat.icon}
-                {cat.label}
-              </motion.button>
-            ))}
-          </motion.div>
+          {/* Controls */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <motion.div
+              className="flex flex-wrap gap-2"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              {VIDEO_CATEGORIES.map((cat) => (
+                <motion.button
+                  key={cat.id}
+                  aria-pressed="true"
+                  className="relative flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium overflow-hidden"
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
+                  style={{
+                    background: 'linear-gradient(135deg, hsl(43 100% 46%), hsl(35 100% 50%))',
+                    border: '1px solid transparent',
+                    color: 'hsl(0 0% 5%)',
+                    backdropFilter: 'blur(40px)',
+                    WebkitBackdropFilter: 'blur(40px)',
+                    transition: 'all 0.4s cubic-bezier(0.25,0.1,0.25,1)',
+                  }}
+                >
+                  {cat.icon}
+                  {cat.label}
+                </motion.button>
+              ))}
+            </motion.div>
+
+            <motion.button
+              onClick={() => setSortOrder(prev => prev === 'newest' ? 'oldest' : 'newest')}
+              aria-label={`Sort by ${sortOrder === 'newest' ? 'oldest first' : 'newest first'}`}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-full text-sm"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              style={{
+                background: 'rgba(12, 12, 15, 0.6)',
+                border: '1px solid rgba(255,255,255,0.08)',
+                color: 'rgba(255,255,255,0.5)',
+                backdropFilter: 'blur(40px)',
+                WebkitBackdropFilter: 'blur(40px)',
+                transition: 'all 0.4s cubic-bezier(0.25,0.1,0.25,1)',
+              }}
+            >
+              <motion.div animate={{ rotate: sortOrder === 'newest' ? 0 : 180 }}>
+                <ArrowUpDown size={14} />
+              </motion.div>
+              <span className="text-xs font-medium">{sortOrder === 'newest' ? 'Newest' : 'Oldest'}</span>
+            </motion.button>
+          </div>
         </motion.div>
 
         {/* Grid */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
-          key={activeCategory}
+          key={sortOrder}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
         >
-          {filteredVideos.map((video, index) => (
+          {sortedVideos.map((video, index) => (
             <VideoCard
               key={video.id}
               video={video}
@@ -696,9 +723,9 @@ export default function Breakdown() {
           transition={{ delay: 0.4 }}
         >
           {[
-            { label: 'Videos', value: filteredVideos.length, icon: <Film size={16} /> },
+            { label: 'Videos', value: sortedVideos.length, icon: <Film size={16} /> },
             { label: 'Pipeline Steps', value: 4, icon: <Layers size={16} /> },
-            { label: 'Categories', value: VIDEO_CATEGORIES.length - 1, icon: <Grid3X3 size={16} /> },
+            { label: 'Categories', value: VIDEO_CATEGORIES.length, icon: <Grid3X3 size={16} /> },
           ].map((stat) => (
             <div key={stat.label} className="flex items-center gap-3">
               <div

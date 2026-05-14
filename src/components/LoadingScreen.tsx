@@ -47,7 +47,6 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   }, [onComplete]);
 
   const keyframePositions = [5, 15, 28, 42, 55, 68, 82, 95];
-  const timelineHeight = 120;
 
   return (
     <motion.div

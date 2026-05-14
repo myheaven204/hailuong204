@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowLeft,
   ArrowRight,
@@ -12,23 +12,18 @@ import {
   X,
   Play,
   Pause,
-  Film,
   Image,
   Clapperboard,
-  Sparkles,
   ChevronDown,
   Youtube,
-  Volume2,
-  VolumeX,
   Maximize2,
   Settings,
   Star,
   MessageSquare,
   Grid3X3,
   Eye,
-  Tag,
 } from 'lucide-react';
-import { getProjectById, getAdjacentProjects } from '../data/projects';
+import { PROJECTS, getProjectById, getAdjacentProjects } from '../data/projects';
 import YouTubePlayer from '../components/YouTubePlayer';
 
 // ─── INTERACTIVE PROJECT TITLE ────────────────────────────────────────────────
@@ -133,7 +128,7 @@ function buildProjectVideos(project: ReturnType<typeof getProjectById>): Project
   if (!project?.youtubeId) return [];
 
   const thumbnails = [project.image, ...(project.gallery ?? [])];
-  return thumbnails.slice(0, 6).map((thumb, index) => ({
+  return thumbnails.map((thumb, index) => ({
     id: index + 1,
     label: index === 0 ? `${project.title} - Official` : `${project.title} - Shot ${index}`,
     youtubeId: project.youtubeId!,
@@ -159,8 +154,6 @@ export default function ProjectDetail() {
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [activeVideo, setActiveVideo] = useState<ProjectVideo | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -469,6 +462,7 @@ function MetaPill({ icon, label, value }: { icon: React.ReactNode; label: string
 function OverviewTab({ project }: { project: ReturnType<typeof getProjectById> }) {
   if (!project) return null;
   const artistCredits = project.artists && project.artists.length > 0 ? project.artists : DEFAULT_ARTISTS;
+  const visibleTools = project.tools?.filter(tool => tool !== 'DaVinci Resolve') ?? [];
 
   return (
     <div className="space-y-12">
@@ -484,48 +478,8 @@ function OverviewTab({ project }: { project: ReturnType<typeof getProjectById> }
         </motion.div>
       )}
 
-      {/* Challenge & Solution */}
-      {(project.challenge || project.solution) && (
-        <div className="grid md:grid-cols-2 gap-5">
-          {project.challenge && (
-            <motion.div
-              className="relative p-8 rounded-2xl bg-white/[0.03] border border-white/8 backdrop-blur-md overflow-hidden"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <div className="absolute top-0 left-0 w-1 h-full rounded-l-2xl" style={{ background: 'linear-gradient(to bottom, #ef4444, transparent)' }} />
-              <div className="flex items-center gap-3 mb-5">
-                <Settings size={18} className="text-red-400" />
-                <p className="text-[11px] text-red-400 uppercase tracking-[0.35em] font-semibold">Thách Thức</p>
-              </div>
-              <p className="text-base md:text-lg text-white/80 leading-relaxed">
-                {project.challenge}
-              </p>
-            </motion.div>
-          )}
-          {project.solution && (
-            <motion.div
-              className="relative p-8 rounded-2xl bg-white/[0.03] border border-white/8 backdrop-blur-md overflow-hidden"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-            >
-              <div className="absolute top-0 left-0 w-1 h-full rounded-l-2xl" style={{ background: 'linear-gradient(to bottom, #22c55e, transparent)' }} />
-              <div className="flex items-center gap-3 mb-5">
-                <Sparkles size={18} className="text-green-400" />
-                <p className="text-[11px] text-green-400 uppercase tracking-[0.35em] font-semibold">Giải Pháp</p>
-              </div>
-              <p className="text-base md:text-lg text-white/80 leading-relaxed">
-                {project.solution}
-              </p>
-            </motion.div>
-          )}
-        </div>
-      )}
-
       {/* Tools */}
-      {project.tools && project.tools.length > 0 && (
+      {visibleTools.length > 0 && (
         <motion.div
           className="p-8 rounded-2xl bg-white/[0.03] border border-white/8 backdrop-blur-md"
           initial={{ opacity: 0, y: 30 }}
@@ -537,7 +491,7 @@ function OverviewTab({ project }: { project: ReturnType<typeof getProjectById> }
             <p className="text-[11px] text-accent uppercase tracking-[0.35em] font-semibold">Công Cụ Sử Dụng</p>
           </div>
           <div className="flex flex-wrap gap-3">
-            {project.tools.map((tool, i) => (
+            {visibleTools.map((tool, i) => (
               <motion.span
                 key={tool}
                 className="px-5 py-2.5 rounded-full bg-white/[0.04] border border-white/10 text-sm text-white/70 hover:border-accent/40 hover:text-accent transition-all duration-300 cursor-default"
@@ -983,7 +937,7 @@ function AwardsTab({ project }: { project: ReturnType<typeof getProjectById> }) 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
         {[
           { value: '100%', label: 'Client Hài Lòng' },
-          { value: '50+', label: 'Projects Hoàn Thành' },
+          { value: `${PROJECTS.length}+`, label: 'Projects Hoàn Thành' },
           { value: '5+', label: 'Năm Kinh Nghiệm' },
           { value: '10+', label: 'Awards Đạt Được' },
         ].map((stat, i) => (

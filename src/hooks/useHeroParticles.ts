@@ -98,5 +98,5 @@ export function useHeroParticles(canvasRef: React.RefObject<HTMLCanvasElement>) 
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [shouldReduceMotion]);
+  }, [canvasRef, shouldReduceMotion]);
 }

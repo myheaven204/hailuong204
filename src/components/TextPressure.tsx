@@ -3,23 +3,41 @@
 
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 
-const dist = (a, b) => {
+type Point = { x: number; y: number };
+
+interface TextPressureProps {
+  text?: string;
+  fontFamily?: string;
+  fontUrl?: string;
+  width?: boolean;
+  weight?: boolean;
+  flex?: boolean;
+  stroke?: boolean;
+  scale?: boolean;
+  textColor?: string;
+  strokeColor?: string;
+  strokeWidth?: number;
+  className?: string;
+  minFontSize?: number;
+}
+
+const dist = (a: Point, b: Point) => {
   const dx = b.x - a.x;
   const dy = b.y - a.y;
   return Math.sqrt(dx * dx + dy * dy);
 };
 
-const getAttr = (distance, maxDist, minVal, maxVal) => {
+const getAttr = (distance: number, maxDist: number, minVal: number, maxVal: number) => {
   const val = maxVal - Math.abs((maxVal * distance) / maxDist);
   return Math.max(minVal, val + minVal);
 };
 
-const debounce = (func, delay) => {
-  let timeoutId;
-  return (...args) => {
+const debounce = (func: () => void, delay: number) => {
+  let timeoutId: ReturnType<typeof setTimeout>;
+  return () => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
-      func.apply(this, args);
+      func();
     }, delay);
   };
 };
@@ -31,8 +49,6 @@ const TextPressure = ({
 
   width = true,
   weight = true,
-  italic = false,
-  alpha = false,
 
   flex = false,
   stroke = false,
@@ -44,10 +60,10 @@ const TextPressure = ({
   className = '',
 
   minFontSize = 64
-}) => {
-  const containerRef = useRef(null);
-  const titleRef = useRef(null);
-  const spansRef = useRef([]);
+}: TextPressureProps) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const spansRef = useRef<Array<HTMLSpanElement | null>>([]);
 
   const mouseRef = useRef({ x: 0, y: 0 });
   const cursorRef = useRef({ x: 0, y: 0 });
@@ -59,12 +75,13 @@ const TextPressure = ({
   const chars = text.split('');
 
   useEffect(() => {
-    const handleMouseMove = e => {
+    const handleMouseMove = (e: MouseEvent) => {
       cursorRef.current.x = e.clientX;
       cursorRef.current.y = e.clientY;
     };
-    const handleTouchMove = e => {
+    const handleTouchMove = (e: TouchEvent) => {
       const t = e.touches[0];
+      if (!t) return;
       cursorRef.current.x = t.clientX;
       cursorRef.current.y = t.clientY;
     };
@@ -119,7 +136,7 @@ const TextPressure = ({
   }, [setSize]);
 
   useEffect(() => {
-    let rafId;
+    let rafId = 0;
     const animate = () => {
       mouseRef.current.x += (cursorRef.current.x - mouseRef.current.x) / 15;
       mouseRef.current.y += (cursorRef.current.y - mouseRef.current.y) / 15;
@@ -138,8 +155,6 @@ const TextPressure = ({
           };
 
           const d = dist(mouseRef.current, charCenter);
-          const influence = Math.max(0, 1 - d / maxDist);
-
           // Roboto Flex supports: wght, wdth, opsz
           const wdth = width ? Math.floor(getAttr(d, maxDist, 75, 100)) : 100;
           const wght = weight ? Math.floor(getAttr(d, maxDist, 400, 900)) : 700;
@@ -210,7 +225,9 @@ const TextPressure = ({
         {chars.map((char, i) => (
           <span
             key={i}
-            ref={el => (spansRef.current[i] = el)}
+            ref={el => {
+              spansRef.current[i] = el;
+            }}
             data-char={char}
             className="inline-block"
             style={{

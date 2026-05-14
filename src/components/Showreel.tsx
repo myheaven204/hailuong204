@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, memo } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { Play, X, Film } from 'lucide-react';
 import { springs, easings, timing } from '../hooks/useAnimationSystem';
+import { PROJECTS } from '../data/projects';
 
 // ─── COUNT UP ANIMATION ───────────────────────────────────────────────────
 function CountUp({ target, label, isInView }: { target: string; label: string; isInView: boolean }) {
@@ -463,7 +464,7 @@ function Showreel() {
           transition={{ delay: 0.4, duration: 0.6 }}
         >
           {[
-            { value: '50+', label: 'Projects' },
+            { value: `${PROJECTS.length}+`, label: 'Projects' },
             { value: '5', label: 'Years Exp' },
             { value: '20+', label: 'Clients' },
           ].map((stat, i) => (

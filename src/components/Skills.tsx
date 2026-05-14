@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { easings, timing } from '../hooks/useAnimationSystem';
+import { easings } from '../hooks/useAnimationSystem';
 import { COLOR_PALETTE } from '../utils/gradients';
 
 const ANIMATION_CONFIG = {

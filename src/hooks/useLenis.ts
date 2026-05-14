@@ -10,9 +10,6 @@ export function useLenis(callback: LenisCallback) {
   const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
-    // Check if Lenis is available
-    const lenisElement = document.querySelector('[data-lenis]');
-    
     const handleScroll = () => {
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);

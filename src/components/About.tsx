@@ -1,13 +1,14 @@
 import { useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useReducedMotion, useMotionValue, useMotionTemplate } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion, useMotionValueEvent } from 'framer-motion';
 import { Film, Users, Clock } from 'lucide-react';
 import { easings } from '../hooks/useAnimationSystem';
-import { GRADIENTS, gradientTextStyle, COLOR_PALETTE } from '../utils/gradients';
+import { GRADIENTS, COLOR_PALETTE } from '../utils/gradients';
+import { PROJECTS } from '../data/projects';
 
 const EXPERTISE = [
   {
     icon: <Film size={18} aria-hidden="true" />,
-    value: '50+',
+    value: `${PROJECTS.length}+`,
     label: 'Projects',
     sublabel: 'Film & TVC',
     color: COLOR_PALETTE.amber[500]
@@ -32,13 +33,11 @@ const SKILLS = [
   'Compositing', 'Matchmoving', 'Rotoscoping', 'Cleanup'
 ];
 
-function AnimatedCounter({ target, duration = 2000 }: { target: string; duration?: number }) {
+function AnimatedCounter({ target }: { target: string }) {
   const shouldReduceMotion = useReducedMotion();
   const numericTarget = parseInt(target.replace(/\D/g, ''));
   const suffix = target.replace(/[\d]/g, '');
-
-  const count = useMotionValue(0);
-  const displayCount = useMotionTemplate`${count.get().toFixed(0)}`;
+  const [displayCount, setDisplayCount] = useState(shouldReduceMotion ? numericTarget : 0);
 
   const ref = useRef<HTMLSpanElement>(null);
   const { scrollYProgress } = useScroll({
@@ -52,6 +51,12 @@ function AnimatedCounter({ target, duration = 2000 }: { target: string; duration
     [0, 0, numericTarget]
   );
 
+  useMotionValueEvent(animatedCount, 'change', (latest) => {
+    if (!shouldReduceMotion) {
+      setDisplayCount(Math.floor(latest));
+    }
+  });
+
   return (
     <motion.span
       ref={ref}
@@ -60,16 +65,7 @@ function AnimatedCounter({ target, duration = 2000 }: { target: string; duration
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
     >
-      <motion.span
-        value={animatedCount}
-        onUpdate={(latest) => {
-          if (!shouldReduceMotion) {
-            count.set(latest);
-          }
-        }}
-      >
-        {shouldReduceMotion ? numericTarget : Math.floor(animatedCount.get())}
-      </motion.span>
+      <motion.span>{shouldReduceMotion ? numericTarget : displayCount}</motion.span>
       {suffix}
     </motion.span>
   );

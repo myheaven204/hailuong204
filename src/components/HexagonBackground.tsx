@@ -131,7 +131,6 @@ export default function HexagonBackground() {
 
       // Second pass: spread glow to neighbors
       const colStep = (HEX_SIZE + HEX_GAP / 2) * Math.sqrt(3);
-      const rowStep = (HEX_SIZE + HEX_GAP / 2) * 1.5;
       const neighborDist = colStep * 1.2;
 
       for (let i = 0; i < hexes.length; i++) {

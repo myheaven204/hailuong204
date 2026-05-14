@@ -100,8 +100,9 @@ function ScrambleTitle({ children, className }: { children: React.ReactNode; cla
     if (isHovered && !isScrambling) {
       scramble();
     }
+    const timeout = timeoutRef.current;
     return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (timeout) clearTimeout(timeout);
     };
   }, [isHovered, scramble, isScrambling]);
 

@@ -1,12 +1,11 @@
 import { useState, useEffect, useRef, memo, useCallback } from 'react';
 import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion';
-import { Film, Tv, ArrowUpRight, ChevronDown, ArrowUpDown, X, Play, Calendar, Users, Clock, ChevronLeft, ChevronRight, Maximize2, Settings, Sparkles, Image } from 'lucide-react';
+import { Tv, ArrowUpRight, ChevronDown, ArrowUpDown, X, Play, Calendar, Users, Clock, ChevronLeft, ChevronRight, Maximize2, Settings, Image } from 'lucide-react';
 import { PROJECTS, Category, Project } from '../data/projects';
 import { springs, easings, timing, staggerContainerFast } from '../hooks/useAnimationSystem';
 
 const CATEGORIES: { label: Category; icon: React.ReactNode }[] = [
   { label: 'All', icon: null },
-  { label: 'Film', icon: <Film size={14} /> },
   { label: 'TVC', icon: <Tv size={14} /> },
 ];
 
@@ -412,11 +411,16 @@ const ProjectModal = memo(function ProjectModal({
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const accentColors = ACCENT_PALETTE[(projectIndex ?? 0) % ACCENT_PALETTE.length];
+  const visibleTools = project.tools?.filter(tool => tool !== 'DaVinci Resolve') ?? [];
 
   const openLightbox = (index: number) => setLightboxIndex(index);
   const closeLightbox = () => setLightboxIndex(null);
-  const prevImage = () => setLightboxIndex(i => i !== null ? Math.max(0, i - 1) : null);
-  const nextImage = () => setLightboxIndex(i => i !== null ? Math.min(allImages.length - 1, i + 1) : null);
+  const prevImage = useCallback(() => {
+    setLightboxIndex(i => i !== null ? Math.max(0, i - 1) : null);
+  }, []);
+  const nextImage = useCallback(() => {
+    setLightboxIndex(i => i !== null ? Math.min(allImages.length - 1, i + 1) : null);
+  }, [allImages.length]);
   const selectImage = (index: number) => setLightboxIndex(index);
 
   useEffect(() => {
@@ -684,47 +688,8 @@ const ProjectModal = memo(function ProjectModal({
               {project.description}
             </motion.p>
 
-            {/* Challenge & Solution */}
-            {(project.challenge || project.solution) && (
-              <motion.div 
-                className="grid sm:grid-cols-2 gap-3"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.45 }}
-              >
-                {project.challenge && (
-                  <motion.div 
-                    className="relative p-5 rounded-2xl overflow-hidden"
-                    whileHover={{ y: -2 }}
-                    style={{ background: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.12)', backdropFilter: 'blur(20px)' }}
-                  >
-                    <div className="absolute top-0 left-0 w-1 h-full rounded-l-2xl" style={{ background: 'linear-gradient(to bottom, #ef4444, transparent)' }} />
-                    <p className="text-[10px] text-red-400/70 uppercase tracking-widest mb-2 font-semibold flex items-center gap-2">
-                      <Settings size={12} />
-                      Challenge
-                    </p>
-                    <p className="text-sm text-white/70 leading-relaxed">{project.challenge}</p>
-                  </motion.div>
-                )}
-                {project.solution && (
-                  <motion.div 
-                    className="relative p-5 rounded-2xl overflow-hidden"
-                    whileHover={{ y: -2 }}
-                    style={{ background: 'rgba(34,197,94,0.05)', border: '1px solid rgba(34,197,94,0.12)', backdropFilter: 'blur(20px)' }}
-                  >
-                    <div className="absolute top-0 left-0 w-1 h-full rounded-l-2xl" style={{ background: 'linear-gradient(to bottom, #22c55e, transparent)' }} />
-                    <p className="text-[10px] text-green-400/70 uppercase tracking-widest mb-2 font-semibold flex items-center gap-2">
-                      <Sparkles size={12} />
-                      Solution
-                    </p>
-                    <p className="text-sm text-white/70 leading-relaxed">{project.solution}</p>
-                  </motion.div>
-                )}
-              </motion.div>
-            )}
-
             {/* Tools */}
-            {project.tools && project.tools.length > 0 && (
+            {visibleTools.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -735,7 +700,7 @@ const ProjectModal = memo(function ProjectModal({
                   Tools Used
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {project.tools.map((tool, i) => (
+                  {visibleTools.map((tool, i) => (
                     <motion.span 
                       key={tool} 
                       className="px-4 py-2 rounded-full text-sm"
@@ -770,7 +735,7 @@ const ProjectModal = memo(function ProjectModal({
                   <span className="text-white/35 font-normal normal-case tracking-normal">({allImages.length})</span>
                 </p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 -mx-6 sm:mx-0 px-6 sm:px-0">
-                  {allImages.slice(0, 6).map((img, i) => (
+                  {allImages.map((img, i) => (
                     <motion.button
                       key={i}
                       className="relative aspect-video overflow-hidden rounded-xl cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgba(8,8,12,0.7)]"

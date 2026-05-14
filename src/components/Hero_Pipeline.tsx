@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState, memo, useCallback } from 'react';
 import { gsap } from 'gsap';
-import { motion, useScroll, useTransform, useReducedMotion, useSpring, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion, AnimatePresence } from 'framer-motion';
 import { Play } from 'lucide-react';
 import MagneticButton from './MagneticButton';
 import { springs, easings } from '../hooks/useAnimationSystem';
+import { PROJECTS } from '../data/projects';
 
 const ROLES = ['VFX Artist', 'Compositor', 'Motion Designer', 'Visual Effects'];
 
@@ -593,6 +594,8 @@ const DataFlowParticles = memo(function DataFlowParticles() {
   );
 });
 
+void [PIPELINE_NODES, PIPELINE_CONNECTIONS, PipelineNodeComponent, ConnectionLine, DataFlowParticles];
+
 // ─── MAIN HERO COMPONENT ────────────────────────────────────────────────────
 function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -603,13 +606,17 @@ function Hero() {
 
   const { scrollYProgress } = useScroll();
 
-  const opacity = shouldReduceMotion
-    ? useTransform(scrollYProgress, [0, 1], [1, 1])
-    : useTransform(scrollYProgress, [0, 0.25], [1, 0]);
+  const opacity = useTransform(
+    scrollYProgress,
+    shouldReduceMotion ? [0, 1] : [0, 0.25],
+    shouldReduceMotion ? [1, 1] : [1, 0]
+  );
 
-  const contentScale = shouldReduceMotion
-    ? useTransform(scrollYProgress, [0, 1], [1, 1])
-    : useTransform(scrollYProgress, [0, 0.2], [1, 0.92]);
+  const contentScale = useTransform(
+    scrollYProgress,
+    shouldReduceMotion ? [0, 1] : [0, 0.2],
+    shouldReduceMotion ? [1, 1] : [1, 0.92]
+  );
 
   // GSAP entrance animation for character-by-character reveal
   useEffect(() => {
@@ -868,10 +875,10 @@ function Hero() {
           transition={{ delay: 2, duration: 0.7, ease: easings.easeOut }}
         >
           {[
-            { value: '50+', label: 'Projects' },
+            { value: `${PROJECTS.length}+`, label: 'Projects' },
             { value: '5+', label: 'Years Exp' },
             { value: '10+', label: 'Awards' },
-          ].map((stat, i) => (
+          ].map((stat) => (
             <motion.div
               key={stat.label}
               className="relative flex items-center gap-3 px-6 py-3 rounded-full"

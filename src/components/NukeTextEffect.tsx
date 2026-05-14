@@ -11,6 +11,10 @@ interface GlitchState {
   rgbSplit: number;
 }
 
+const LINE1 = 'HAI LUONG'.split('');
+const LINE2 = 'VFX'.split('');
+const CORRUPTION_CHARS = '!@#$%^&*()_+-=[]{}|;:,.<>?/~`0123456789ABCDEF';
+
 function NukeTextEffect({ className = '' }: { className?: string }) {
   const [effectMode, setEffectMode] = useState<EffectMode>('glitch');
   const [isHovered, setIsHovered] = useState(false);
@@ -24,10 +28,6 @@ function NukeTextEffect({ className = '' }: { className?: string }) {
   const [scanlineOffset, setScanlineOffset] = useState(0);
   const [corruptionChars, setCorruptionChars] = useState<string[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const LINE1 = 'HAI LUONG'.split('');
-  const LINE2 = 'VFX'.split('');
-  const CORRUPTION_CHARS = '!@#$%^&*()_+-=[]{}|;:,.<>?/~`0123456789ABCDEF';
 
   const getCorruptionChar = () => CORRUPTION_CHARS[Math.floor(Math.random() * CORRUPTION_CHARS.length)];
 
@@ -64,7 +64,7 @@ function NukeTextEffect({ className = '' }: { className?: string }) {
   // Scanline animation
   useEffect(() => {
     let frame: number;
-    let startTime = performance.now();
+    const startTime = performance.now();
 
     const animate = (time: number) => {
       const elapsed = time - startTime;

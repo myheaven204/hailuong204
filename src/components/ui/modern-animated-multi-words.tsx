@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useId } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
 // Utility function to merge class names
@@ -31,7 +31,6 @@ export function ContainerTextFlip({
   animationDuration = 800,
   variant = "gradient",
 }: ContainerTextFlipProps) {
-  const id = useId();
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -214,13 +213,14 @@ export function ContainerTextFlip({
 export default function Demo() {
   const [currentVariant, setCurrentVariant] = useState(0);
   const variants: ("gradient" | "primary" | "neon" | "glass")[] = ["gradient", "primary", "neon", "glass"];
+  const variantCount = variants.length;
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentVariant((prev) => (prev + 1) % variants.length);
+      setCurrentVariant((prev) => (prev + 1) % variantCount);
     }, 8000);
     return () => clearInterval(interval);
-  }, []);
+  }, [variantCount]);
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-8">

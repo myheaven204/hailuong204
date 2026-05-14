@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { springs, easings, timing } from '../hooks/useAnimationSystem';
+import { springs, easings } from '../hooks/useAnimationSystem';
 
 const NAV_LINKS = [
   { label: 'Work', id: 'work' },
@@ -15,7 +15,6 @@ interface NavbarProps {
 
 export default function Navbar({ activeSection }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
-  const [scrollPct, setScrollPct] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
@@ -23,7 +22,7 @@ export default function Navbar({ activeSection }: NavbarProps) {
     const onScroll = () => {
       setScrolled(window.scrollY > 60);
       const docH = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollPct(docH > 0 ? Math.round((window.scrollY / docH) * 100) : 0);
+      void docH;
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
