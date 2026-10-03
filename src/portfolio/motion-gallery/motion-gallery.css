@@ -13,8 +13,14 @@ body.mg-gallery-active { min-width: 0; }
 .mg-cursor-label-track span { flex-shrink: 0; display: block; white-space: nowrap; padding: 9px 12px; font-family: 'Archivo Variable', Arial, sans-serif; font-stretch: 75%; font-weight: 700; font-size: 17px; line-height: 1; }
 .mg-mouse-cursor[data-active="true"] .mg-cursor-label-track { animation-play-state: running; }
 @keyframes mg-cursor-label-loop { to { transform: translateX(-50%); } }
+@media (hover: hover) and (pointer: fine) {
+  body.mg-gallery-active { --mg-arrow-cursor: url("/cursors/hai-luong-macos.svg") 3 2, auto; cursor: var(--mg-arrow-cursor); }
+  body.mg-gallery-active :is(.mg-layout, .mg-layout *, .media-dialog, .media-dialog *) { cursor: var(--mg-arrow-cursor); }
+  body.mg-gallery-active :is(input:not([type]), input[type="text"], input[type="search"], input[type="email"], input[type="url"], input[type="tel"], input[type="password"], input[type="number"], textarea, [contenteditable="true"]) { cursor: text; }
+  body.mg-gallery-active :is(button:disabled, [aria-disabled="true"]) { cursor: not-allowed; }
+}
 @media (min-width: 992px) and (hover: hover) and (pointer: fine) {
-  .mg-layout[data-mg-cursor-active="true"] [data-mg-cursor] { cursor: none; }
+  .mg-layout[data-mg-cursor-active="true"] :is([data-mg-cursor], [data-mg-cursor] *) { cursor: none; }
 }
 @media (max-width: 991px), (hover: none), (pointer: coarse) { .mg-mouse-cursor { display: none; } }
 html.mg-smooth-scroll, html.mg-smooth-scroll body { height: auto; }
