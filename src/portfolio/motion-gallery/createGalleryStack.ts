@@ -2,6 +2,22 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { galleryMotion } from './motion';
 
+type StackBypass = {
+  start: number;
+  end: number;
+  compact: (showFirst: boolean) => {
+    compress: (position: number) => number;
+    restore: (position: number) => number;
+  };
+};
+
+const stackBypasses = new WeakMap<HTMLElement, StackBypass>();
+
+export const getGalleryStackBypass = (element: HTMLElement) => {
+  const stack = element.querySelector<HTMLElement>('.mg-stack');
+  return stack ? stackBypasses.get(stack) : undefined;
+};
+
 export default function createGalleryStack(element: HTMLElement) {
   const stack = element.querySelector<HTMLElement>('.mg-stack');
   const pin = stack?.querySelector<HTMLElement>('.mg-stack-pin');
@@ -17,6 +33,9 @@ export default function createGalleryStack(element: HTMLElement) {
   stack.dataset.stacked = 'true';
   let viewportHeight = pin.clientHeight;
   let active = -1;
+  let bypassing = false;
+  let alive = true;
+  let restorePresentation: (() => void) | undefined;
   const resetCards = () => cards.forEach((card, index) => gsap.set(card, {
     y: -index * galleryMotion.stackOffset, z: -index * galleryMotion.stackDepth,
     rotation: 0, autoAlpha: 1, zIndex: cards.length - index, force3D: true,
@@ -46,15 +65,50 @@ export default function createGalleryStack(element: HTMLElement) {
   if (seal) sequence.fromTo(seal, { rotation: 0 }, { rotation: 180, duration: cards.length - 1, ease: 'none' }, 0);
   select(0);
   const trigger = ScrollTrigger.create({
+    id: 'mg-selected-work',
     trigger: stack, start: 'top top', end: () => '+=' + pin.clientHeight * (cards.length - 1) * galleryMotion.stackScroll,
     pin, pinSpacing: false, anticipatePin: 1, refreshPriority: 1,
-    onUpdate: state => sequence.progress(state.progress),
+    onUpdate: state => { if (!bypassing) sequence.progress(state.progress); },
     onRefresh: state => {
+      if (bypassing) return;
       viewportHeight = pin.clientHeight;
       sequence.progress(0, true);
       resetCards();
       sequence.invalidate().progress(state.progress, true);
       select(sequence.time());
+    },
+  });
+  stackBypasses.set(stack, {
+    get start() { return trigger.start; },
+    get end() { return trigger.end; },
+    compact: showFirst => {
+      const start = trigger.start;
+      const originalHeight = stack.style.getPropertyValue('height');
+      const heightPriority = stack.style.getPropertyPriority('height');
+      const height = stack.offsetHeight;
+      const frozen = showFirst ? 0 : sequence.progress();
+      bypassing = true;
+      trigger.disable();
+      stack.style.height = pin.clientHeight + 'px';
+      const depth = height - stack.offsetHeight;
+      restorePresentation = () => {
+        if (originalHeight) stack.style.setProperty('height', originalHeight, heightPriority);
+        else stack.style.removeProperty('height');
+      };
+      const compress = (value: number) => value - gsap.utils.clamp(0, depth, value - start);
+      sequence.progress(frozen);
+      select(sequence.time());
+      return {
+        compress,
+        restore: value => {
+          if (!alive || !bypassing) return value;
+          restorePresentation?.();
+          restorePresentation = undefined;
+          bypassing = false;
+          trigger.enable(false, false);
+          return value > start + 0.5 ? value + depth : value;
+        },
+      };
     },
   });
   const xTo = gsap.quickTo(surface, 'rotationX', { duration: 0.6, ease: 'power3.out' });
@@ -87,6 +141,9 @@ export default function createGalleryStack(element: HTMLElement) {
   window.addEventListener('blur', leave);
 
   return () => {
+    restorePresentation?.();
+    alive = false;
+    stackBypasses.delete(stack);
     cancelAnimationFrame(animation);
     pin.removeEventListener('pointermove', move);
     pin.removeEventListener('pointerleave', leave);

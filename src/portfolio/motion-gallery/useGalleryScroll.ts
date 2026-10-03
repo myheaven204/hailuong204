@@ -4,12 +4,15 @@ import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { galleryEase, galleryMotion } from './motion';
+import { getGalleryStackBypass } from './createGalleryStack';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function useGalleryScroll(root: RefObject<HTMLElement>, enabled: boolean, transitionLocked: RefObject<boolean>) {
   const scroll = useRef<Lenis | null>(null);
   const previous = useRef<{ pathname: string; hash: string } | null>(null);
+  const anchorRestore = useRef<(() => void) | null>(null);
+  const anchorCompress = useRef<((position: number) => number) | null>(null);
   const { pathname, search, hash } = useLocation();
   const navigate = useNavigate();
 
@@ -21,13 +24,55 @@ export default function useGalleryScroll(root: RefObject<HTMLElement>, enabled: 
     else if (!stopped && instance.isStopped) instance.start();
   }, [transitionLocked]);
 
-  const goTo = useCallback((target: HTMLElement | number, immediate = false) => {
-    if (scroll.current) {
-      scroll.current.resize();
-      scroll.current.scrollTo(target, { immediate, force: true, duration: 1.25, easing: galleryEase.settle });
+  const finishAnchor = useCallback(() => {
+    const restore = anchorRestore.current;
+    anchorRestore.current = null;
+    anchorCompress.current = null;
+    restore?.();
+    root.current?.removeAttribute('data-mg-anchor-scrolling');
+  }, [root]);
+
+  const goTo = useCallback((target: HTMLElement | number, immediate = false, skipStack = false) => {
+    const instance = scroll.current;
+    if (instance) {
+      instance.resize();
+      if (skipStack) {
+        root.current?.setAttribute('data-mg-anchor-scrolling', 'true');
+        const host = root.current;
+        const stack = host && getGalleryStackBypass(host);
+        const originalPosition = typeof target === 'number' ? target : target.getBoundingClientRect().top + instance.actualScroll;
+        const origin = instance.actualScroll;
+        if (!anchorRestore.current && stack && Math.max(origin, originalPosition) > stack.start && Math.min(origin, originalPosition) < stack.end) {
+          const bypass = stack.compact(typeof target !== 'number' && target.id === 'work');
+          anchorCompress.current = bypass.compress;
+          anchorRestore.current = () => {
+            const position = bypass.restore(instance.actualScroll);
+            instance.resize();
+            instance.scrollTo(position, { immediate: true, force: true });
+            ScrollTrigger.refresh();
+            instance.resize();
+            ScrollTrigger.update();
+          };
+          instance.resize();
+          instance.scrollTo(bypass.compress(origin), { immediate: true, force: true });
+          ScrollTrigger.refresh();
+          instance.resize();
+        }
+        const margin = typeof target === 'number' ? 0 : Number.parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+        const padding = typeof target === 'number' ? 0 : Number.parseFloat(getComputedStyle(instance.rootElement).scrollPaddingTop) || 0;
+        const position = typeof target === 'number' ? anchorCompress.current?.(target) ?? target : target.getBoundingClientRect().top + instance.actualScroll - margin - padding;
+        const destination = gsap.utils.clamp(0, instance.limit, position);
+        const animated = !immediate && Math.abs(destination - instance.animatedScroll) > 0.5;
+        instance.scrollTo(destination, { immediate: !animated, force: true, lock: animated, duration: 1.25, easing: gsap.parseEase('sine.inOut'),
+          onComplete: finishAnchor,
+        });
+      } else {
+        finishAnchor();
+        instance.scrollTo(target, { immediate, force: true, duration: 1.25, easing: galleryEase.settle });
+      }
     } else if (typeof target === 'number') window.scrollTo({ top: target, behavior: 'instant' });
     else target.scrollIntoView({ behavior: 'instant' });
-  }, []);
+  }, [finishAnchor, root]);
 
   const settleLayout = useCallback(() => {
     ScrollTrigger.refresh();
@@ -61,7 +106,11 @@ export default function useGalleryScroll(root: RefObject<HTMLElement>, enabled: 
     let width = host.offsetWidth;
     const update = () => ScrollTrigger.update();
     const unsubscribe = instance.on('scroll', update);
-    const tick = (time: number) => { instance.raf(time * 1000); refreshIfIdle(time); };
+    const tick = (time: number) => {
+      instance.raf(time * 1000);
+      if (!instance.isScrolling && host.hasAttribute('data-mg-anchor-scrolling')) finishAnchor();
+      refreshIfIdle(time);
+    };
     gsap.ticker.lagSmoothing(0);
     gsap.ticker.add(tick);
     const interruptScroll = (event: KeyboardEvent) => {
@@ -70,12 +119,13 @@ export default function useGalleryScroll(root: RefObject<HTMLElement>, enabled: 
       if (instance.isStopped) { event.preventDefault(); return; }
       instance.stop();
       instance.start();
+      finishAnchor();
     };
     document.addEventListener('keydown', interruptScroll);
     const lockObserver = new MutationObserver(syncLock);
     lockObserver.observe(document.body, { attributes: true, attributeFilter: ['style'] });
     function refreshIfIdle(time: number) {
-      if (instance.isStopped || transitionLocked.current || document.hidden) return;
+      if (instance.isStopped || transitionLocked.current || host.hasAttribute('data-mg-anchor-scrolling') || document.hidden) return;
       if (refreshing) {
         height = host.offsetHeight;
         width = host.offsetWidth;
@@ -119,6 +169,7 @@ export default function useGalleryScroll(root: RefObject<HTMLElement>, enabled: 
     resizeObserver.observe(host);
     syncLock();
     return () => {
+      finishAnchor();
       host.removeEventListener('load', onMediaLoad, true);
       window.removeEventListener('mg:layout-ready', scheduleRefresh);
       window.removeEventListener('mg:layout-settled', settled);
@@ -134,7 +185,7 @@ export default function useGalleryScroll(root: RefObject<HTMLElement>, enabled: 
       if (scroll.current === instance) scroll.current = null;
       document.documentElement.classList.remove('mg-smooth-scroll');
     };
-  }, [enabled, root, syncLock, transitionLocked]);
+  }, [enabled, finishAnchor, root, syncLock, transitionLocked]);
 
   useEffect(() => {
     const last = previous.current;
@@ -169,12 +220,19 @@ export default function useGalleryScroll(root: RefObject<HTMLElement>, enabled: 
       if (!target || !root.current?.contains(target) && targetId !== 'top' && targetId !== 'main-content') return;
       event.preventDefault();
       if (link.classList.contains('skip-link')) { goTo(target, true); target.focus({ preventScroll: true }); }
+      else if (event.composedPath().some(node => node instanceof Element && node.matches('.site-header'))) {
+        scroll.current?.stop();
+        syncLock();
+        goTo(target, false, true);
+        previous.current = { pathname, hash: destination.hash };
+        if (destination.hash !== hash) navigate(pathname + search + destination.hash, { preventScrollReset: true });
+      }
       else if (destination.hash === hash) goTo(target);
       else navigate(pathname + search + destination.hash, { preventScrollReset: true });
     };
     document.addEventListener('click', onAnchor);
     return () => document.removeEventListener('click', onAnchor);
-  }, [goTo, hash, navigate, pathname, root, search]);
+  }, [goTo, hash, navigate, pathname, root, search, syncLock]);
 
   return { scroll, syncLock, goTo, settleLayout };
 }

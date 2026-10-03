@@ -172,7 +172,7 @@ export default function MotionGallery() {
 
   return <GalleryNavigation.Provider value={transition}><GalleryPreferences.Provider value={preferences}>
     <div ref={root} className="mg-layout" data-mg-motion={enabled ? 'on' : 'off'}>
-      <Header homePath={GALLERY_PATH} onHomeScroll={() => goTo(0)} />
+      <Header homePath={GALLERY_PATH} onHomeScroll={() => goTo(0, false, true)} />
       <GalleryCursor root={root} />
       <Routes>
         <Route index element={<MotionHome />} />
