@@ -1,0 +1,19 @@
+.mg-archive-layouts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; margin-top: 35px; border: 1px solid var(--mg-line); background: var(--mg-line); }
+.mg-archive-layouts button { display: flex; align-items: center; gap: 17px; min-height: 78px; padding: 17px 21px; color: var(--mg-fg); background: #101213; text-align: left; transition: background .3s, color .3s; }
+.mg-archive-layouts button[aria-selected="true"] { background: #e6e5d8; color: #101314; }
+.mg-archive-layouts button:not([aria-selected="true"]):hover { background: #1c2021; }
+.mg-archive-layouts button:focus-visible { position: relative; z-index: 1; outline: 2px solid var(--mg-accent); outline-offset: 3px; }
+.mg-layout-letter { font-family: var(--mg-display); font-stretch: 75%; font-weight: 800; font-size: 34px; line-height: 1; }
+.mg-archive-layouts button > span:nth-child(2) { min-width: 0; font-size: 13px; line-height: 1.4; }
+.mg-archive-layouts small { display: block; margin-top: 4px; font-size: 9px; opacity: .7; }
+.mg-archive-layouts svg { width: 16px; flex-shrink: 0; margin-left: auto; }
+.mg-archive .mg-archive-tools { margin-top: 20px; }
+.mg-archive .ws-card-grid > .mg-empty { grid-column: 1 / -1; }
+.mg-layout[data-mg-motion="off"] .mg-archive-layouts button { transition: none; }
+@media (max-width: 760px) {
+  .mg-archive-layouts { margin-top: 26px; }
+  .mg-archive-layouts button { min-height: 76px; padding: 14px 10px; gap: 8px; }
+  .mg-layout-letter { font-size: 27px; }
+  .mg-archive-layouts button > span:nth-child(2) { font-size: 10px; }
+  .mg-archive-layouts small, .mg-archive-layouts svg { display: none; }
+}
