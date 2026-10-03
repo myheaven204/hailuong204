@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { PROJECTS } from '../../data/projects';
+import { compareProjectDates, PROJECTS } from '../../data/projects';
 import { number, projectGenre } from '../content';
 import Icon from '../Icon';
 import { archiveRange, GALLERY_YEARS } from './data';
@@ -30,7 +30,7 @@ export default function MotionArchive() {
   const filtered = useMemo(() => PROJECTS.filter(project =>
     (year === 'all' || project.year === year) && (format === 'all' || projectGenre(project) === format)
     && normalize(project.title + ' ' + (project.client ?? '') + ' ' + project.year).includes(normalize(query.trim()))
-  ).sort((first, second) => Number(second.year) - Number(first.year)), [format, query, year]);
+  ).sort(compareProjectDates), [format, query, year]);
   const shown = filtered.slice(0, limit);
   useEditionMotion(grid, selectedLayout.id, shown.map(project => project.id).join('|'));
   const filtering = Boolean(query || year !== 'all' || format !== 'all');

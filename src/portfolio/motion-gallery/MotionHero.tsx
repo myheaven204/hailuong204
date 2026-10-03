@@ -59,7 +59,7 @@ export default function MotionHero() {
         <span className="mg-print-caption"><span>{project.client}</span><span>{project.year} ↗</span></span>
       </MotionLink>)}
     </div>
-    <div className="mg-hero-bottom"><div className="mg-hero-info"><p>Compositing.<br />Matchmoving. Motion design.</p>{enabled && <button type="button" className="mg-frame-control" onClick={() => setPaused(value => !value)} aria-pressed={paused} aria-label="Pause automatic hero images"><span aria-hidden="true">{paused ? '▶' : 'Ⅱ'}</span>{paused ? 'Play frames' : 'Pause frames'}</button>}</div><a href="#work" className="mg-scroll-link"><span>Scroll to explore</span><span className="mg-round-arrow"><Icon name="down" /></span></a><p>Ho Chi Minh City<br />Vietnam</p></div>
+    <div className="mg-hero-bottom"><div className="mg-hero-info"><p>Compositing.<br />Matchmoving. Motion design.</p>{enabled && <button type="button" className="mg-frame-control" onClick={() => setPaused(value => !value)} aria-pressed={paused} aria-label="Pause automatic hero images"><span aria-hidden="true">{paused ? '▶' : 'Ⅱ'}</span>{paused ? 'Play frames' : 'Pause frames'}</button>}</div><a href="#showreel" className="mg-scroll-link"><span>Scroll to explore</span><span className="mg-round-arrow"><Icon name="down" /></span></a><p>Ho Chi Minh City<br />Vietnam</p></div>
     <HeroPreview hero={hero} />
   </section>;
 }

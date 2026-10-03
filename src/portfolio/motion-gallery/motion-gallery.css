@@ -417,7 +417,7 @@ html.mg-smooth-scroll dialog, html.mg-smooth-scroll .mobile-menu { overscroll-be
 .mg-case-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 25px; }
 .mg-case-frame { position: relative; background: #151716; aspect-ratio: var(--mg-frame-ratio, auto); overflow: hidden; padding: 0; }
 .mg-case-frame-wide { grid-column: 1 / -1; }
-.mg-case-frame-compact { justify-self: center; width: min(100%, 640px, var(--mg-frame-width, 640px)); }
+.mg-case-frame-compact { justify-self: center; width: min(100%, var(--mg-frame-width, 640px)); }
 .mg-case-frame.mg-case-frame-compact:hover > img { transform: none; }
 .mg-case-frame > img { display: block; height: auto; object-fit: contain; transition: transform .5s; }
 .mg-case-frame:hover > img { transform: scale(1.025); }

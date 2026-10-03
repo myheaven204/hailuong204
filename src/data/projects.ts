@@ -8,6 +8,7 @@ export interface Project {
   image: string;
   imagePosition?: string;
   year: string;
+  publishedAt?: string;
   description: string;
   client?: string;
   duration?: string;
@@ -40,7 +41,7 @@ export const PROJECTS: Project[] = [
     "category": "TVC",
     "role": "VFX Compositor & Motion Designer",
     "image": "https://res.cloudinary.com/diwzqmwno/image/upload/v1777457028/fc0dd8190459057.65bb3983a6983_renwsx.webp",
-    "year": "2024",
+    "year": "2023",
     "description": "A compilation of the latest VFX work, featuring compositing, matchmoving, and visual effects across film and TVC projects.",
     "client": "Grab",
     "duration": "1 month",
@@ -64,7 +65,30 @@ export const PROJECTS: Project[] = [
     ],
     "awards": [],
     "rating": 4.8,
-    "voteCount": 124
+    "voteCount": 124,
+    "publishedAt": "2023-12-01",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Ly Cam Bieu"
+      }
+    ]
   },
   {
     "id": "dejavu-2026",
@@ -111,13 +135,14 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "CG Artists",
-        "names": "Viet Nguyen, Dilys Le, Glou Mai"
+        "names": "Viet Nguyen, GlouMai, Dilys Le"
       },
       {
         "role": "VFX Artists",
-        "names": "Luong Minh Hai, Nguyen Viet Hoang, Tuan Binh, Ly Cam Bieu"
+        "names": "Hai Luong, Ly Cam Bieu"
       }
-    ]
+    ],
+    "publishedAt": "2022-12-20"
   },
   {
     "id": "nuvi-mv",
@@ -126,7 +151,7 @@ export const PROJECTS: Project[] = [
     "role": "VFX Compositor",
     "image": "https://res.cloudinary.com/diwzqmwno/image/upload/v1777452461/0918_1600_NUVI_MV_GENERIC_MOV4444-002.mov_snapshot_00.11.795_rqkvg1.jpg",
     "imagePosition": "center 25%",
-    "year": "2026",
+    "year": "2025",
     "description": "A cinematic music video featuring stunning visual effects and atmospheric storytelling, bringing the artistic vision to life.",
     "client": "NUVI",
     "duration": "1 month",
@@ -170,9 +195,10 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Luong Minh Hai, Nguyen Thanh Duy, Ly Cam Bieu, Le My Tam"
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
       }
-    ]
+    ],
+    "publishedAt": "2025-09-19"
   },
   {
     "id": "7up-fun",
@@ -222,14 +248,15 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Luong Minh Hai, Nguyen Thanh Duy, Ly Cam Bieu, Le My Tam"
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
       }
     ],
     "testimonial": {
       "text": "The VFX work perfectly captured the fun and energetic spirit of 7UP.",
       "author": "Marketing Director",
       "position": "Client"
-    }
+    },
+    "publishedAt": "2026-01-06"
   },
   {
     "id": "lays-gi-on-chan-dong",
@@ -280,24 +307,26 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Luong Minh Hai, Nguyen Thanh Duy, Ly Cam Bieu, Le My Tam"
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
       }
     ],
     "testimonial": {
       "text": "Excellent VFX work with great attention to detail. Delivered on time with outstanding quality.",
       "author": "Producer",
       "position": "SPICE fx"
-    }
+    },
+    "publishedAt": "2026-04-24"
   },
   {
     "id": "all-new-nmax",
     "title": "NMAX – MAX UY THẾ",
     "category": "TVC",
     "role": "VFX Compositor",
-    "image": "https://res.cloudinary.com/diwzqmwno/image/upload/v1777374562/maxresdefault_xganrx.jpg",
-    "year": "2026",
-    "description": "High-end automotive commercial with fluid simulations and particle systems.",
-    "client": "Aether Motors",
+    "image": "https://i.ytimg.com/vi_webp/2M4gpgwyVHU/maxresdefault.webp",
+    "year": "2025",
+    "publishedAt": "2025-12-23",
+    "description": "VFX compositing for Yamaha’s All New NMAX commercial, “Max Uy Thế”.",
+    "client": "Yamaha",
     "duration": "1 months",
     "team": "6 artists",
     "tools": [
@@ -306,11 +335,10 @@ export const PROJECTS: Project[] = [
       "Pftrack",
       "V-Ray"
     ],
+    "youtubeId": "2M4gpgwyVHU",
     "challenge": "Integrating CG fluid and particle simulations seamlessly with practical plates of a luxury vehicle while preserving the brand’s signature lighting language.",
     "solution": "Designed a multi-pass comp template, used custom flip simulations with retimed cache layers, and matched lighting via deep compositing and projected HDRIs.",
-    "gallery": [
-      "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=1600&q=80"
-    ],
+    "gallery": [],
     "awards": [],
     "rating": 4.4,
     "voteCount": 67,
@@ -333,7 +361,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Luong Minh Hai, Nguyen Thanh Duy, Ly Cam Bieu, Le My Tam"
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
       }
     ],
     "testimonial": {
@@ -348,7 +376,7 @@ export const PROJECTS: Project[] = [
     "category": "TVC",
     "role": "VFX Compositor",
     "image": "https://res.cloudinary.com/diwzqmwno/image/upload/v1777442482/1008_Rihair_Film_2_Online.mp4_snapshot_00.20.217_c9s2gi.jpg",
-    "year": "2026",
+    "year": "2025",
     "description": "Cinematic film production with stunning visual effects and atmospheric storytelling.",
     "client": "Rihair Production",
     "duration": "3 months",
@@ -390,14 +418,15 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Luong Minh Hai, Nguyen Thanh Duy, Ly Cam Bieu, Le My Tam"
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
       }
     ],
     "testimonial": {
       "text": "Outstanding visual effects work that elevated our film to international standards.",
       "author": "Film Director",
       "position": "Client"
-    }
+    },
+    "publishedAt": "2025-12-14"
   },
   {
     "id": "surf-tvc-2025",
@@ -429,7 +458,30 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778679825/best_10_e0icek.png"
     ],
     "challenge": "Creating realistic ocean wave simulations with dynamic foam and spray that needed to blend seamlessly with live-action surf footage.",
-    "solution": "Built a custom Houdini pyro simulation pipeline for water spray and foam, composited in Nuke with multi-pass layers for realistic light scattering."
+    "solution": "Built a custom Houdini pyro simulation pipeline for water spray and foam, composited in Nuke with multi-pass layers for realistic light scattering.",
+    "publishedAt": "2025-05-08",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Dat Duong"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
+      }
+    ]
   },
   {
     "id": "tiger-balm-tvc-2025",
@@ -459,6 +511,29 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778675007/best_08_oaz44t.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778675009/best_09_srbpau.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778675010/best_10_tcglwz.png"
+    ],
+    "publishedAt": "2025-12-04",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, Dat Duong"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
+      }
     ]
   },
   {
@@ -485,6 +560,29 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778679716/best_07_nec2ha.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778679725/best_09_kuaejj.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778679729/best_10_d4ymyr.png"
+    ],
+    "publishedAt": "2025-12-04",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, Dat Duong"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
+      }
     ]
   },
   {
@@ -513,6 +611,29 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674973/best_07_ucochf.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674974/best_08_b4eb3f.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674975/best_09_jxqvzo.png"
+    ],
+    "publishedAt": "2025-12-04",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, Dat Duong"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
+      }
     ]
   },
   {
@@ -541,6 +662,29 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778675093/best_07_nrzetw.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778675094/best_08_rikpci.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778675095/best_10_uodtkl.png"
+    ],
+    "publishedAt": "2025-06-30",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Dat Duong"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
+      }
     ]
   },
   {
@@ -559,7 +703,30 @@ export const PROJECTS: Project[] = [
       "Nuke",
       "After Effects"
     ],
-    "vimeoId": "1097430825"
+    "vimeoId": "1097430825",
+    "publishedAt": "2025-06-30",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Dat Duong"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
+      }
+    ]
   },
   {
     "id": "lavie-tvc-2025",
@@ -589,6 +756,29 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674802/best_08_bdlctn.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674804/best_09_cteevm.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674805/best_10_wo5je6.png"
+    ],
+    "publishedAt": "2025-06-30",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Dat Duong"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
+      }
     ]
   },
   {
@@ -618,6 +808,29 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674850/best_08_uat1hy.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674851/best_09_xin7dy.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674853/best_10_aevcbf.png"
+    ],
+    "publishedAt": "2025-06-04",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Dat Duong"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
+      }
     ]
   },
   {
@@ -648,6 +861,29 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674710/best_08_jdsb5x.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674711/best_09_s4pxtd.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674712/best_10_ztues1.png"
+    ],
+    "publishedAt": "2025-05-08",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Dat Duong"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
+      }
     ]
   },
   {
@@ -666,7 +902,30 @@ export const PROJECTS: Project[] = [
       "Nuke",
       "After Effects"
     ],
-    "vimeoId": "1082477066"
+    "vimeoId": "1082477066",
+    "publishedAt": "2025-05-08",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Dat Duong"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
+      }
+    ]
   },
   {
     "id": "kiri-minisweet-tvc-2025",
@@ -684,7 +943,30 @@ export const PROJECTS: Project[] = [
       "Nuke",
       "Cinema 4D"
     ],
-    "vimeoId": "1082476307"
+    "vimeoId": "1082476307",
+    "publishedAt": "2025-05-08",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Dat Duong"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
+      }
+    ]
   },
   {
     "id": "kitkat-tvc-2025",
@@ -712,6 +994,29 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674771/best_07_dhh1en.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674772/best_08_zynokd.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674775/best_10_bfkk71.png"
+    ],
+    "publishedAt": "2025-05-08",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Dat Duong"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
+      }
     ]
   },
   {
@@ -739,6 +1044,25 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778675128/best_08_mbnvtt.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778675130/best_09_b7wscc.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778675131/best_10_ri3xom.png"
+    ],
+    "publishedAt": "2025-03-31",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
+      }
     ]
   },
   {
@@ -767,6 +1091,29 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674739/best_06_knyzol.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674740/best_07_w2uzpn.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674743/best_09_xn7qn8.png"
+    ],
+    "publishedAt": "2024-11-25",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
+      }
     ]
   },
   {
@@ -797,6 +1144,29 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674943/best_08_xthm1s.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674944/best_09_hdupgl.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674946/best_10_mwekfh.png"
+    ],
+    "publishedAt": "2024-10-10",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
+      }
     ]
   },
   {
@@ -814,7 +1184,30 @@ export const PROJECTS: Project[] = [
       "After Effects",
       "Nuke"
     ],
-    "vimeoId": "1008292821"
+    "vimeoId": "1008292821",
+    "publishedAt": "2024-09-11",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
+      }
+    ]
   },
   {
     "id": "tiki-bumper-ads-2024",
@@ -831,7 +1224,30 @@ export const PROJECTS: Project[] = [
       "After Effects",
       "Cinema 4D"
     ],
-    "vimeoId": "1008292182"
+    "vimeoId": "1008292182",
+    "publishedAt": "2024-09-11",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
+      }
+    ]
   },
   {
     "id": "lays-tvc-2024",
@@ -849,7 +1265,30 @@ export const PROJECTS: Project[] = [
       "Nuke",
       "After Effects"
     ],
-    "vimeoId": "1008291680"
+    "vimeoId": "1008291680",
+    "publishedAt": "2024-09-11",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
+      }
+    ]
   },
   {
     "id": "king-koil-tvc-2024",
@@ -879,6 +1318,29 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674758/best_08_dh4vk9.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674759/best_09_ieeqri.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674760/best_10_qmc4nz.png"
+    ],
+    "publishedAt": "2024-03-15",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Ly Cam Bieu"
+      }
     ]
   },
   {
@@ -907,6 +1369,29 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778675114/best_08_mdho73.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778675116/best_09_mxumpf.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778675117/best_10_bnqipf.png"
+    ],
+    "publishedAt": "2024-01-18",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Ly Cam Bieu"
+      }
     ]
   },
   {
@@ -937,6 +1422,29 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674958/best_08_nggvzb.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674959/best_09_jkkuxg.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674961/best_10_u0vg3i.png"
+    ],
+    "publishedAt": "2023-12-06",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Ly Cam Bieu"
+      }
     ]
   },
   {
@@ -955,7 +1463,30 @@ export const PROJECTS: Project[] = [
       "Nuke",
       "After Effects"
     ],
-    "vimeoId": "880041741"
+    "vimeoId": "880041741",
+    "publishedAt": "2023-11-01",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Ly Cam Bieu"
+      }
+    ]
   },
   {
     "id": "larue-tvc-2023",
@@ -985,6 +1516,29 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674895/best_08_cabmzm.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674896/best_09_ttpdby.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674898/best_10_bbwr2t.png"
+    ],
+    "publishedAt": "2023-08-02",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Ly Cam Bieu"
+      }
     ]
   },
   {
@@ -1015,6 +1569,29 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674834/best_08_vk4xyc.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674836/best_09_nvsqvz.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674837/best_10_xysyo4.png"
+    ],
+    "publishedAt": "2023-07-03",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Ly Cam Bieu"
+      }
     ]
   },
   {
@@ -1044,6 +1621,29 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674878/best_07_komrsm.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674880/best_08_sl275j.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674882/best_10_swyosj.png"
+    ],
+    "publishedAt": "2023-06-29",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Ly Cam Bieu"
+      }
     ]
   },
   {
@@ -1074,6 +1674,29 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674864/best_08_a893bl.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674866/best_09_sl8wl5.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674867/best_10_rmw4dx.png"
+    ],
+    "publishedAt": "2023-06-09",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Ly Cam Bieu"
+      }
     ]
   },
   {
@@ -1097,6 +1720,29 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778675099/best_01_yszk27.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778675102/best_03_k2zd5r.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778675103/best_04_ty2ccs.png"
+    ],
+    "publishedAt": "2023-05-31",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Ly Cam Bieu"
+      }
     ]
   },
   {
@@ -1115,7 +1761,30 @@ export const PROJECTS: Project[] = [
       "Nuke",
       "After Effects"
     ],
-    "vimeoId": "817154908"
+    "vimeoId": "817154908",
+    "publishedAt": "2023-04-13",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Ly Cam Bieu"
+      }
+    ]
   },
   {
     "id": "durex-thematic-gay-tvc-2022",
@@ -1123,7 +1792,7 @@ export const PROJECTS: Project[] = [
     "category": "TVC",
     "role": "VFX Compositor",
     "image": "https://vumbnail.com/817151192.jpg",
-    "year": "2022",
+    "year": "2023",
     "description": "VFX breakdown for Durex Thematic Gay campaign. Sensitivity and creativity in visual storytelling.",
     "client": "Durex",
     "duration": "29s",
@@ -1133,7 +1802,30 @@ export const PROJECTS: Project[] = [
       "After Effects",
       "DaVinci Resolve"
     ],
-    "vimeoId": "817151192"
+    "vimeoId": "817151192",
+    "publishedAt": "2023-04-13",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Ly Cam Bieu"
+      }
+    ]
   },
   {
     "id": "durex-thematic-les-tvc-2022",
@@ -1141,7 +1833,7 @@ export const PROJECTS: Project[] = [
     "category": "TVC",
     "role": "VFX Compositor",
     "image": "https://vumbnail.com/817151101.jpg",
-    "year": "2022",
+    "year": "2023",
     "description": "VFX compositing for Durex Thematic Les campaign. Emotional storytelling through visual effects.",
     "client": "Durex",
     "duration": "29s",
@@ -1151,7 +1843,30 @@ export const PROJECTS: Project[] = [
       "After Effects",
       "DaVinci Resolve"
     ],
-    "vimeoId": "817151101"
+    "vimeoId": "817151101",
+    "publishedAt": "2023-04-13",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Ly Cam Bieu"
+      }
+    ]
   },
   {
     "id": "knorr-tvc-2023",
@@ -1169,7 +1884,30 @@ export const PROJECTS: Project[] = [
       "After Effects",
       "Nuke"
     ],
-    "vimeoId": "817148374"
+    "vimeoId": "817148374",
+    "publishedAt": "2023-04-12",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Ly Cam Bieu"
+      }
+    ]
   },
   {
     "id": "rejoice-viral-2022",
@@ -1177,7 +1915,7 @@ export const PROJECTS: Project[] = [
     "category": "TVC",
     "role": "VFX Compositor",
     "image": "https://vumbnail.com/817147701.jpg",
-    "year": "2022",
+    "year": "2023",
     "description": "VFX for Rejoice shampoo viral video campaign. Hair care product effects and lifestyle visualization.",
     "client": "Rejoice",
     "duration": "1:33",
@@ -1187,7 +1925,30 @@ export const PROJECTS: Project[] = [
       "After Effects",
       "DaVinci Resolve"
     ],
-    "vimeoId": "817147701"
+    "vimeoId": "817147701",
+    "publishedAt": "2023-04-12",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Ly Cam Bieu"
+      }
+    ]
   },
   {
     "id": "omo-tvc-2022",
@@ -1195,7 +1956,7 @@ export const PROJECTS: Project[] = [
     "category": "TVC",
     "role": "VFX Compositor",
     "image": "https://vumbnail.com/817146786.jpg",
-    "year": "2022",
+    "year": "2023",
     "description": "VFX breakdown for OMO detergent TV commercial. Laundry and cleaning product visual effects.",
     "client": "OMO",
     "duration": "30s",
@@ -1205,7 +1966,30 @@ export const PROJECTS: Project[] = [
       "Nuke",
       "After Effects"
     ],
-    "vimeoId": "817146786"
+    "vimeoId": "817146786",
+    "publishedAt": "2023-04-12",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Ly Cam Bieu"
+      }
+    ]
   },
   {
     "id": "heineken-tvc-2023",
@@ -1235,25 +2019,30 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674788/best_08_tp5ckp.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674789/best_09_jiv9hs.png",
       "https://res.cloudinary.com/diwzqmwno/image/upload/v1778674791/best_10_shwmmm.png"
-    ]
-  },
-  {
-    "id": "warrior-mv",
-    "title": "WARRIOR MV",
-    "category": "TVC",
-    "role": "VFX Compositor",
-    "image": "https://vumbnail.com/714310031.jpg",
-    "year": "2022",
-    "description": "VFX breakdown for Warrior music video. Cinematic visual effects for a high-energy music production.",
-    "client": "Warrior",
-    "duration": "3:14",
-    "team": "6 artists",
-    "tools": [
-      "Houdini",
-      "Nuke",
-      "After Effects"
     ],
-    "vimeoId": "714310031"
+    "publishedAt": "2023-04-12",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Nhi Truong, Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen, GlouMai, Dilys Le"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong, Ly Cam Bieu"
+      }
+    ]
   },
   {
     "id": "warrior-tvc-2021",
@@ -1261,7 +2050,7 @@ export const PROJECTS: Project[] = [
     "category": "TVC",
     "role": "VFX Compositor",
     "image": "https://vumbnail.com/713612370.jpg",
-    "year": "2021",
+    "year": "2022",
     "description": "VFX for Warrior energy drink TV commercial. High-impact visual effects for sports drink branding.",
     "client": "Warrior",
     "duration": "15s",
@@ -1270,7 +2059,30 @@ export const PROJECTS: Project[] = [
       "After Effects",
       "Nuke"
     ],
-    "vimeoId": "713612370"
+    "vimeoId": "713612370",
+    "publishedAt": "2022-05-25",
+    "artists": [
+      {
+        "role": "CGI and VFX",
+        "names": "SPICE fx"
+      },
+      {
+        "role": "CG Director",
+        "names": "Quoc Duy Ngo"
+      },
+      {
+        "role": "VFX Producer",
+        "names": "Tran Thi Tuyet Nhung"
+      },
+      {
+        "role": "CG Artists",
+        "names": "Viet Nguyen"
+      },
+      {
+        "role": "VFX Artists",
+        "names": "Hai Luong"
+      }
+    ]
   },
   {
     "id": "mbbank-priority",
@@ -1278,7 +2090,7 @@ export const PROJECTS: Project[] = [
     "category": "TVC",
     "role": "VFX Compositor",
     "image": "https://res.cloudinary.com/diwzqmwno/image/upload/v1777443001/0820_MBBank_Online_30s_master_prores_4444.mov_snapshot_00.00.000_jsx6hv.jpg",
-    "year": "2026",
+    "year": "2025",
     "description": "A cinematic campaign blending emotional storytelling with premium product visuals for MB Priority.",
     "client": "MB Bank",
     "duration": "2 months",
@@ -1318,33 +2130,39 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "CG Artists",
-        "names": "Viet Nguyen, Dat Duong"
+        "names": "Dat Duong"
       },
       {
         "role": "VFX Artists",
-        "names": "Luong Minh Hai, Nguyen Thanh Duy, Ly Cam Bieu, Le My Tam"
+        "names": "Hai Luong, Nguyen Thanh Duy, Le My Tam, Ly Cam Bieu"
       }
     ],
     "testimonial": {
       "text": "The visual storytelling was premium and emotional, exactly what we envisioned for the campaign.",
       "author": "Brand Manager",
       "position": "Client"
-    }
+    },
+    "publishedAt": "2025-08-20"
   }
 ];
 
 export const getProjectById = (id: string): Project | undefined =>
   PROJECTS.find((project) => project.id === id);
 
+export const compareProjectDates = (first: Project, second: Project): number =>
+  (second.publishedAt ?? second.year).localeCompare(first.publishedAt ?? first.year);
+
+export const CHRONOLOGICAL_PROJECTS = [...PROJECTS].sort(compareProjectDates);
+
 export const getAdjacentProjects = (id: string): { previous: Project; next: Project } | null => {
-  const index = PROJECTS.findIndex((project) => project.id === id);
+  const index = CHRONOLOGICAL_PROJECTS.findIndex((project) => project.id === id);
 
   if (index === -1) {
     return null;
   }
 
   return {
-    previous: PROJECTS[(index - 1 + PROJECTS.length) % PROJECTS.length],
-    next: PROJECTS[(index + 1) % PROJECTS.length],
+    previous: CHRONOLOGICAL_PROJECTS[(index - 1 + CHRONOLOGICAL_PROJECTS.length) % CHRONOLOGICAL_PROJECTS.length],
+    next: CHRONOLOGICAL_PROJECTS[(index + 1) % CHRONOLOGICAL_PROJECTS.length],
   };
 };

@@ -7,7 +7,7 @@ export default function MotionShowreel({ onPlay }: { onPlay: (film: FilmSource) 
   const poster = GALLERY_FILM_POSTERS[SHOWREEL.id];
 
   return <section id="showreel" className="mg-showreel mg-shell" aria-labelledby="mg-showreel-title">
-    <div className="mg-section-label"><span>04 / The studio reel</span><span>SPICE fx / 2026</span></div>
+    <div className="mg-section-label"><span>02 / The studio reel</span><span>SPICE fx / 2026</span></div>
     <div className="mg-showreel-heading"><h2 id="mg-showreel-title" className="mg-display" data-mg-reveal>SHOW<span className="mg-outline">REEL</span></h2><div className="mg-showreel-intro"><span className="mg-showreel-year">2026</span><p>A collection of the studio’s work,<br />presented in its original form.</p></div></div>
     <button className="mg-showreel-screen" aria-label={'Watch ' + SHOWREEL.title} data-mg-cursor="WATCH STUDIO REEL →" onClick={() => onPlay(SHOWREEL)}>
       {poster && <Image {...poster} alt="Preview frame from SPICE fx — Studio Showreel 2026" sizes="(max-width: 760px) 90vw, 92vw" loading="lazy" />}

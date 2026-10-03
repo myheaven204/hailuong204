@@ -1,6 +1,15 @@
 import { PROJECTS, type Project } from '../data/projects';
 import manifest from '../data/media-manifest.json';
 import issues from '../data/media-issues.json';
+import dimensions from '../data/media-dimensions.json';
+import supplemental from '../data/supplemental-frames.json';
+
+type SupplementalFrame = { src: string; width: number; height: number; timestamp: number; provider: string; videoId: string };
+const supplementalFrames = supplemental as Record<string, SupplementalFrame[]>;
+export const imageDimensions: Record<string, { width: number; height: number }> = {
+  ...dimensions,
+  ...Object.fromEntries(Object.values(supplementalFrames).flat().map(frame => [frame.src, { width: frame.width, height: frame.height }])),
+};
 
 export const EMAIL = 'hailuong.vfx@gmail.com';
 export const PORTRAIT = '/images/hai-luong-portrait.webp';
@@ -37,7 +46,7 @@ const summaries: Record<string, string> = {
   'nuvi-mv': 'VFX compositing for NUVI’s music video featuring Quang Hùng MasterD.',
   '7up-fun': 'VFX compositing for a 7UP Vietnam commercial.',
   'lays-gi-on-chan-dong': 'VFX compositing for Lay’s “Giòn Chấn Động” campaign.',
-  'all-new-nmax': 'VFX compositing for “NMAX – Max Uy Thế”.',
+  'all-new-nmax': 'VFX compositing for Yamaha’s All New NMAX commercial, “Max Uy Thế”.',
   'rihair-film': 'VFX compositing for Rihair’s Vietnam commercial.',
   'surf-tvc-2025': 'VFX compositing for the 2025 Surf commercial. Project footage and selected frames below.',
   'tiger-balm-tvc-2025': 'VFX compositing for Tiger Balm’s 2025 commercial.',
@@ -73,7 +82,6 @@ const summaries: Record<string, string> = {
   'rejoice-viral-2022': 'VFX compositing for Rejoice’s 2022 viral campaign.',
   'omo-tvc-2022': 'VFX compositing for OMO’s 2022 commercial.',
   'heineken-tvc-2023': 'VFX compositing for Heineken’s 2023 commercial.',
-  'warrior-mv': 'VFX compositing for the Warrior music video.',
   'warrior-tvc-2021': 'VFX compositing for Warrior’s 2021 commercial.',
   'mbbank-priority': 'VFX compositing for MB Bank’s Priority campaign, “Creative Breakthrough”.',
 };
@@ -85,10 +93,23 @@ export const heroProject = featuredProjects[0];
 const coverFrameIndexes: Record<string, number> = { 'lavie-tvc-2025': 6, 'grab-dejavu': 2, 'mbbank-priority': 2, 'nuvi-mv': 1, 'rong-do-gducke-mv': 5, 'heineken-tvc-2023': 7 };
 export const projectCover = (project: Project) => project.gallery?.[coverFrameIndexes[project.id]] ?? project.image;
 export const brandNames = ['Grab', 'Comfort', '7UP', 'NUVI', 'MB Bank', 'Heineken', 'KitKat', 'LAVIE'];
+const publicationDateFormat = new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC' });
+export const projectPublishedDate = (project: Project) => project.publishedAt ? publicationDateFormat.format(new Date(project.publishedAt)) : '';
 export const projectSummary = (project: Project) => summaries[project.id] ?? project.description;
 export const projectGenre = (project: Project) => /-mv$/.test(project.id) ? 'Music video' : project.category === 'Film' ? 'Film' : 'Commercial';
-export const projectBrand = (project: Project) => project.id === 'all-new-nmax' ? undefined : project.client;
-export const projectFrames = (project: Project) => [...new Set([project.image, ...(project.gallery ?? [])])].filter(frame => !issues.some(issue => issue.url === frame && issue.error === 'HTTP 404'));
+export const projectBrand = (project: Project) => project.client;
+export const projectFrames = (project: Project) => {
+  const extraFrames = supplementalFrames[project.id] ?? [];
+  const frames = [...new Set([project.image, ...(project.gallery ?? []), ...extraFrames.map(frame => frame.src)])]
+    .filter(frame => !issues.some(issue => issue.url === frame && issue.error === 'HTTP 404'));
+  const coverDimensions = imageDimensions[project.image];
+  const hasDetailedFrames = frames.some(frame => {
+    const dimensions = imageDimensions[frame];
+    return frame !== project.image && dimensions && Math.min(dimensions.width, dimensions.height) >= 720 && Math.max(dimensions.width, dimensions.height) >= 1280;
+  });
+  const omitThumbnail = hasDetailedFrames && coverDimensions && (Math.min(coverDimensions.width, coverDimensions.height) < 720 || Math.max(coverDimensions.width, coverDimensions.height) < 1280);
+  return omitThumbnail ? frames.filter(frame => frame !== project.image) : frames;
+};
 export const projectFilm = (project: Project): FilmSource | undefined => {
   if (project.youtubeId) return { title: project.title, provider: 'youtube', id: project.youtubeId, kind: 'Project film' };
   if (project.vimeoId) return { title: project.title, provider: 'vimeo', id: project.vimeoId, kind: 'Project film' };

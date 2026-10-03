@@ -1,0 +1,968 @@
+{
+  "7up-fun": [
+    {
+      "src": "/media/frames/7up-fun/01-1-760.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 1.76,
+      "provider": "youtube",
+      "videoId": "RvnaMwVGCYE"
+    },
+    {
+      "src": "/media/frames/7up-fun/02-2-960.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 2.96,
+      "provider": "youtube",
+      "videoId": "RvnaMwVGCYE"
+    },
+    {
+      "src": "/media/frames/7up-fun/03-4-840.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 4.84,
+      "provider": "youtube",
+      "videoId": "RvnaMwVGCYE"
+    },
+    {
+      "src": "/media/frames/7up-fun/04-7-200.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 7.2,
+      "provider": "youtube",
+      "videoId": "RvnaMwVGCYE"
+    },
+    {
+      "src": "/media/frames/7up-fun/05-8-800.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 8.8,
+      "provider": "youtube",
+      "videoId": "RvnaMwVGCYE"
+    },
+    {
+      "src": "/media/frames/7up-fun/06-10-880.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 10.88,
+      "provider": "youtube",
+      "videoId": "RvnaMwVGCYE"
+    },
+    {
+      "src": "/media/frames/7up-fun/07-13-200.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 13.2,
+      "provider": "youtube",
+      "videoId": "RvnaMwVGCYE"
+    }
+  ],
+  "lays-gi-on-chan-dong": [
+    {
+      "src": "/media/frames/lays-gi-on-chan-dong/01-2-320.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 2.32,
+      "provider": "youtube",
+      "videoId": "Q3Q-TWRiaDE"
+    },
+    {
+      "src": "/media/frames/lays-gi-on-chan-dong/02-4-600.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 4.6,
+      "provider": "youtube",
+      "videoId": "Q3Q-TWRiaDE"
+    },
+    {
+      "src": "/media/frames/lays-gi-on-chan-dong/03-7-560.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 7.56,
+      "provider": "youtube",
+      "videoId": "Q3Q-TWRiaDE"
+    },
+    {
+      "src": "/media/frames/lays-gi-on-chan-dong/04-10-280.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 10.28,
+      "provider": "youtube",
+      "videoId": "Q3Q-TWRiaDE"
+    },
+    {
+      "src": "/media/frames/lays-gi-on-chan-dong/05-12-400.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 12.4,
+      "provider": "youtube",
+      "videoId": "Q3Q-TWRiaDE"
+    },
+    {
+      "src": "/media/frames/lays-gi-on-chan-dong/06-15-080.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 15.08,
+      "provider": "youtube",
+      "videoId": "Q3Q-TWRiaDE"
+    },
+    {
+      "src": "/media/frames/lays-gi-on-chan-dong/07-17-120.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 17.12,
+      "provider": "youtube",
+      "videoId": "Q3Q-TWRiaDE"
+    }
+  ],
+  "all-new-nmax": [
+    {
+      "src": "/media/frames/all-new-nmax/01-13-000.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 13,
+      "provider": "youtube",
+      "videoId": "2M4gpgwyVHU"
+    },
+    {
+      "src": "/media/frames/all-new-nmax/02-19-440.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 19.44,
+      "provider": "youtube",
+      "videoId": "2M4gpgwyVHU"
+    },
+    {
+      "src": "/media/frames/all-new-nmax/03-24-760.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 24.76,
+      "provider": "youtube",
+      "videoId": "2M4gpgwyVHU"
+    },
+    {
+      "src": "/media/frames/all-new-nmax/04-28-800.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 28.8,
+      "provider": "youtube",
+      "videoId": "2M4gpgwyVHU"
+    },
+    {
+      "src": "/media/frames/all-new-nmax/05-36-400.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 36.4,
+      "provider": "youtube",
+      "videoId": "2M4gpgwyVHU"
+    },
+    {
+      "src": "/media/frames/all-new-nmax/06-42-040.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 42.04,
+      "provider": "youtube",
+      "videoId": "2M4gpgwyVHU"
+    },
+    {
+      "src": "/media/frames/all-new-nmax/07-56-080.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 56.08,
+      "provider": "youtube",
+      "videoId": "2M4gpgwyVHU"
+    },
+    {
+      "src": "/media/frames/all-new-nmax/08-75-200.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 75.2,
+      "provider": "youtube",
+      "videoId": "2M4gpgwyVHU"
+    }
+  ],
+  "rihair-film": [
+    {
+      "src": "/media/frames/rihair-film/01-5-520.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 5.52,
+      "provider": "youtube",
+      "videoId": "CUYnRS53vZs"
+    },
+    {
+      "src": "/media/frames/rihair-film/02-15-760.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 15.76,
+      "provider": "youtube",
+      "videoId": "CUYnRS53vZs"
+    },
+    {
+      "src": "/media/frames/rihair-film/03-22-880.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 22.88,
+      "provider": "youtube",
+      "videoId": "CUYnRS53vZs"
+    },
+    {
+      "src": "/media/frames/rihair-film/04-29-280.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 29.28,
+      "provider": "youtube",
+      "videoId": "CUYnRS53vZs"
+    },
+    {
+      "src": "/media/frames/rihair-film/05-37-200.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 37.2,
+      "provider": "youtube",
+      "videoId": "CUYnRS53vZs"
+    },
+    {
+      "src": "/media/frames/rihair-film/06-46-600.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 46.6,
+      "provider": "youtube",
+      "videoId": "CUYnRS53vZs"
+    },
+    {
+      "src": "/media/frames/rihair-film/07-51-520.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 51.52,
+      "provider": "youtube",
+      "videoId": "CUYnRS53vZs"
+    }
+  ],
+  "clear-tvc-2025": [
+    {
+      "src": "/media/frames/clear-tvc-2025/01-2-960.webp",
+      "width": 1440,
+      "height": 1080,
+      "timestamp": 2.96,
+      "provider": "vimeo",
+      "videoId": "1097430825"
+    },
+    {
+      "src": "/media/frames/clear-tvc-2025/02-14-600.webp",
+      "width": 1440,
+      "height": 1080,
+      "timestamp": 14.6,
+      "provider": "vimeo",
+      "videoId": "1097430825"
+    },
+    {
+      "src": "/media/frames/clear-tvc-2025/03-22-480.webp",
+      "width": 1440,
+      "height": 1080,
+      "timestamp": 22.48,
+      "provider": "vimeo",
+      "videoId": "1097430825"
+    },
+    {
+      "src": "/media/frames/clear-tvc-2025/04-30-800.webp",
+      "width": 1440,
+      "height": 1080,
+      "timestamp": 30.8,
+      "provider": "vimeo",
+      "videoId": "1097430825"
+    },
+    {
+      "src": "/media/frames/clear-tvc-2025/05-37-560.webp",
+      "width": 1440,
+      "height": 1080,
+      "timestamp": 37.56,
+      "provider": "vimeo",
+      "videoId": "1097430825"
+    },
+    {
+      "src": "/media/frames/clear-tvc-2025/06-40-160.webp",
+      "width": 1440,
+      "height": 1080,
+      "timestamp": 40.16,
+      "provider": "vimeo",
+      "videoId": "1097430825"
+    }
+  ],
+  "boncha-ooh-2025": [
+    {
+      "src": "/media/frames/boncha-ooh-2025/01-0-640.webp",
+      "width": 1620,
+      "height": 1080,
+      "timestamp": 0.64,
+      "provider": "vimeo",
+      "videoId": "1082477066"
+    },
+    {
+      "src": "/media/frames/boncha-ooh-2025/02-1-600.webp",
+      "width": 1620,
+      "height": 1080,
+      "timestamp": 1.6,
+      "provider": "vimeo",
+      "videoId": "1082477066"
+    },
+    {
+      "src": "/media/frames/boncha-ooh-2025/03-5-200.webp",
+      "width": 1620,
+      "height": 1080,
+      "timestamp": 5.2,
+      "provider": "vimeo",
+      "videoId": "1082477066"
+    },
+    {
+      "src": "/media/frames/boncha-ooh-2025/04-7-520.webp",
+      "width": 1620,
+      "height": 1080,
+      "timestamp": 7.52,
+      "provider": "vimeo",
+      "videoId": "1082477066"
+    },
+    {
+      "src": "/media/frames/boncha-ooh-2025/05-13-080.webp",
+      "width": 1620,
+      "height": 1080,
+      "timestamp": 13.08,
+      "provider": "vimeo",
+      "videoId": "1082477066"
+    }
+  ],
+  "kiri-minisweet-tvc-2025": [
+    {
+      "src": "/media/frames/kiri-minisweet-tvc-2025/01-0-720.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 0.72,
+      "provider": "vimeo",
+      "videoId": "1082476307"
+    },
+    {
+      "src": "/media/frames/kiri-minisweet-tvc-2025/02-2-040.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 2.04,
+      "provider": "vimeo",
+      "videoId": "1082476307"
+    },
+    {
+      "src": "/media/frames/kiri-minisweet-tvc-2025/03-2-800.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 2.8,
+      "provider": "vimeo",
+      "videoId": "1082476307"
+    },
+    {
+      "src": "/media/frames/kiri-minisweet-tvc-2025/04-4-240.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 4.24,
+      "provider": "vimeo",
+      "videoId": "1082476307"
+    },
+    {
+      "src": "/media/frames/kiri-minisweet-tvc-2025/05-5-400.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 5.4,
+      "provider": "vimeo",
+      "videoId": "1082476307"
+    }
+  ],
+  "surf-bumper-ads-2024": [
+    {
+      "src": "/media/frames/surf-bumper-ads-2024/01-0-800.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 0.8,
+      "provider": "vimeo",
+      "videoId": "1008292821"
+    },
+    {
+      "src": "/media/frames/surf-bumper-ads-2024/02-1-880.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 1.88,
+      "provider": "vimeo",
+      "videoId": "1008292821"
+    },
+    {
+      "src": "/media/frames/surf-bumper-ads-2024/03-2-680.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 2.68,
+      "provider": "vimeo",
+      "videoId": "1008292821"
+    },
+    {
+      "src": "/media/frames/surf-bumper-ads-2024/04-3-160.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 3.16,
+      "provider": "vimeo",
+      "videoId": "1008292821"
+    },
+    {
+      "src": "/media/frames/surf-bumper-ads-2024/05-3-920.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 3.92,
+      "provider": "vimeo",
+      "videoId": "1008292821"
+    },
+    {
+      "src": "/media/frames/surf-bumper-ads-2024/06-4-640.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 4.64,
+      "provider": "vimeo",
+      "videoId": "1008292821"
+    },
+    {
+      "src": "/media/frames/surf-bumper-ads-2024/07-5-360.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 5.36,
+      "provider": "vimeo",
+      "videoId": "1008292821"
+    }
+  ],
+  "tiki-bumper-ads-2024": [
+    {
+      "src": "/media/frames/tiki-bumper-ads-2024/01-0-520.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 0.52,
+      "provider": "vimeo",
+      "videoId": "1008292182"
+    },
+    {
+      "src": "/media/frames/tiki-bumper-ads-2024/02-1-440.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 1.44,
+      "provider": "vimeo",
+      "videoId": "1008292182"
+    },
+    {
+      "src": "/media/frames/tiki-bumper-ads-2024/03-2-920.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 2.92,
+      "provider": "vimeo",
+      "videoId": "1008292182"
+    },
+    {
+      "src": "/media/frames/tiki-bumper-ads-2024/04-3-520.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 3.52,
+      "provider": "vimeo",
+      "videoId": "1008292182"
+    },
+    {
+      "src": "/media/frames/tiki-bumper-ads-2024/05-3-800.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 3.8,
+      "provider": "vimeo",
+      "videoId": "1008292182"
+    },
+    {
+      "src": "/media/frames/tiki-bumper-ads-2024/06-4-760.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 4.76,
+      "provider": "vimeo",
+      "videoId": "1008292182"
+    }
+  ],
+  "lays-tvc-2024": [
+    {
+      "src": "/media/frames/lays-tvc-2024/01-3-440.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 3.44,
+      "provider": "vimeo",
+      "videoId": "1008291680"
+    },
+    {
+      "src": "/media/frames/lays-tvc-2024/02-7-680.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 7.68,
+      "provider": "vimeo",
+      "videoId": "1008291680"
+    },
+    {
+      "src": "/media/frames/lays-tvc-2024/03-14-600.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 14.6,
+      "provider": "vimeo",
+      "videoId": "1008291680"
+    },
+    {
+      "src": "/media/frames/lays-tvc-2024/04-19-720.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 19.72,
+      "provider": "vimeo",
+      "videoId": "1008291680"
+    },
+    {
+      "src": "/media/frames/lays-tvc-2024/05-24-760.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 24.76,
+      "provider": "vimeo",
+      "videoId": "1008291680"
+    }
+  ],
+  "surf-tvc-2023": [
+    {
+      "src": "/media/frames/surf-tvc-2023/01-1-280.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 1.28,
+      "provider": "vimeo",
+      "videoId": "880041741"
+    },
+    {
+      "src": "/media/frames/surf-tvc-2023/02-5-200.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 5.2,
+      "provider": "vimeo",
+      "videoId": "880041741"
+    },
+    {
+      "src": "/media/frames/surf-tvc-2023/03-7-360.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 7.36,
+      "provider": "vimeo",
+      "videoId": "880041741"
+    },
+    {
+      "src": "/media/frames/surf-tvc-2023/04-10-160.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 10.16,
+      "provider": "vimeo",
+      "videoId": "880041741"
+    },
+    {
+      "src": "/media/frames/surf-tvc-2023/05-13-280.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 13.28,
+      "provider": "vimeo",
+      "videoId": "880041741"
+    }
+  ],
+  "twister-tvc-2023": [
+    {
+      "src": "/media/frames/twister-tvc-2023/01-5-080.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 5.08,
+      "provider": "vimeo",
+      "videoId": "832113256"
+    },
+    {
+      "src": "/media/frames/twister-tvc-2023/02-10-120.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 10.12,
+      "provider": "vimeo",
+      "videoId": "832113256"
+    },
+    {
+      "src": "/media/frames/twister-tvc-2023/03-15-480.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 15.48,
+      "provider": "vimeo",
+      "videoId": "832113256"
+    },
+    {
+      "src": "/media/frames/twister-tvc-2023/04-20-920.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 20.92,
+      "provider": "vimeo",
+      "videoId": "832113256"
+    },
+    {
+      "src": "/media/frames/twister-tvc-2023/05-25-600.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 25.6,
+      "provider": "vimeo",
+      "videoId": "832113256"
+    }
+  ],
+  "7up-tvc-2023": [
+    {
+      "src": "/media/frames/7up-tvc-2023/01-6-920.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 6.92,
+      "provider": "vimeo",
+      "videoId": "817154908"
+    },
+    {
+      "src": "/media/frames/7up-tvc-2023/02-15-520.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 15.52,
+      "provider": "vimeo",
+      "videoId": "817154908"
+    },
+    {
+      "src": "/media/frames/7up-tvc-2023/03-29-840.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 29.84,
+      "provider": "vimeo",
+      "videoId": "817154908"
+    },
+    {
+      "src": "/media/frames/7up-tvc-2023/04-38-600.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 38.6,
+      "provider": "vimeo",
+      "videoId": "817154908"
+    },
+    {
+      "src": "/media/frames/7up-tvc-2023/05-49-000.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 49,
+      "provider": "vimeo",
+      "videoId": "817154908"
+    }
+  ],
+  "durex-thematic-gay-tvc-2022": [
+    {
+      "src": "/media/frames/durex-thematic-gay-tvc-2022/01-3-720.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 3.72,
+      "provider": "vimeo",
+      "videoId": "817151192"
+    },
+    {
+      "src": "/media/frames/durex-thematic-gay-tvc-2022/02-7-320.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 7.32,
+      "provider": "vimeo",
+      "videoId": "817151192"
+    },
+    {
+      "src": "/media/frames/durex-thematic-gay-tvc-2022/03-11-760.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 11.76,
+      "provider": "vimeo",
+      "videoId": "817151192"
+    },
+    {
+      "src": "/media/frames/durex-thematic-gay-tvc-2022/04-17-840.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 17.84,
+      "provider": "vimeo",
+      "videoId": "817151192"
+    },
+    {
+      "src": "/media/frames/durex-thematic-gay-tvc-2022/05-20-000.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 20,
+      "provider": "vimeo",
+      "videoId": "817151192"
+    },
+    {
+      "src": "/media/frames/durex-thematic-gay-tvc-2022/06-26-040.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 26.04,
+      "provider": "vimeo",
+      "videoId": "817151192"
+    }
+  ],
+  "durex-thematic-les-tvc-2022": [
+    {
+      "src": "/media/frames/durex-thematic-les-tvc-2022/01-4-200.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 4.2,
+      "provider": "vimeo",
+      "videoId": "817151101"
+    },
+    {
+      "src": "/media/frames/durex-thematic-les-tvc-2022/02-8-560.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 8.56,
+      "provider": "vimeo",
+      "videoId": "817151101"
+    },
+    {
+      "src": "/media/frames/durex-thematic-les-tvc-2022/03-10-960.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 10.96,
+      "provider": "vimeo",
+      "videoId": "817151101"
+    },
+    {
+      "src": "/media/frames/durex-thematic-les-tvc-2022/04-16-240.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 16.24,
+      "provider": "vimeo",
+      "videoId": "817151101"
+    },
+    {
+      "src": "/media/frames/durex-thematic-les-tvc-2022/05-19-960.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 19.96,
+      "provider": "vimeo",
+      "videoId": "817151101"
+    },
+    {
+      "src": "/media/frames/durex-thematic-les-tvc-2022/06-26-080.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 26.08,
+      "provider": "vimeo",
+      "videoId": "817151101"
+    }
+  ],
+  "knorr-tvc-2023": [
+    {
+      "src": "/media/frames/knorr-tvc-2023/01-1-720.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 1.72,
+      "provider": "vimeo",
+      "videoId": "817148374"
+    },
+    {
+      "src": "/media/frames/knorr-tvc-2023/02-4-240.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 4.24,
+      "provider": "vimeo",
+      "videoId": "817148374"
+    },
+    {
+      "src": "/media/frames/knorr-tvc-2023/03-6-560.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 6.56,
+      "provider": "vimeo",
+      "videoId": "817148374"
+    },
+    {
+      "src": "/media/frames/knorr-tvc-2023/04-8-080.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 8.08,
+      "provider": "vimeo",
+      "videoId": "817148374"
+    },
+    {
+      "src": "/media/frames/knorr-tvc-2023/05-10-160.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 10.16,
+      "provider": "vimeo",
+      "videoId": "817148374"
+    },
+    {
+      "src": "/media/frames/knorr-tvc-2023/06-12-040.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 12.04,
+      "provider": "vimeo",
+      "videoId": "817148374"
+    }
+  ],
+  "rejoice-viral-2022": [
+    {
+      "src": "/media/frames/rejoice-viral-2022/01-7-560.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 7.56,
+      "provider": "vimeo",
+      "videoId": "817147701"
+    },
+    {
+      "src": "/media/frames/rejoice-viral-2022/02-28-880.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 28.88,
+      "provider": "vimeo",
+      "videoId": "817147701"
+    },
+    {
+      "src": "/media/frames/rejoice-viral-2022/03-45-960.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 45.96,
+      "provider": "vimeo",
+      "videoId": "817147701"
+    },
+    {
+      "src": "/media/frames/rejoice-viral-2022/04-64-600.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 64.6,
+      "provider": "vimeo",
+      "videoId": "817147701"
+    },
+    {
+      "src": "/media/frames/rejoice-viral-2022/05-76-840.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 76.84,
+      "provider": "vimeo",
+      "videoId": "817147701"
+    }
+  ],
+  "omo-tvc-2022": [
+    {
+      "src": "/media/frames/omo-tvc-2022/01-3-600.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 3.6,
+      "provider": "vimeo",
+      "videoId": "817146786"
+    },
+    {
+      "src": "/media/frames/omo-tvc-2022/02-6-240.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 6.24,
+      "provider": "vimeo",
+      "videoId": "817146786"
+    },
+    {
+      "src": "/media/frames/omo-tvc-2022/03-10-160.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 10.16,
+      "provider": "vimeo",
+      "videoId": "817146786"
+    },
+    {
+      "src": "/media/frames/omo-tvc-2022/04-13-680.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 13.68,
+      "provider": "vimeo",
+      "videoId": "817146786"
+    },
+    {
+      "src": "/media/frames/omo-tvc-2022/05-17-160.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 17.16,
+      "provider": "vimeo",
+      "videoId": "817146786"
+    },
+    {
+      "src": "/media/frames/omo-tvc-2022/06-22-600.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 22.6,
+      "provider": "vimeo",
+      "videoId": "817146786"
+    },
+    {
+      "src": "/media/frames/omo-tvc-2022/07-26-960.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 26.96,
+      "provider": "vimeo",
+      "videoId": "817146786"
+    }
+  ],
+  "warrior-tvc-2021": [
+    {
+      "src": "/media/frames/warrior-tvc-2021/01-1-640.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 1.64,
+      "provider": "vimeo",
+      "videoId": "713612370"
+    },
+    {
+      "src": "/media/frames/warrior-tvc-2021/02-2-280.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 2.28,
+      "provider": "vimeo",
+      "videoId": "713612370"
+    },
+    {
+      "src": "/media/frames/warrior-tvc-2021/03-3-360.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 3.36,
+      "provider": "vimeo",
+      "videoId": "713612370"
+    },
+    {
+      "src": "/media/frames/warrior-tvc-2021/04-4-480.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 4.48,
+      "provider": "vimeo",
+      "videoId": "713612370"
+    },
+    {
+      "src": "/media/frames/warrior-tvc-2021/05-5-680.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 5.68,
+      "provider": "vimeo",
+      "videoId": "713612370"
+    },
+    {
+      "src": "/media/frames/warrior-tvc-2021/06-7-760.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 7.76,
+      "provider": "vimeo",
+      "videoId": "713612370"
+    },
+    {
+      "src": "/media/frames/warrior-tvc-2021/07-9-640.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 9.64,
+      "provider": "vimeo",
+      "videoId": "713612370"
+    },
+    {
+      "src": "/media/frames/warrior-tvc-2021/08-12-640.webp",
+      "width": 1920,
+      "height": 1080,
+      "timestamp": 12.64,
+      "provider": "vimeo",
+      "videoId": "713612370"
+    }
+  ]
+}

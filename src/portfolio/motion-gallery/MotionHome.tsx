@@ -31,8 +31,9 @@ export default function MotionHome() {
       <div className="mg-intro-portrait"><div className="mg-portrait-frame" data-mg-parallax><Image src={PORTRAIT} alt="Hai Luong — VFX compositor" loading="lazy" sizes="(max-width: 760px) 90vw, 40vw" width={1400} height={1867} /><span className="mg-portrait-caption">Hai Luong / The artist</span></div><span className="mg-portrait-note">Behind the frame.<br />Inside the detail.</span></div>
       <div className="mg-intro-copy"><p className="mg-small-label">01 / The artist</p><h2 id="mg-about-title" className="mg-display" data-mg-reveal>I MAKE THE<br />IMPOSSIBLE<br /><span className="mg-outline">FEEL REAL.</span></h2><p className="mg-intro-description">I’m Hai Luong, a VFX Compositor based in Ho Chi Minh City. I specialize in compositing, cleanup, camera tracking, and motion design for commercials and music videos.</p><a href="#contact" className="mg-button">Let’s talk <Icon name="arrow" /></a></div>
     </section>
+    <MotionShowreel onPlay={openFilm} />
     <section id="work" className="mg-stack" aria-labelledby="mg-work-title"><div className="mg-stack-pin mg-shell">
-      <div className="mg-section-label"><span>02 / Selected work</span><a href="#archive" className="mg-work-archive">The full archive <span>{PROJECT_COUNT}</span><Icon name="arrow" /></a></div>
+      <div className="mg-section-label"><span>03 / Selected work</span><a href="#archive" className="mg-work-archive">The full archive <span>{PROJECT_COUNT}</span><Icon name="arrow" /></a></div>
       <h2 id="mg-work-title" className="mg-display mg-stack-title">SELECTED <span className="mg-outline">WORK.</span></h2>
       <div className="mg-stack-list">
         {GALLERY_PROJECTS.map((project, index) => <article className={'mg-stack-card mg-stack-color-' + index} key={project.id} data-project={project.id}>
@@ -48,7 +49,6 @@ export default function MotionHome() {
       <div className="mg-stack-footer"><div className="mg-stack-count"><span data-stack-count>01</span><span>/ {number(GALLERY_PROJECTS.length)}</span><div className="mg-stack-progress"><span /></div></div><span className="mg-stack-instruction">Scroll through the frames</span></div>
     </div></section>
     <MotionBreakdowns onPlay={openFilm} />
-    <MotionShowreel onPlay={openFilm} />
     <MotionArchive />
     <MotionContact />
     {media && <Suspense fallback={<div className="viewer-opening" role="status">Opening the viewer…</div>}><MediaDialog content={media} onClose={closeMedia} /></Suspense>}

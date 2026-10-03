@@ -9,8 +9,8 @@ export default function MotionBreakdowns({ onPlay }: { onPlay: (film: FilmSource
   const [hovered, setHovered] = useState<string | null>(null);
 
   return <section id="breakdowns" className="mg-breakdowns mg-shell" aria-labelledby="mg-breakdown-title">
-    <div className="mg-section-label"><span>03 / A closer look</span><span>{number(GALLERY_BREAKDOWN_COUNT)} breakdown films / Compositing in motion</span></div>
-    <div className="mg-breakdown-heading"><h2 id="mg-breakdown-title" className="mg-display" data-mg-reveal>THE IMAGE.<br /><span className="mg-outline">THE CRAFT.</span></h2><div className="mg-breakdown-intro"><p>Look beyond the finished frame.<br />Watch the compositing breakdowns.</p><a href="#showreel">Explore the studio reel <Icon name="down" /></a></div></div>
+    <div className="mg-section-label"><span>04 / A closer look</span><span>{number(GALLERY_BREAKDOWN_COUNT)} breakdown films / Compositing in motion</span></div>
+    <div className="mg-breakdown-heading"><h2 id="mg-breakdown-title" className="mg-display" data-mg-reveal>THE IMAGE.<br /><span className="mg-outline">THE CRAFT.</span></h2><div className="mg-breakdown-intro"><p>Look beyond the finished frame.<br />Watch the compositing breakdowns.</p><a href="#showreel">Explore the studio reel <Icon name="arrow" /></a></div></div>
     <div className="mg-breakdown-grid">{GALLERY_BREAKDOWNS.map(({ project, film }, index) => <button key={project.id} className={'mg-breakdown-card mg-breakdown-color-' + index} data-mg-tilt data-mg-cursor="WATCH BREAKDOWN ↗" onClick={() => onPlay(film)}
       onPointerEnter={() => setHovered(project.id)} onPointerLeave={() => setHovered(null)} onFocus={() => setHovered(project.id)} onBlur={() => setHovered(null)}>
       <span className="mg-tilt-surface"><span className="mg-breakdown-frame"><MotionMedia project={project} active={hovered === project.id} sizes="(max-width: 760px) 90vw, 30vw" /><span className="mg-play-disc"><Icon name="play" /></span><span className="mg-breakdown-tag">Watch breakdown</span></span><span className="mg-breakdown-caption"><span>{project.client}</span><span>VFX breakdown <Icon name="arrow" /></span></span></span>

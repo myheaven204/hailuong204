@@ -38,6 +38,10 @@ A GitHub push publishes source code; a hosting integration must be configured se
 - The three hero frames start with the approved images on every refresh, then fade between high-resolution frames from their own projects. Pause/Play, hover/focus, offscreen and background-tab handling are included.
 - Individual project pages present the available original film first. Missing footage must be supplied by the owner, not replaced with unrelated footage.
 - Breakdowns and SPICE fx — Studio Showreel 2026 remain separate from individual project credits.
+- Navigation links directly to Work Index, Breakdowns, Showreel and About. The studio showreel appears before Selected Work.
+- The archive contains 43 projects after removal of the duplicate WARRIOR MV entry. NMAX uses the owner-approved YouTube film and its thumbnail; additional full-HD frames remain associated with their original jobs.
+- Project publication dates and archive years follow the linked YouTube/Vimeo upload dates, as confirmed by the owner. Work Index and adjacent-project navigation run newest first; original job titles are preserved even when they contain a different campaign year.
+- Production credits use the owner's supplied personnel ranges, evaluated against the video publication month. Month boundaries are inclusive; the supplied Nhi Truong cutoff is interpreted as April 2026. These are owner-directed credits, not independently verified attendance records.
 
 ## Media maintenance
 

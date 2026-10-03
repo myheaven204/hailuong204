@@ -2,8 +2,8 @@ import { lazy, Suspense, useCallback, useContext, useEffect, useRef, useState, t
 import { useParams } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { getAdjacentProjects, getProjectById, PROJECTS } from '../../data/projects';
-import { number, projectBrand, projectFilm, projectFrames, projectGenre, projectSummary } from '../content';
+import { CHRONOLOGICAL_PROJECTS, getAdjacentProjects, getProjectById } from '../../data/projects';
+import { number, projectBrand, projectFilm, projectFrames, projectGenre, projectPublishedDate, projectSummary } from '../content';
 import type { MediaContent } from '../MediaDialog';
 import Icon from '../Icon';
 import Image from '../Image';
@@ -97,7 +97,7 @@ export default function MotionProject() {
 
   return <main id="main-content" className="mg-page mg-case" ref={root} tabIndex={-1}>
     <section className="mg-case-hero mg-shell">
-      <div className="mg-section-label"><MotionLink to={GALLERY_PATH + '#archive'} className="mg-back-link"><Icon name="left" /> Back to the collection</MotionLink><span>{number(PROJECTS.findIndex(item => item.id === id) + 1)} / {number(PROJECTS.length)}</span></div>
+      <div className="mg-section-label"><MotionLink to={GALLERY_PATH + '#archive'} className="mg-back-link"><Icon name="left" /> Back to the collection</MotionLink><span>{number(CHRONOLOGICAL_PROJECTS.findIndex(item => item.id === id) + 1)} / {number(CHRONOLOGICAL_PROJECTS.length)}</span></div>
       <h1 id="mg-page-title" className="mg-display mg-case-title" tabIndex={-1}><span className="mg-line"><span className="mg-line-inner">{project.title}</span></span></h1>
       <div className="mg-case-meta"><span>{projectGenre(project)}</span><span>{project.year}</span><span>{project.role}</span></div>
       <ProjectFilm key={project.id} film={film} poster={cover} title={project.title} />
@@ -110,7 +110,7 @@ export default function MotionProject() {
       </div>
     </section>
     <section id="mg-frames" className="mg-case-frames mg-shell" aria-labelledby="mg-frames-title"><div className="mg-section-label"><span>Selected frames</span><span>{number(frames.length)} images</span></div><h2 id="mg-frames-title" className="mg-display" data-mg-reveal>FRAME BY <span className="mg-outline">FRAME.</span></h2><div className="mg-case-grid">{frames.map((frame, index) => <button key={frame} className={'mg-case-frame' + (compactFrame(frame) ? ' mg-case-frame-compact' : '') + (index === wideFrame ? ' mg-case-frame-wide' : '')} style={frameStyle(frame)} onClick={() => openFrame(index)} aria-label={'Open ' + project.title + ' frame ' + number(index + 1)}><Image src={frame} alt={project.title + ' — final frame ' + number(index + 1)} loading="lazy" sizes={index === wideFrame ? '90vw' : '(max-width: 760px) 90vw, 44vw'} /><span>{number(index + 1)} <Icon name="plus" /></span></button>)}</div></section>
-    <section className="mg-case-credits mg-shell" aria-labelledby="mg-credits-title"><div><p className="mg-small-label">The people behind the image</p><h2 id="mg-credits-title" className="mg-display">PROJECT<br /><span className="mg-outline">CREDITS.</span></h2><p className="mg-credit-note">Credits retained from the original project archive. My contribution: {project.role}.</p></div><dl><div><dt>Project</dt><dd>{project.title}</dd></div><div><dt>Year</dt><dd>{project.year}</dd></div>{client && <div><dt>Client</dt><dd>{client}</dd></div>}{project.artists?.map((credit, index) => <div key={credit.role + index}><dt>{credit.role}</dt><dd>{credit.names}</dd></div>)}</dl></section>
+    <section className="mg-case-credits mg-shell" aria-labelledby="mg-credits-title"><div><p className="mg-small-label">The people behind the image</p><h2 id="mg-credits-title" className="mg-display">PROJECT<br /><span className="mg-outline">CREDITS.</span></h2><p className="mg-credit-note">Production credits supplied by the portfolio owner. My contribution: {project.role}.</p></div><dl><div><dt>Project</dt><dd>{project.title}</dd></div><div><dt>Year</dt><dd>{project.year}</dd></div>{project.publishedAt && <div><dt>Video published</dt><dd><time dateTime={project.publishedAt}>{projectPublishedDate(project)}</time></dd></div>}{client && <div><dt>Client</dt><dd>{client}</dd></div>}{project.artists?.map((credit, index) => <div key={credit.role + index}><dt>{credit.role}</dt><dd>{credit.names}</dd></div>)}</dl></section>
     {next && <section className="mg-next-project mg-shell"><p className="mg-small-label">Next in the collection</p><MotionLink to={GALLERY_PATH + 'project/' + next.id}><h2 className="mg-display">{next.title}</h2><Icon name="arrow" /></MotionLink></section>}
     <MotionContact />
     {media && <Suspense fallback={<div className="viewer-opening" role="status">Opening the viewer…</div>}><MediaDialog content={media} onClose={closeMedia} /></Suspense>}
