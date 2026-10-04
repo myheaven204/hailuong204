@@ -86,7 +86,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Hai Luong, Ly Cam Bieu"
+        "names": "Hai Luong, Tuan Binh, Ly Cam Bieu"
       }
     ]
   },
@@ -139,7 +139,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Hai Luong, Ly Cam Bieu"
+        "names": "Hai Luong, Nguyen Viet Hoang, Tuan Binh, Ly Cam Bieu"
       }
     ],
     "publishedAt": "2022-12-20"
@@ -1339,7 +1339,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Hai Luong, Ly Cam Bieu"
+        "names": "Hai Luong, Tuan Binh, Ly Cam Bieu"
       }
     ]
   },
@@ -1390,7 +1390,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Hai Luong, Ly Cam Bieu"
+        "names": "Hai Luong, Tuan Binh, Ly Cam Bieu"
       }
     ]
   },
@@ -1443,7 +1443,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Hai Luong, Ly Cam Bieu"
+        "names": "Hai Luong, Tuan Binh, Ly Cam Bieu"
       }
     ]
   },
@@ -1484,7 +1484,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Hai Luong, Ly Cam Bieu"
+        "names": "Hai Luong, Tuan Binh, Ly Cam Bieu"
       }
     ]
   },
@@ -1537,7 +1537,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Hai Luong, Ly Cam Bieu"
+        "names": "Hai Luong, Tuan Binh, Ly Cam Bieu"
       }
     ]
   },
@@ -1590,7 +1590,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Hai Luong, Ly Cam Bieu"
+        "names": "Hai Luong, Tuan Binh, Ly Cam Bieu"
       }
     ]
   },
@@ -1642,7 +1642,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Hai Luong, Ly Cam Bieu"
+        "names": "Hai Luong, Tuan Binh, Ly Cam Bieu"
       }
     ]
   },
@@ -1695,7 +1695,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Hai Luong, Ly Cam Bieu"
+        "names": "Hai Luong, Tuan Binh, Ly Cam Bieu"
       }
     ]
   },
@@ -1741,7 +1741,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Hai Luong, Ly Cam Bieu"
+        "names": "Hai Luong, Tuan Binh, Ly Cam Bieu"
       }
     ]
   },
@@ -1782,7 +1782,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Hai Luong, Ly Cam Bieu"
+        "names": "Hai Luong, Tuan Binh, Ly Cam Bieu"
       }
     ]
   },
@@ -1823,7 +1823,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Hai Luong, Ly Cam Bieu"
+        "names": "Hai Luong, Tuan Binh, Ly Cam Bieu"
       }
     ]
   },
@@ -1864,7 +1864,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Hai Luong, Ly Cam Bieu"
+        "names": "Hai Luong, Tuan Binh, Ly Cam Bieu"
       }
     ]
   },
@@ -1905,7 +1905,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Hai Luong, Ly Cam Bieu"
+        "names": "Hai Luong, Tuan Binh, Ly Cam Bieu"
       }
     ]
   },
@@ -1946,7 +1946,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Hai Luong, Ly Cam Bieu"
+        "names": "Hai Luong, Tuan Binh, Ly Cam Bieu"
       }
     ]
   },
@@ -1987,7 +1987,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Hai Luong, Ly Cam Bieu"
+        "names": "Hai Luong, Tuan Binh, Ly Cam Bieu"
       }
     ]
   },
@@ -2040,7 +2040,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Hai Luong, Ly Cam Bieu"
+        "names": "Hai Luong, Tuan Binh, Ly Cam Bieu"
       }
     ]
   },
@@ -2080,7 +2080,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "role": "VFX Artists",
-        "names": "Hai Luong"
+        "names": "Hai Luong, Nguyen Viet Hoang"
       }
     ]
   },

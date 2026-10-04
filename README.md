@@ -42,6 +42,9 @@ A GitHub push publishes source code; a hosting integration must be configured se
 - The archive contains 43 projects after removal of the duplicate WARRIOR MV entry. NMAX uses the owner-approved YouTube film and its thumbnail; additional full-HD frames remain associated with their original jobs.
 - Project publication dates and archive years follow the linked YouTube/Vimeo upload dates, as confirmed by the owner. Work Index and adjacent-project navigation run newest first; original job titles are preserved even when they contain a different campaign year.
 - Production credits use the owner's supplied personnel ranges, evaluated against the video publication month. Month boundaries are inclusive; the supplied Nhi Truong cutoff is interpreted as April 2026. These are owner-directed credits, not independently verified attendance records.
+- Viet Nguyen is included from May 2021 through May 2024, excluded from June 2024 through August 2025, and included again from September 2025.
+- Nguyen Viet Hoang is included from January 2021 through March 2023, correcting the previously supplied March 2022 cutoff.
+- Tuan Binh is included in VFX Artists from August 2022 through April 2024, inclusive.
 
 ## Media maintenance
 
